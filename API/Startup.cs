@@ -29,6 +29,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors();
             services.AddDbContext<DataContext>(options =>
            {
                options.UseSqlServer(_config.GetConnectionString("DefaultConnection"));
@@ -47,6 +48,11 @@ namespace API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(policy => policy
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithOrigins("https://localhost:4200") );
 
             app.UseAuthorization();
 
