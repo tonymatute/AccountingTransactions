@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">{{title}}</a>
+        <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$ | async">
+            <li class="nav-item ">
+                <a class="nav-link" href="#">Scouts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Adults</a>
+            </li>
+            <li class="nav-item">
+                <div class="dropdown" dropdown>
+                    <a class="dropdown-toggle text-light nav-link" dropdownToggle>Admin</a>
+                    <div class="dropdown-menu mt-2" *dropdownMenu>                        
+                        <a class="dropdown-item" href="#">Admin Function 1</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Admin Functions 2</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+            <a class="dropdown-toggle text-light" dropdownToggle>Welcome User</a>
+            <div class="dropdown-menu mt-3" *dropdownMenu>
+                <a class="dropdown-item">User Info</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" (click)="logout()">Logout</a>
+            </div>
+        </div>        
+        <form *ngIf="(accountService.currentUser$ | async) == null" #loginForm='ngForm' 
+            class="form-inline mt-2 mt-md-0"  (ngSubmit)="login()" autocomplete="off" >  
+            <input 
+                name="username"
+                [(ngModel)]="model.username"
+                placeholder="Username"
+                type="text" 
+                class="form-control mr-sm-2">
+            <input 
+                name="password"
+                [(ngModel)]="model.password"
+                placeholder="Password"
+                type="password" 
+                class="form-control mr-sm-2"
+                autocomplete="off">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+        </form >
+
+        
+    </div>
+</nav>
