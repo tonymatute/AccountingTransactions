@@ -1,3 +1,8 @@
 .dropdown-toggle, .dropdown-item {
     cursor: pointer;
 }
+.small-image {
+    height: 6%;
+    width: 6%;
+    mix-blend-mode: multiply;
+  }

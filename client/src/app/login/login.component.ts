@@ -3,48 +3,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../_services/account.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
   @Output() cancelLogin = new EventEmitter();
-  loginForm: FormGroup;
   model: any = {};
-  validationErrors: string[] = [];
 
-  constructor(
-    private accountService: AccountService,
-    private fb: FormBuilder,
-    private router: Router) { }
- 
-  ngOnInit(): void {
-    this.initializeForm();
-  }
+  constructor(public accountService: AccountService) {}
 
-  initializeForm() { 
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', [
-        Validators.required
-      ]],
-    })
-  }
+  ngOnInit(): void {}
 
   login() {
-    this.accountService.login(this.model).subscribe(response => {
-      this.router.navigateByUrl('/members');      
-    });
+    this.accountService.login(this.model).subscribe(
+      (user) => {
+        console.log(user);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
+  logout() {
+    this.accountService.logout();
+  }
   cancel() {
     this.cancelLogin.emit(false);
   }
-
-  forgotPassword() {
-    this.router.navigateByUrl('../forgot-password/');
-  }
-  
 }

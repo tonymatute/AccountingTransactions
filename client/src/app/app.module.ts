@@ -1,20 +1,22 @@
+import { SharedModule } from './_modules/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { LoginComponent } from './login/login.component';
-import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DateInputComponent } from './_forms/date-input/date-input.component';
-import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ScoutListComponent } from './scouts/scout-list/scout-list.component';
+import { ScoutTransactionsComponent } from './scouts/scout-transactions/scout-transactions.component';
+import { AdultTransactionsComponent } from './adults/adult-transactions/adult-transactions.component';
+import { AdultListComponent } from './adults/adult-list/adult-list.component';
 
 
 @NgModule({
@@ -25,18 +27,21 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     HomeComponent,
     RegisterComponent,
     TextInputComponent,
-    DateInputComponent
+    DateInputComponent,
+    ScoutListComponent,
+    ScoutTransactionsComponent,
+    AdultTransactionsComponent,
+    AdultListComponent
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule,
-    BsDropdownModule.forRoot(),
-    ToastrModule.forRoot(),
+    FormsModule,    
     ReactiveFormsModule,
-    BsDatepickerModule.forRoot()
+
   ],
   providers: [],
   bootstrap: [AppComponent]

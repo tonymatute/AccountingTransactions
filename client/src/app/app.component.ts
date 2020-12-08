@@ -9,7 +9,7 @@ import { AccountService } from './_services/account.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'Troop 425 Accounting System';
+  title = 'Troop 425';
   users: any;
 
   constructor(private accountService: AccountService) {}
