@@ -1,7 +1,8 @@
+import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { SharedModule } from './_modules/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {HttpClientModule} from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -17,7 +18,9 @@ import { ScoutListComponent } from './scouts/scout-list/scout-list.component';
 import { ScoutTransactionsComponent } from './scouts/scout-transactions/scout-transactions.component';
 import { AdultTransactionsComponent } from './adults/adult-transactions/adult-transactions.component';
 import { AdultListComponent } from './adults/adult-list/adult-list.component';
-
+import { ErrorTestComponent } from './errors/error-test/error-test.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { AdultListComponent } from './adults/adult-list/adult-list.component';
     ScoutListComponent,
     ScoutTransactionsComponent,
     AdultTransactionsComponent,
-    AdultListComponent
+    AdultListComponent,
+    ErrorTestComponent,
+    NotFoundComponent,
+    ServerErrorComponent,
   ],
   imports: [
     SharedModule,
@@ -39,11 +45,12 @@ import { AdultListComponent } from './adults/adult-list/adult-list.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    FormsModule,    
+    FormsModule,
     ReactiveFormsModule,
-
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

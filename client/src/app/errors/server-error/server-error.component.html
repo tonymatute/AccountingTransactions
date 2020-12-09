@@ -1,0 +1,7 @@
+<h2 class="text-primary">Internal server error.</h2>
+<h4 class="text-warning">Refressing the page will make this error dissapear!!</h4>
+<ng-container *ngIf="error">
+    <h5>Error: <p class="text-danger">{{error.message}}</p></h5>    
+    <h5>Details:</h5>
+    <code class="mt-5" style="background-color: white;">{{error.details}} </code>
+</ng-container>

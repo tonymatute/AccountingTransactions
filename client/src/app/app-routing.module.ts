@@ -1,3 +1,5 @@
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { ErrorTestComponent } from './errors/error-test/error-test.component';
 import { AuthorizedPathGuard } from './_guards/authorized-path.guard';
 import { AdultListComponent } from './adults/adult-list/adult-list.component';
 import { ScoutTransactionsComponent } from './scouts/scout-transactions/scout-transactions.component';
@@ -8,6 +10,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { AdultTransactionsComponent } from './adults/adult-transactions/adult-transactions.component';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,6 +25,9 @@ const routes: Routes = [
       { path: 'scouts/:id', component: ScoutTransactionsComponent },
     ]
   },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: 'server-error', component: ServerErrorComponent },
+  { path: 'errors', component: ErrorTestComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: '**', component: HomeComponent , pathMatch: 'full'},
