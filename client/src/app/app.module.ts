@@ -1,7 +1,7 @@
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { SharedModule } from './_modules/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule ,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +21,9 @@ import { AdultListComponent } from './adults/adult-list/adult-list.component';
 import { ErrorTestComponent } from './errors/error-test/error-test.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ScoutCardComponent } from './scouts/scout-card/scout-card.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     ErrorTestComponent,
     NotFoundComponent,
     ServerErrorComponent,
+    ScoutCardComponent,
   ],
   imports: [
     SharedModule,
@@ -47,9 +51,12 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-  ],
+    NgxSpinnerModule
+  ],  
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

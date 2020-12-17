@@ -1,1 +1,47 @@
-<p>scout-list works!</p>
+<div class="text-center">
+    <h2 class="font-weight-bold" >Scouts</h2>
+</div>
+
+<div class="container mt3">
+    <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadScouts()" autocomplete="off">
+        <div class="form-group">
+            <label>LastName: </label>
+            <input type="text" class="from-control ml-1" style="width: 140px;" name="lastname"
+                [(ngModel)]="searchParams.lastName">
+        </div>
+        <div class="form-group px-2">
+            <label>FirstName: </label>
+            <input type="text" class="from-control ml-1" style="width: 140px;" name="firstname"
+                [(ngModel)]="searchParams.firstName">
+        </div>
+        <div class="form-group px-2">
+            <label>Patrol: </label>
+            <select name="gender" [(ngModel)]="searchParams.patrolName" style="width: 110px;" class="form-control ml-1">
+                <option *ngFor="let patrol of patrolList" [value]="patrol.value">
+                    {{patrol.display}}
+                </option>
+            </select>
+        </div>
+        <button class="btn btn-primary ml-1" type="submit">Find scout</button>
+        <button class="btn btn-info ml-1" (click)="resetFilter()" type="submit">Reset Filter</button>
+        <!-- <div class="ml-3">
+            <div class="btn-group float-right">
+                <button type="button" name="orderBy" (click)="loadScouts()" btnRadio="Name"
+                    [(ngModel)]="searchParams.orderBy" class="btn btn-primary">By Name</button>
+
+                <button type="button" name="orderBy" (click)="loadScouts()" btnRadio="patrolname"
+                    [(ngModel)]="searchParams.orderBy" class="btn btn-primary">By Patrol</button>
+            </div>
+        </div> -->
+    </form>
+</div>
+<div class="row">
+    <div *ngFor="let scout of scouts" class="col-2">
+        <app-scout-card [scout]='scout'></app-scout-card>
+    </div>
+</div>
+
+
+
+
+

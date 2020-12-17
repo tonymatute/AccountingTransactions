@@ -1,0 +1,33 @@
+<div class="card mb-4">
+    <div class="car-img-wrapper">
+        <img class="card-img-top" src="{{scout.photo || './assets/user.png'}}" alt="{{scout.firstName}}">
+        <ul class="list-inline member-icons animate text-center">
+            <li class="list-inline-item">
+                <button class="btn btn-primary" routerLink="/scout/{{scout.memberId}}">
+                    <i class="fa fa-user"></i>
+                </button>
+            </li>    
+            
+            <li class="list-inline-item">
+                <button class="btn btn-primary" >
+                    <i class="fa fa-heart"></i>
+                </button>
+            </li>
+            <li class="list-inline-item">
+                <button class="btn btn-primary" 
+                routerLink="/"
+                [queryParams]='{tab: 3}' >
+                    <i class="fa fa-envelope"></i>
+                </button>
+            </li>        
+        </ul>
+    </div>
+    <div class="card-body p-1">
+        <h6 class="card-title text-center mb-1">                       
+           {{scout.firstName + ' ' + scout.lastName}}, {{scout.age}}
+        </h6>
+        <p class="card-text text-center text-muted">
+           Patrol: {{scout.patrolName}}
+        </p>
+    </div>
+</div>
