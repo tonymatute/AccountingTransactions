@@ -1,3 +1,5 @@
+import { LookupService } from './../../_services/lookup.service';
+import { LookUpTable } from './../../_models/lookUpTable';
 import { User } from './../../_models/user';
 import { SearchParams } from './../../_models/searchParams';
 import { Scout } from './../../_models/scout';
@@ -17,10 +19,14 @@ export class ScoutListComponent implements OnInit {
   scouts: Scout[];
   searchParams: SearchParams;
   user: User;
+   patrols: LookUpTable[];  
+  //patrols;
 
-  patrolList = [{ value: 'wolf', display: 'Wolf' }, { value: 'eagle', display: 'Eagle' }];
-
-  constructor(private scoutService: ScoutService, private accountService: AccountService) { 
+  constructor(
+    private scoutService: ScoutService,
+    private accountService: AccountService,
+    private lookUpService: LookupService)
+  { 
     this.accountService.currentUser$.pipe(take(1)).subscribe((user) => {
       this.user = user;
       this.searchParams = new SearchParams();
@@ -30,7 +36,14 @@ export class ScoutListComponent implements OnInit {
   ngOnInit(): void {
    
     this.loadScouts();
+    this.getPatrols();
   }
+
+  getPatrols() {
+    this.lookUpService.getPatrols().subscribe(patrols => {
+      this.patrols = patrols;
+  })
+}
 
   loadScouts() {
 

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace API.Data
 {
+  
     public class ScoutRepository : IScoutRepository
     {
         private readonly DataContext _context;
@@ -63,17 +64,29 @@ namespace API.Data
         }
 
 
-        public async Task<List<SelectList>> GetLookupTableAsync()
+        public async Task<List<SelectList>> GetListTypesAsync(string listType)
         {
-            return await _context.SelectList
+            return  await _context.SelectList
+                .Where(s => s.ListType == listType)
                .AsNoTracking()
                .ToListAsync();
         }
 
 
+        public List<SelectList> GetListTypes(string listType)
+        {
+            return  _context.SelectList
+                .Where(s => s.ListType == listType)
+               .AsNoTracking()
+               .ToList();
+        }
+
+
+        #region "Private Methods" 
+
         private void setTransactionType(ScoutDto scout)
         {
-            foreach (var row in _context.SelectList)
+            foreach (var row in GetListTypes("Transaction Type"))
             {
                 foreach (var transaction in scout.Transactions)
                 {
@@ -95,7 +108,7 @@ namespace API.Data
 
         private void setPatrolName(ScoutDto scout)
         {
-            foreach (var row in _context.SelectList)
+            foreach (var row in GetListTypes("Patrol"))
             {
                 if (scout.PatrolId == row.Id)
                 {
@@ -106,7 +119,7 @@ namespace API.Data
         }
         private void setActivity(ScoutDto scout)
         {
-            foreach (var row in _context.SelectList)
+            foreach (var row in GetListTypes("Activity"))
             {
                 foreach (var transaction in scout.Transactions)
                 {
@@ -124,5 +137,7 @@ namespace API.Data
                 }
             }
         }
+
+        #endregion
     }
 }

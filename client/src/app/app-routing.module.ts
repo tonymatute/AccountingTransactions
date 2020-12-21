@@ -27,6 +27,7 @@ const routes: Routes = [
       { path: 'scout-edit', component: ScoutEditComponent }
     ]
   },
+  { path: 'lookup', component: ScoutListComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
   { path: 'errors', component: ErrorTestComponent },

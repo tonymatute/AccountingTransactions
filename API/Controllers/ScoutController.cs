@@ -57,11 +57,6 @@ namespace API.Controllers
             return await _unitOfWork.scoutRepository.GetScoutAsync(id);
         }
 
-        [HttpGet("lookup")]
-        public async Task<ActionResult<List<SelectList>>> GetLookUpTable()
-        {
-            return await _unitOfWork.scoutRepository.GetLookupTableAsync();
-        }
-
+        
     }
 }

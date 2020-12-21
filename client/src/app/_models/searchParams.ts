@@ -2,9 +2,9 @@ export class SearchParams {
 
     lastName: string;
     firstName: string;
-    patrolName: string;
+    patrolId: string;
     pageNumber: number = 1;
-    pageSize: number = 10;
+    pageSize: number = 12;
     orderBy: string = "Name";
 
 }

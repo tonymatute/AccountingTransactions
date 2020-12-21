@@ -60,8 +60,6 @@ export class ScoutService {
     return this.http.get<Scout>(this.baseUrl + 'scout/' + id);
   }
 
-  getLookUpTable() {
-    return this.http.get<LookUpTable[]>(this.baseUrl + 'scout/lookup');
-  }
+  
 
 }

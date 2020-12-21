@@ -15,7 +15,7 @@ export class ScoutTransactionsComponent implements OnInit {
   troop: string = environment.troop;
   charteredOrganization = environment.charteredOrganization;
   troopLocation = environment.troopLocation;
-  lookUpTable: LookUpTable[];
+  //lookUpTable: LookUpTable[];
 
   constructor(
     private scoutService: ScoutService,
@@ -24,7 +24,7 @@ export class ScoutTransactionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadScout();
-    this.getLookUpTable();
+    
   }
 
   loadScout() {
@@ -35,11 +35,11 @@ export class ScoutTransactionsComponent implements OnInit {
       });
   }
 
-  getLookUpTable() {
-    this.scoutService.getLookUpTable().subscribe(lookUpValues => {
-      this.lookUpTable = lookUpValues;
-    })
-  }
+  // getLookUpTable() {
+  //   this.scoutService.getLookUpTable().subscribe(lookUpValues => {
+  //     this.lookUpTable = lookUpValues;
+  //   })
+  // }
 
 
 }
