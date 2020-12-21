@@ -1,0 +1,29 @@
+<ag-grid-angular 
+    #agGrid id="myGrid" 
+    style="width: 800px; " 
+    class="ag-theme-alpine" 
+    [pagination]="true"
+    [paginationPageSize]="paginationPageSize" 
+    [rowData]="transactions" 
+    [domLayout]="domLayout" 
+    [animateRows]="true"
+    [columnDefs]="columnDefs" 
+    [defaultColDef]="defaultColDef" 
+    [statusBar]="statusBar" 
+    (gridReady)="onGridReady($event)">
+</ag-grid-angular>
+<div class="container mt-3" style="padding-left: 10px; ">
+    <div class="d-flex  ">
+        <div class=" mr-4 pl-100">
+            <h5><strong> Total Credit:</strong> {{totalCredit | currency }} </h5>
+        </div>
+        <div class="mr-4">
+            <h5><strong>Total Debit: </strong>{{TotalDebit | currency}} </h5>
+        </div>
+        <div class="" [ngStyle]="{'color': getColor(total)}">
+            <h5><strong>Total: </strong> {{total | currency}}</h5>
+        </div>
+    </div>
+
+
+</div>

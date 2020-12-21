@@ -19,6 +19,47 @@ namespace API.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("API.Entities.Adult", b =>
+                {
+                    b.Property<int>("AdultId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ActiveSinceDatetime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PublicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RechartedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ScoutMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AdultId");
+
+                    b.HasIndex("ScoutMemberId");
+
+                    b.ToTable("Adult");
+                });
+
             modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
                     b.Property<int>("Id")
@@ -52,6 +93,71 @@ namespace API.Data.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("API.Entities.BuckTransaction", b =>
+                {
+                    b.Property<int>("TransactionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ScoutMemberId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TransactionCredit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("TransactionDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TransactionDebit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("TransactionTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TransactionId");
+
+                    b.HasIndex("ScoutMemberId");
+
+                    b.ToTable("BuckTransactions");
+                });
+
+            modelBuilder.Entity("API.Entities.Rank", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<bool>("ActiveRank")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("RankDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RankId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RankName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("ScoutMemberId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScoutMemberId");
+
+                    b.ToTable("Ranks");
+                });
+
             modelBuilder.Entity("API.Entities.Scout", b =>
                 {
                     b.Property<int>("MemberId")
@@ -77,17 +183,14 @@ namespace API.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PatrolName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PatrolId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Photo")
+                    b.Property<string>("PhotoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublicId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Rank")
-                        .HasColumnType("int");
 
                     b.Property<DateTime>("RechartedDate")
                         .HasColumnType("datetime2");
@@ -95,6 +198,26 @@ namespace API.Data.Migrations
                     b.HasKey("MemberId");
 
                     b.ToTable("Scout");
+                });
+
+            modelBuilder.Entity("API.Entities.SelectList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Display")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("ListType")
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SelectList");
                 });
 
             modelBuilder.Entity("API.Entities.Transaction", b =>
@@ -107,8 +230,8 @@ namespace API.Data.Migrations
                     b.Property<int>("ActivityId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CheckNumber")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("CheckNumber")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -128,13 +251,7 @@ namespace API.Data.Migrations
                     b.Property<decimal>("TransactionDebit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("TransactionFrom")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransactionSubType")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TransactionType")
+                    b.Property<int>("TransactionTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("TransactionId");
@@ -142,6 +259,33 @@ namespace API.Data.Migrations
                     b.HasIndex("ScoutMemberId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("API.Entities.Adult", b =>
+                {
+                    b.HasOne("API.Entities.Scout", "Scout")
+                        .WithMany("Parents")
+                        .HasForeignKey("ScoutMemberId");
+
+                    b.Navigation("Scout");
+                });
+
+            modelBuilder.Entity("API.Entities.BuckTransaction", b =>
+                {
+                    b.HasOne("API.Entities.Scout", "Scout")
+                        .WithMany("BuckTransactions")
+                        .HasForeignKey("ScoutMemberId");
+
+                    b.Navigation("Scout");
+                });
+
+            modelBuilder.Entity("API.Entities.Rank", b =>
+                {
+                    b.HasOne("API.Entities.Scout", "Scout")
+                        .WithMany("Ranks")
+                        .HasForeignKey("ScoutMemberId");
+
+                    b.Navigation("Scout");
                 });
 
             modelBuilder.Entity("API.Entities.Transaction", b =>
@@ -155,6 +299,12 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Scout", b =>
                 {
+                    b.Navigation("BuckTransactions");
+
+                    b.Navigation("Parents");
+
+                    b.Navigation("Ranks");
+
                     b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618

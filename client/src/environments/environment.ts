@@ -5,6 +5,9 @@
 export const environment = {
   production: false,
   apiUrl: 'https://Localhost:5001/api/',
+  troop: 'BSA Troop 425',
+  charteredOrganization: 'Heritage United Methodist Church',
+  troopLocation: "Overland Park, Kansas"
 };
 
 /*

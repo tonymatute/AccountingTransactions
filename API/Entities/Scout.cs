@@ -1,9 +1,7 @@
-﻿using API.Extentions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace API.Entities
 {
@@ -18,14 +16,15 @@ namespace API.Entities
         public DateTime RechartedDate { get; set; }
         public bool Active { get; set; }
         public DateTime ActiveSinceDatetime { get; set; }
-        public string Photo { get; set; }
-        public string PublicId { get; set; }
-        public int Rank { get; set; }
-        public string PatrolName { get; set; }
+        public string PhotoUrl { get; set; }
+        public string PublicId { get; set; }       
+        public int PatrolId { get; set; }
         public DateTime Created{ get; set; }
-       
-        public ICollection<Transaction>Transactions{ get; set; }
+        
 
-       
+        public ICollection<Transaction>Transactions{ get; set; }
+        public ICollection<BuckTransaction>BuckTransactions { get; set; }
+        public ICollection<Adult>Parents { get; set; }
+        public ICollection<Rank> Ranks { get; set; }
     }
 }

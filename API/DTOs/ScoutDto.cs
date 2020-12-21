@@ -1,8 +1,5 @@
-﻿using API.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.DTOs
 {
@@ -15,12 +12,17 @@ namespace API.DTOs
         public DateTime RechartedDate { get; set; }
         public bool Active { get; set; }
         public DateTime ActiveSinceDatetime { get; set; }
-        public string Photo { get; set; }
+        public string PhotoUrl { get; set; }
         public string PublicId { get; set; }
-        public int Rank { get; set; }
+        public string RankName { get; set; }
+        public int PatrolId { get; set; }
         public string PatrolName { get; set; }
         public DateTime Created { get; set; }
 
         public ICollection<TransactionDto> Transactions { get; set; }
+        public ICollection<BuckTransactionDto> BuckTransactions { get; set; }
+        public ICollection<AdultDto> Parents { get; set; }
+        public ICollection<RankDto> Ranks { get; set; }
+
     }
 }

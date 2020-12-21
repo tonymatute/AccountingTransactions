@@ -1,9 +1,5 @@
-using API.Data;
 using API.Extentions;
-using API.Helpers;
-using API.Interfaces;
 using API.Middleware;
-using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,14 +22,13 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
-            services.AddCors();
             services.AddApplicationServices(_config);
             services.AddIdentityServices(_config);
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Accounting", Version = "v1" });
-            });           
+            });
 
         }
 

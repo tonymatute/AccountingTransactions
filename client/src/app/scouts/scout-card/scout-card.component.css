@@ -9,7 +9,7 @@
     transition-duration: 500ms;
     transition-timing-function: ease-out;
 }
-.card-img-wrapper {
+ .card-img-wrapper {
     overflow: hidden;
     position: relative;
 }
@@ -39,3 +39,4 @@
     animation: fa-blink 1.5s linear infinite;
     color: green;
 }
+

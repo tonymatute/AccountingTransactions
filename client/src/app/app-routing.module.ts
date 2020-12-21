@@ -1,3 +1,4 @@
+import { ScoutEditComponent } from './scouts/scout-edit/scout-edit.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { ErrorTestComponent } from './errors/error-test/error-test.component';
 import { AuthorizedPathGuard } from './_guards/authorized-path.guard';
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'adults/:id', component: AdultTransactionsComponent },
       { path: 'scouts', component: ScoutListComponent},
       { path: 'scouts/:id', component: ScoutTransactionsComponent },
+      { path: 'scout-edit', component: ScoutEditComponent }
     ]
   },
   { path: 'not-found', component: NotFoundComponent },

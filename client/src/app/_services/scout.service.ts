@@ -1,3 +1,4 @@
+import { LookUpTable } from './../_models/lookUpTable';
 import { HttpClient } from '@angular/common/http';
 import { Scout } from './../_models/scout';
 import { Injectable } from '@angular/core';
@@ -48,10 +49,10 @@ export class ScoutService {
     );
   }
 
-  getScout(id: number) {
+  getScout(id: string) {
     const scout = [...this.scoutCache.values()]
       .reduce((arr, elem) => arr.concat(elem.result), [])
-      .find((scout: Scout) => scout.memberId === id);
+      .find((scout: Scout) => scout.memberId === Number(id));
 
     if (scout) {
       return of(scout);
@@ -59,5 +60,8 @@ export class ScoutService {
     return this.http.get<Scout>(this.baseUrl + 'scout/' + id);
   }
 
+  getLookUpTable() {
+    return this.http.get<LookUpTable[]>(this.baseUrl + 'scout/lookup');
+  }
 
 }

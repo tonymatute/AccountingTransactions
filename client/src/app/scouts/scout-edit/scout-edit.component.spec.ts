@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScoutTransactionsComponent } from './scout-transactions.component';
+import { ScoutEditComponent } from './scout-edit.component';
 
-describe('ScoutTransactionsComponent', () => {
-  let component: ScoutTransactionsComponent;
-  let fixture: ComponentFixture<ScoutTransactionsComponent>;
+describe('ScoutEditComponent', () => {
+  let component: ScoutEditComponent;
+  let fixture: ComponentFixture<ScoutEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScoutTransactionsComponent ]
+      declarations: [ ScoutEditComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ScoutTransactionsComponent);
+    fixture = TestBed.createComponent(ScoutEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

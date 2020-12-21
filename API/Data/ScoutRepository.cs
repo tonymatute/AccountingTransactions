@@ -1,4 +1,5 @@
 ﻿using API.DTOs;
+using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
@@ -24,11 +25,15 @@ namespace API.Data
 
         public async Task<ScoutDto> GetScoutAsync(int id)
         {
-            return await _context.Scouts
-               .Include(t => t.Transactions)
+            var scout = await _context.Scouts
                .ProjectTo<ScoutDto>(_mapper.ConfigurationProvider)
                .AsNoTracking()
                .FirstOrDefaultAsync(s => s.MemberId == id);
+
+            setTransactionType(scout);
+            setPatrolName(scout);
+            setActivity(scout);
+            return scout;
 
         }
 
@@ -41,13 +46,13 @@ namespace API.Data
             if (searchParams.FirstName?.Length == 0)
                 query = query.Where(s => s.FirstName == searchParams.FirstName);
 
-            if (searchParams.PatrolName?.Length > 0)
-                query = query.Where(s => s.PatrolName == searchParams.PatrolName);
+            if (searchParams.PatrolId > 0)
+                query = query.Where(s => s.PatrolId == searchParams.PatrolId);
 
             query = searchParams.OrderBy switch
             {
                 "Name" => query.OrderBy(o => o.LastName).ThenBy(o => o.FirstName),
-                _ => query.OrderBy(o => o.PatrolName).ThenBy(o => o.LastName)
+                _ => query.OrderBy(o => o.PatrolId).ThenBy(o => o.LastName)
             };
 
             return await PageList<ScoutDto>.CreateAsync(
@@ -55,6 +60,69 @@ namespace API.Data
                            .AsNoTracking(),
                            searchParams.PageNumber,
                            searchParams.PageSize);
+        }
+
+
+        public async Task<List<SelectList>> GetLookupTableAsync()
+        {
+            return await _context.SelectList
+               .AsNoTracking()
+               .ToListAsync();
+        }
+
+
+        private void setTransactionType(ScoutDto scout)
+        {
+            foreach (var row in _context.SelectList)
+            {
+                foreach (var transaction in scout.Transactions)
+                {
+                    if (transaction.TransactionTypeId == row.Id)
+                    {
+                        transaction.TransactionType = row.Display;
+                    }
+                }
+
+                foreach (var transaction in scout.BuckTransactions)
+                {
+                    if (transaction.TransactionTypeId == row.Id)
+                    {
+                        transaction.TransactionType = row.Display;
+                    }
+                }
+            }
+        }
+
+        private void setPatrolName(ScoutDto scout)
+        {
+            foreach (var row in _context.SelectList)
+            {
+                if (scout.PatrolId == row.Id)
+                {
+                    scout.PatrolName = row.Display;
+
+                }
+            }
+        }
+        private void setActivity(ScoutDto scout)
+        {
+            foreach (var row in _context.SelectList)
+            {
+                foreach (var transaction in scout.Transactions)
+                {
+                    if (transaction.ActivityId == row.Id)
+                    {
+                        transaction.Activity = row.Display;
+                    }
+                }
+                foreach (var transaction in scout.BuckTransactions)
+                {
+                    if (transaction.ActivityId == row.Id)
+                    {
+                        transaction.Activity = row.Display;
+                    }
+                }
+            }
         }
     }
 }

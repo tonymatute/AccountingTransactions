@@ -9,7 +9,7 @@ namespace API.Helpers
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public string PatrolName { get; set; }
+        public int PatrolId { get; set; }
 
         public string OrderBy { get; set; } = "Name";
     }

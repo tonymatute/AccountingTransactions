@@ -24,6 +24,11 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ScoutCardComponent } from './scouts/scout-card/scout-card.component';
+import { ScoutEditComponent } from './scouts/scout-edit/scout-edit.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { TransactionsComponent } from './transactions/transactions.component';
+import { BuckTransactionsComponent } from './buck-transactions/buck-transactions.component';
+import { ScoutParentComponent } from './scouts/scout-parent/scout-parent.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,10 @@ import { ScoutCardComponent } from './scouts/scout-card/scout-card.component';
     NotFoundComponent,
     ServerErrorComponent,
     ScoutCardComponent,
+    ScoutEditComponent,
+    TransactionsComponent,
+    BuckTransactionsComponent,
+    ScoutParentComponent
   ],
   imports: [
     SharedModule,
@@ -51,7 +60,8 @@ import { ScoutCardComponent } from './scouts/scout-card/scout-card.component';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    AgGridModule.withComponents([])
   ],  
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

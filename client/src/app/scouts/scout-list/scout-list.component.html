@@ -1,5 +1,5 @@
 <div class="text-center">
-    <h2 class="font-weight-bold" >Scouts</h2>
+    <h2 class="font-weight-bold" >{{pagination?.totalItems}} Active Scouts  </h2>
 </div>
 
 <div class="container mt3">
@@ -36,7 +36,7 @@
     </form>
 </div>
 <div class="row">
-    <div *ngFor="let scout of scouts" class="col-2">
+    <div *ngFor="let scout of scouts" class="col-2" >
         <app-scout-card [scout]='scout'></app-scout-card>
     </div>
 </div>

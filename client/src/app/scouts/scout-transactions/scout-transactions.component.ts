@@ -1,15 +1,45 @@
+import { LookUpTable } from './../../_models/lookUpTable';
+import { ScoutService } from './../../_services/scout.service';
+import { Scout } from './../../_models/scout';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-scout-transactions',
   templateUrl: './scout-transactions.component.html',
-  styleUrls: ['./scout-transactions.component.css']
+  styleUrls: ['./scout-transactions.component.css'],
 })
 export class ScoutTransactionsComponent implements OnInit {
+  scout: Scout;
+  troop: string = environment.troop;
+  charteredOrganization = environment.charteredOrganization;
+  troopLocation = environment.troopLocation;
+  lookUpTable: LookUpTable[];
 
-  constructor() { }
+  constructor(
+    private scoutService: ScoutService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.loadScout();
+    this.getLookUpTable();
   }
+
+  loadScout() {
+    this.scoutService
+      .getScout(this.route.snapshot.paramMap.get('id'))
+      .subscribe((scout) => {
+        this.scout = scout;
+      });
+  }
+
+  getLookUpTable() {
+    this.scoutService.getLookUpTable().subscribe(lookUpValues => {
+      this.lookUpTable = lookUpValues;
+    })
+  }
+
 
 }

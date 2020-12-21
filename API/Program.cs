@@ -23,6 +23,7 @@ namespace API
                 var context = services.GetRequiredService<DataContext>();
                 await context.Database.MigrateAsync();
                 await Seed.SeedScouts(context);
+                await Seed.SeedLookUpTable(context);
             }
             catch (System.Exception ex)
             {

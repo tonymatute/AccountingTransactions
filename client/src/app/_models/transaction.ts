@@ -1,13 +1,13 @@
 export interface Transaction {
 
     transactionId: number;
-    transactionType: number;
-    transactionSubType: number;
-    transactionFrom: number;
+    transactionTypeId: number;
+    transactionType: string;
     activityId: number; 
+    activity: string;
     transactionCredit: number;    
     transactionDebit: number;
-    checkNumbe: string;
+    checkNumber: number;
     transactionDateTime: Date;
     created: Date;
     reconciliated: boolean;

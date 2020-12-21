@@ -37,5 +37,25 @@ namespace API.Data
 
             await context.SaveChangesAsync();
         }
+
+
+        public static async Task SeedLookUpTable(DataContext context)
+        {
+           
+            if (await context.SelectList.AnyAsync()) return;
+            var data = await File.ReadAllTextAsync("Data/LookupTable.json");
+            var looupList= JsonSerializer.Deserialize<List<SelectList>>(data);
+            foreach (var row in looupList)
+            {
+                context.SelectList.Add(row);
+            }
+
+            await context.SaveChangesAsync();
+        }       
+
+
     }
+
+    
 }
+
