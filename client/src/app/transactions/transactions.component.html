@@ -1,15 +1,19 @@
+<div class="">
+    <button class="btn btn-primary btn-sm rounded relocateButton"  (click)="addNewHandler()">Add New</button>
+</div>
 <ag-grid-angular 
-    #agGrid id="myGrid" 
-    style="width: 810px; " 
+    #agGrid 
+    id="myGrid" 
+    style="width: 860px; " 
     class="ag-theme-alpine" 
     [pagination]="true"
     [paginationPageSize]="paginationPageSize" 
-    [rowData]="transactions" 
+    [rowData]="rowData" 
     [domLayout]="domLayout" 
     [animateRows]="true"
     [columnDefs]="columnDefs" 
     [defaultColDef]="defaultColDef" 
-    [statusBar]="statusBar" 
+    [frameworkComponents]="frameworkComponents"
     (gridReady)="onGridReady($event)">
 </ag-grid-angular>
 <div class="container mt-3" style="padding-left: 10px; ">

@@ -6,17 +6,17 @@
     <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadScouts()" autocomplete="off">
         <div class="form-group">
             <label>LastName: </label>
-            <input type="text" class="from-control ml-1" style="width: 140px;" name="lastname"
+            <input type="text" class="from-control ml-1" style="width: 140px;" name="lastName"
                 [(ngModel)]="searchParams.lastName">
         </div>
         <div class="form-group px-2">
             <label>FirstName: </label>
-            <input type="text" class="from-control ml-1" style="width: 140px;" name="firstname"
+            <input type="text" class="from-control ml-1" style="width: 140px;" name="firstName"
                 [(ngModel)]="searchParams.firstName">
         </div>
         <div class="form-group px-2">
             <label>Patrol: </label>
-            <select name="gender" [(ngModel)]="searchParams.patrolId" style="width: 130px;" class="form-control ml-1">
+            <select name="patrolId" [(ngModel)]="searchParams.patrolId" style="width: 160px;height: 34px;" class="form-control ml-1">
                 <option *ngFor="let patrol of patrols" [value]="patrol.id">
                     {{patrol.display}}
                 </option>
@@ -42,10 +42,17 @@
 </div>
 
 <div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
-        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
-
+    <pagination 
+        [boundaryLinks]="true" 
+        [totalItems]="pagination.totalItems" 
+        [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)" 
+        previousText="&lsaquo;"
+        nextText="&rsaquo;" 
+        firstText="&laquo;" 
+        lastText="&raquo;">
+    </pagination>
 </div>
 
 

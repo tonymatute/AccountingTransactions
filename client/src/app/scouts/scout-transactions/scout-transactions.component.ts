@@ -15,7 +15,6 @@ export class ScoutTransactionsComponent implements OnInit {
   troop: string = environment.troop;
   charteredOrganization = environment.charteredOrganization;
   troopLocation = environment.troopLocation;
-  //lookUpTable: LookUpTable[];
 
   constructor(
     private scoutService: ScoutService,
@@ -34,12 +33,6 @@ export class ScoutTransactionsComponent implements OnInit {
         this.scout = scout;
       });
   }
-
-  // getLookUpTable() {
-  //   this.scoutService.getLookUpTable().subscribe(lookUpValues => {
-  //     this.lookUpTable = lookUpValues;
-  //   })
-  // }
 
 
 }

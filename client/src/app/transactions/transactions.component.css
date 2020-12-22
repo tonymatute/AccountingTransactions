@@ -1,0 +1,8 @@
+.relocateButton {
+
+    position:absolute;
+    z-index: 1;
+    top:13%; /* if circle bulb in image is at 60% set at 60% */
+    left:3%;
+  
+}

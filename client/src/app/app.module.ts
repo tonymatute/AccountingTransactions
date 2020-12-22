@@ -29,6 +29,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { BuckTransactionsComponent } from './buck-transactions/buck-transactions.component';
 import { ScoutParentComponent } from './scouts/scout-parent/scout-parent.component';
+import { BtnCellRenderer } from './_buttons/btn-cell-renderer/btn-cell-renderer.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ScoutParentComponent } from './scouts/scout-parent/scout-parent.compone
     ScoutEditComponent,
     TransactionsComponent,
     BuckTransactionsComponent,
-    ScoutParentComponent
+    ScoutParentComponent,
+    BtnCellRenderer
   ],
   imports: [
     SharedModule,
@@ -61,7 +63,7 @@ import { ScoutParentComponent } from './scouts/scout-parent/scout-parent.compone
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    AgGridModule.withComponents([])
+    AgGridModule.withComponents([BtnCellRenderer])
   ],  
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

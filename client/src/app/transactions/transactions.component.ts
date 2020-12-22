@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Transaction } from './../_models/transaction';
 import { Component, OnInit, Input } from '@angular/core';
 import { formatDate } from '@angular/common';
+import { BtnCellRenderer } from '../_buttons/btn-cell-renderer/btn-cell-renderer.component';
 
 @Component({
   selector: 'app-transactions',
@@ -26,35 +27,35 @@ export class TransactionsComponent implements OnInit {
   totalCredit: number = 0;
   TotalDebit: number = 0;
   total: number = 0;
+  rowData: Transaction[];
 
- 
+  frameworkComponents: { btnCellRenderer: typeof BtnCellRenderer; };
 
-  constructor() {}
-
-  ngOnInit(): void {
-    this.initGrid();
-  }
-
-  initGrid() {
-    this.calculateTotals(this.transactions);
-
-    this.statusBar = {
-      statusPanels: [
-        {
-          statusPanel: 'agAggregationComponent',
-          statusPanelParams: {
-            // possible values are: 'count', 'sum', 'min', 'max', 'avg'
-          },
-          align: 'left',
-        },
-      ],
+  constructor() {
+    this.frameworkComponents = {
+      btnCellRenderer: BtnCellRenderer
     };
 
     this.columnDefs = [
       {
+        headerName: '',
+        maxWidth: 65,  
+        cellRenderer: "btnCellRenderer",
+        cellRendererParams: {
+          clicked: function(field: any) {
+            alert(`${field} was clicked`);
+          }
+        },               
+      },
+      {
         headerName: 'Type',
         field: 'transactionType',
-        maxWidth: 200,
+        maxWidth: 200, 
+        filter: 'agTextColumnFilter',
+        filterParams: {
+          buttons: ['reset', 'apply'],
+          debounceMs: 200,
+        },
       },
       {
         headerName: 'Check',
@@ -66,7 +67,16 @@ export class TransactionsComponent implements OnInit {
           debounceMs: 200,
         },
       },
-      { headerName: 'Trip', field: 'activity', maxWidth: 200 },
+      {
+        headerName: 'Trip',
+        field: 'activity',
+        maxWidth: 200,
+        filter: 'agTextColumnFilter',
+        filterParams: {
+          buttons: ['reset', 'apply'],
+          debounceMs: 200,
+        },
+      },
       {
         headerName: 'Credit',
         field: 'transactionCredit',
@@ -95,7 +105,6 @@ export class TransactionsComponent implements OnInit {
         filter: 'agNumberColumnFilter',
         cellStyle: function (params) {
           if (params.value < '0') {
-            //mark police cells as red
             return { color: 'red' };
           } else {
             return null;
@@ -111,8 +120,7 @@ export class TransactionsComponent implements OnInit {
         valueFormatter: (params) =>
           this.dateFormatter(params.data.transactionDateTime),
         field: 'transactionDateTime',
-        maxWidth: 160,
-
+        maxWidth: 160,       
         filter: 'agDateColumnFilter',
         filterParams: {
           buttons: ['reset', 'apply'],
@@ -123,7 +131,6 @@ export class TransactionsComponent implements OnInit {
 
     this.defaultColDef = {
       flex: 1,
-      minWidth: 150,
       sortable: true,
       resizable: false,
     };
@@ -136,15 +143,24 @@ export class TransactionsComponent implements OnInit {
     };
   }
 
+  ngOnInit(): void {
+    this.initGrid();
+  }
+
+  initGrid() {
+    this.calculateTotals(this.transactions);    
+  }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
+    this.rowData = this.transactions;
   }
 
   calculateTotals(totalTransactions) {
     var result = 0;
 
-    totalTransactions.forEach((transaction) => {
+    totalTransactions.forEach((transaction:Transaction) => {
       if (typeof transaction.transactionCredit === 'number')
         this.totalCredit += transaction.transactionCredit;
       if (typeof transaction.transactionDebit === 'number')
@@ -169,17 +185,10 @@ export class TransactionsComponent implements OnInit {
     var locale = 'en-US';
     var formattedDate = formatDate(date, format, locale);
     return formattedDate;
-  }
+  }  
 
-  setTransactionTypeValue(transactionTypeId) {
-    let display = "TEST";
-    let rows = this.lookUpTable;
-    display = rows[1].display
-    // for (let row of this.lookUpTable) {
-    //   if (row.id === transactionTypeId) display = row.display;       
-    // };
-    return display;
+  addNewHandler() {
+    alert('Add new');
   }
-  
   
 }
