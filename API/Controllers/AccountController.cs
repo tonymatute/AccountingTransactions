@@ -1,4 +1,5 @@
-﻿using API.Data;
+﻿
+using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
@@ -42,7 +43,10 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                Created = user.Created
             };           
         }
 
@@ -63,7 +67,10 @@ namespace API.Controllers
             return new UserDto
             {
                 Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                Created = user.Created
             };
         }
 

@@ -28,7 +28,7 @@ export class ScoutTransactionsComponent implements OnInit {
 
   loadScout() {
     this.scoutService
-      .getScout(this.route.snapshot.paramMap.get('id'))
+      .getScout(Number(this.route.snapshot.paramMap.get('id')))
       .subscribe((scout) => {
         this.scout = scout;
       });

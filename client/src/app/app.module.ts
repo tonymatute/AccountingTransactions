@@ -1,3 +1,4 @@
+import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { SharedModule } from './_modules/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,6 +31,8 @@ import { TransactionsComponent } from './transactions/transactions.component';
 import { BuckTransactionsComponent } from './buck-transactions/buck-transactions.component';
 import { ScoutParentComponent } from './scouts/scout-parent/scout-parent.component';
 import { BtnCellRenderer } from './_buttons/btn-cell-renderer/btn-cell-renderer.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { LoadingOverlayComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
 
 @NgModule({
   declarations: [
@@ -52,7 +55,8 @@ import { BtnCellRenderer } from './_buttons/btn-cell-renderer/btn-cell-renderer.
     TransactionsComponent,
     BuckTransactionsComponent,
     ScoutParentComponent,
-    BtnCellRenderer
+    BtnCellRenderer,
+    UserEditComponent
   ],
   imports: [
     SharedModule,
@@ -68,6 +72,7 @@ import { BtnCellRenderer } from './_buttons/btn-cell-renderer/btn-cell-renderer.
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

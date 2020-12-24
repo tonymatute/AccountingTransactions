@@ -8,7 +8,7 @@
                 </button>
             </li>    
             <li class="list-inline-item">
-                <button class="btn btn-primary" routerLink="/scout-edit">
+                <button class="btn btn-primary" routerLink="/scout/edit/{{scout.memberId}}">
                     <i class="fa fa-id-card-o"></i>
                 </button>
             </li>             
@@ -20,7 +20,7 @@
            {{scout.firstName + ' ' + scout.lastName}}, {{scout.age}}
         </h6>
         <p class="card-text text-center text-muted">
-           Patrol: {{scout.patrolName}}
+           {{scout.patrolName}}
         </p>
     </div>
 </div>

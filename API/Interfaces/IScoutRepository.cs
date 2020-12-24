@@ -13,6 +13,8 @@ namespace API.Interfaces
         Task<PageList<ScoutDto>> GetScoutsAsync(SearchParams userParams);
         Task<ScoutDto> GetScoutAsync(int id);
         Task<List<SelectList>> GetListTypesAsync(string listType);
+        void Update(Scout scout);
+        Task<Scout> FindScoutByIdAsync(int id);
 
 
     }

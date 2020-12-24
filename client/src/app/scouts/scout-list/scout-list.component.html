@@ -1,7 +1,6 @@
 <div class="text-center">
     <h2 class="font-weight-bold" >{{pagination?.totalItems}} Active Scouts  </h2>
 </div>
-
 <div class="container mt3">
     <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadScouts()" autocomplete="off">
         <div class="form-group">
@@ -22,8 +21,17 @@
                 </option>
             </select>
         </div>
+        <div class="form-group px-2">
+            <label>Show: </label>
+            <select name="active" [(ngModel)]="searchParams.active" style="width: 110px;" class="form-control ml-1">
+                <option *ngFor="let active of activeList" [value]="active.value">
+                    {{active.display}}
+                </option>
+            </select>
+        </div>
+
         <button class="btn btn-primary ml-1" type="submit">Find scout</button>
-        <button class="btn btn-info ml-1" (click)="resetFilter()" type="submit">Reset Filter</button>
+        <!-- <button class="btn btn-info ml-1" (click)="resetFilter()" type="submit">Reset Filter</button> -->
         <!-- <div class="ml-3">
             <div class="btn-group float-right">
                 <button type="button" name="orderBy" (click)="loadScouts()" btnRadio="Name"
@@ -35,13 +43,14 @@
         </div> -->
     </form>
 </div>
+
 <div class="row">
-    <div *ngFor="let scout of scouts" class="col-2" >
+    <div *ngFor="let scout of scouts$ | async" class="col-2" >
         <app-scout-card [scout]='scout'></app-scout-card>
     </div>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
+<!-- <div class="d-flex justify-content-center" *ngIf="pagination">
     <pagination 
         [boundaryLinks]="true" 
         [totalItems]="pagination.totalItems" 
@@ -53,7 +62,9 @@
         firstText="&laquo;" 
         lastText="&raquo;">
     </pagination>
-</div>
+</div> -->
+
+
 
 
 

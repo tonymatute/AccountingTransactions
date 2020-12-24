@@ -1,3 +1,5 @@
+import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { UserEditComponent } from './user-edit/user-edit.component';
 import { ScoutEditComponent } from './scouts/scout-edit/scout-edit.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { ErrorTestComponent } from './errors/error-test/error-test.component';
@@ -24,7 +26,8 @@ const routes: Routes = [
       { path: 'adults/:id', component: AdultTransactionsComponent },
       { path: 'scouts', component: ScoutListComponent},
       { path: 'scouts/:id', component: ScoutTransactionsComponent },
-      { path: 'scout-edit', component: ScoutEditComponent }
+      { path: 'scout/edit/:id', component: ScoutEditComponent, canDeactivate: [PreventUnsavedChangesGuard]  },
+      { path: 'user/edit', component: UserEditComponent }
     ]
   },
   { path: 'lookup', component: ScoutListComponent },

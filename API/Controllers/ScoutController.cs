@@ -54,9 +54,18 @@ namespace API.Controllers
         [HttpGet("{id}", Name = "GetScout")]
         public async Task<ActionResult<ScoutDto>> GetScout(int id)
         {
-            return await _unitOfWork.scoutRepository.GetScoutAsync(id);
+             return await _unitOfWork.scoutRepository.GetScoutAsync(id);
         }
 
+        [HttpPut]
+        public async Task<ActionResult> UpdateScout(ScoutUpdateDto scoutUpdateDto) {
+            var scout = await _unitOfWork.scoutRepository.FindScoutByIdAsync(scoutUpdateDto.MemberId);
+            _mapper.Map(scoutUpdateDto, scout);
+            _unitOfWork.scoutRepository.Update(scout);
+            if (await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Failed to update Scout!");
+        }
         
     }
 }

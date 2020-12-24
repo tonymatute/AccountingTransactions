@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScoutService } from 'src/app/_services/scout.service';
 import { AccountService } from 'src/app/_services/account.service';
 import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-scout-list',
@@ -16,11 +17,11 @@ import { take } from 'rxjs/operators';
 })
 export class ScoutListComponent implements OnInit {
   pagination: Pagination;
-  scouts: Scout[];
+  scouts$: Observable<Scout[]>;
   searchParams: SearchParams;
   user: User;
-   patrols: LookUpTable[];  
-  //patrols;
+  patrols: LookUpTable[];  
+  activeList = [{ value: true, display: 'Active' }, { value: false, display: 'Inactive' }];
 
   constructor(
     private scoutService: ScoutService,
@@ -34,8 +35,8 @@ export class ScoutListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.scouts$ = this.scoutService.getScouts();
    
-    this.loadScouts();
     this.getPatrols();
   }
 
@@ -46,24 +47,19 @@ export class ScoutListComponent implements OnInit {
 }
 
   loadScouts() {
-
-    this.scoutService.setSearchParams(this.searchParams);
-    this.scoutService.getScouts(this.searchParams).subscribe(response => {
-      this.scouts = response.result;
-      this.pagination = response.pagination;
-    })
+    this.scouts$ = this.scoutService.getScouts();
   }
 
-  pageChanged(event: any) {
-    this.searchParams.pageNumber = event.page;
-    this.scoutService.setSearchParams(this.searchParams);
-    this.loadScouts();
-  }
+  // pageChanged(event: any) {
+  //   this.searchParams.pageNumber = event.page;
+  //   this.scoutService.setSearchParams(this.searchParams);
+  //   this.loadScouts();
+  // }
 
-  resetFilter() {
-    this.searchParams = this.scoutService.resetSearchParams();
-    this.loadScouts();
-  }
+  // resetFilter() {
+  //   this.searchParams = this.scoutService.resetSearchParams();
+  //   this.loadScouts();
+  // }
 
 
 }

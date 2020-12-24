@@ -34,8 +34,16 @@ namespace API.Data
             setTransactionType(scout);
             setPatrolName(scout);
             setActivity(scout);
+
             return scout;
 
+        }
+
+        public async Task<Scout> FindScoutByIdAsync(int id)
+        {
+            return await _context.Scouts
+               .AsNoTracking()
+               .FirstOrDefaultAsync(s => s.MemberId == id);
         }
 
         public async Task<PageList<ScoutDto>> GetScoutsAsync(SearchParams searchParams)
@@ -55,14 +63,21 @@ namespace API.Data
                 "Name" => query.OrderBy(o => o.LastName).ThenBy(o => o.FirstName),
                 _ => query.OrderBy(o => o.PatrolId).ThenBy(o => o.LastName)
             };
-
-            return await PageList<ScoutDto>.CreateAsync(
+            
+            var scouts = await PageList<ScoutDto>.CreateAsync(
                            query.ProjectTo<ScoutDto>(_mapper.ConfigurationProvider)
                            .AsNoTracking(),
                            searchParams.PageNumber,
                            searchParams.PageSize);
-        }
 
+            foreach (var scout in scouts)
+            {
+                setTransactionType(scout);
+                setPatrolName(scout);
+                setActivity(scout);
+            }
+            return scouts;
+        }
 
         public async Task<List<SelectList>> GetListTypesAsync(string listType)
         {
@@ -79,10 +94,7 @@ namespace API.Data
                 .Where(s => s.ListType == listType)
                .AsNoTracking()
                .ToList();
-        }
-
-
-        #region "Private Methods" 
+        }      
 
         private void setTransactionType(ScoutDto scout)
         {
@@ -138,6 +150,11 @@ namespace API.Data
             }
         }
 
-        #endregion
+        public void Update(Scout scout)
+        {
+            _context.Entry(scout).State = EntityState.Modified;
+        }
+
+      
     }
 }

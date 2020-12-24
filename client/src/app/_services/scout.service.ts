@@ -9,7 +9,7 @@ import { getPaginationHeaders, getPaginationResult } from './paginationHelper';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ScoutService {
   baseUrl = environment.apiUrl;
@@ -17,7 +17,7 @@ export class ScoutService {
   scoutCache = new Map();
   searchParams: SearchParams;
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient) {
     this.searchParams = new SearchParams();
   }
 
@@ -34,32 +34,59 @@ export class ScoutService {
     return this.searchParams;
   }
 
-  getScouts(searchParams: SearchParams) { 
-    var response = this.scoutCache.get(Object.values(searchParams).join('-'));
-    if (response) {
-      return of(response);
-    }
+  // getScouts(searchParams: SearchParams) {
+  getScouts() {
+    if (this.scouts.length > 0) return of(this.scouts);
+    
+     return this.http.get<Scout[]>(this.baseUrl + 'scout').pipe(
+      map((scouts) => {
+        this.scouts = scouts;
+        return scouts;
+      })
+    );
 
-    let params = getPaginationHeaders(searchParams.pageNumber, searchParams.pageSize);
-    return getPaginationResult<Scout[]>(this.baseUrl + 'scout', params, this.http).pipe(
-      map((response) => {
-        this.scoutCache.set(Object.values(searchParams).join('-'), response);
-        return response;
+    // var response = this.scoutCache.get(Object.values(searchParams).join('-'));
+    // if (response) {
+    //   return of(response);
+    // }
+
+    // let params = getPaginationHeaders(searchParams.pageNumber, searchParams.pageSize);
+
+    // params = params.append('lastName', searchParams.lastName);
+    // params = params.append('firstName', searchParams.firstName);
+    // params = params.append('patrolId', searchParams.patrolId);
+    // params = params.append('active', searchParams.active.toString());
+    // params = params.append('orderBy', searchParams.orderBy);
+
+    // return getPaginationResult<Scout[]>(this.baseUrl + 'scout', params, this.http).pipe(
+    //   map((response) => {
+    //     this.scoutCache.set(Object.values(searchParams).join('-'), response);
+    //     return response;
+    //   })
+    // );
+  }
+
+  getScout(id: number) {
+    const scout = this.scouts.find((s) => (s.memberId === id));
+    if (scout !== undefined) return of(scout);
+
+    return this.http.get<Scout>(this.baseUrl + 'scout/' + id);
+    //  const scout = [...this.scoutCache.values()]
+    //   .reduce((arr, elem) => arr.concat(elem.result), [])
+    //   .find((scout: Scout) => scout.memberId === Number(id));
+
+    // if (scout) {
+    //   return of(scout);
+    // }
+    //
+  }
+
+  updateScout(scout: Scout) {
+    return this.http.put(this.baseUrl + 'scout/', scout).pipe(
+      map(() => {
+        const index = this.scouts.indexOf(scout);
+        this.scouts[index] = scout;
       })
     );
   }
-
-  getScout(id: string) {
-    const scout = [...this.scoutCache.values()]
-      .reduce((arr, elem) => arr.concat(elem.result), [])
-      .find((scout: Scout) => scout.memberId === Number(id));
-
-    if (scout) {
-      return of(scout);
-    }
-    return this.http.get<Scout>(this.baseUrl + 'scout/' + id);
-  }
-
-  
-
 }

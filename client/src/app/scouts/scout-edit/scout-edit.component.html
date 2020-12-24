@@ -1,1 +1,70 @@
-<p>scout-edit works!</p>
+<div class="row" *ngIf="scout">
+    <div class="col-4">
+        <h1>Scout Profile</h1>
+    </div>    
+    <div class="col-8">
+        <div class="alert alert-primary" *ngIf="editForm.dirty">
+            <strong>Information: </strong>You have made changes. Any unsaved changes will be lost!
+        </div>
+    </div>
+    <form #editForm="ngForm" id="editForm" (ngSubmit)="updateScout()">
+        <div class="card">
+            
+            <img src="{{scout.photoUrl || './assets/user.png'}}" alt="{{scout.firstName}}"
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div class="form-inline">
+                    <p> <strong>Scout Name:&nbsp;</strong>
+                        {{scout.firstName}} {{scout.lastName}} </p>
+                </div>
+                <div>
+                    <p><strong>Age: </strong>
+                        {{scout.age}}</p>
+                </div>
+                <div>
+                    <strong>Recharted Date: &nbsp;</strong>
+                    <input [ngModel]="scout.rechartedDate | date:'yyyy-MM-dd'" ngModel
+                        (ngModelChange)="scout.rechartedDate = $event" type="date" name="rechartedDate"
+                        class="form-control form-control-rounded">
+                </div>
+                <div class="mt-2">
+                    <p> <strong>Acitve:&nbsp;&nbsp; </strong>
+                        <input name="active" type="checkbox" [(ngModel)]="scout.active" />&nbsp;Since&nbsp;
+                        <input [ngModel]="scout.activeSinceDatetime | date:'yyyy-MM-dd'"
+                            (ngModelChange)="scout.activeSinceDatetime = $event" type="date" name="activeSinceDatetime"
+                            class="form-control">
+                    </p>
+                </div>
+                <div>
+                    <p> <strong>Rank : </strong>
+                        {{scout.rankName}} </p>
+                </div>
+                <div>
+                    <p> <strong>Patrol:&nbsp;&nbsp; </strong>
+                        <select class="form-control" [(ngModel)]="scout.patrolId" value="scout.patrolId"
+                            name="patrolId">
+                            <option *ngFor="let patrol of patrols" [value]="patrol.id">
+                                {{patrol.display}}
+                            </option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button [disabled]="!editForm.dirty" form="editForm" type="submit"
+                    class="btn btn-success btn-block">Save Changes</button>
+            </div>
+        </div>
+    </form>
+    <div class="col-8 ml-4 ">
+        <tabset class="member-tabset">
+            <tab heading='Ranks'>
+                Ranks in here
+            </tab>
+            <tab heading='Parents'>
+                Parents in here
+            </tab>
+        </tabset>
+    </div>
+
+</div>

@@ -10,7 +10,6 @@ namespace API.Helpers
     {
         public AutoMapperProfile() 
         {
-
             CreateMap<Scout, ScoutDto>()
               .ForMember(s => s.Age, opt => opt.MapFrom(scout => scout.DateOfBirth.CalculateAge()))
               .ForMember(r => r.RankName, opt => opt.MapFrom(rank =>
@@ -19,6 +18,7 @@ namespace API.Helpers
             CreateMap<BuckTransaction, BuckTransactionDto>();
             CreateMap<Adult, AdultDto>();
             CreateMap<Rank, RankDto>();
+            CreateMap<ScoutUpdateDto, Scout>();
             
 
         }
