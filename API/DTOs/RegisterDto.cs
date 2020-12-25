@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.DTOs
 {
@@ -6,9 +7,12 @@ namespace API.DTOs
     {
         [Required]
         public string Username { get; set; }
-
         [Required]
-        [StringLength(10,MinimumLength =4)]
+        [StringLength(20, MinimumLength = 8)]
         public string Password { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        public string FirstName { get; set; }        
     }
 }

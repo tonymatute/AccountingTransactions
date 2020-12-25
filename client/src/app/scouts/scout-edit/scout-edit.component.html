@@ -14,8 +14,7 @@
         </div>
     </div>
     <form #editForm="ngForm" id="editForm" (ngSubmit)="updateScout()">
-        <div class="card">
-            
+        <div class="card">            
             <img src="{{scout.photoUrl || './assets/user.png'}}"  style="height: 200px;width: 200px;" alt="{{scout.firstName}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
@@ -29,9 +28,9 @@
                 </div>
                 <div>
                     <strong>Recharted Date: &nbsp;</strong>
-                    <input [ngModel]="scout.rechartedDate | date:'yyyy-MM-dd'" ngModel
+                    <input [ngModel]="scout.rechartedDate | date:'yyyy-MM-dd'" ngModel 
                         (ngModelChange)="scout.rechartedDate = $event" type="date" name="rechartedDate"
-                        class="form-control form-control-rounded">
+                        class="form-control">
                 </div>
                 <div class="mt-2">
                     <p> <strong>Acitve:&nbsp;&nbsp; </strong>

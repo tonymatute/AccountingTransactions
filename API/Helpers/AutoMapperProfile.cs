@@ -20,6 +20,7 @@ namespace API.Helpers
             CreateMap<Rank, RankDto>();
             CreateMap<ScoutUpdateDto, Scout>();
             CreateMap<PhotoDto, Scout>();
+            CreateMap<RegisterDto, AppUser>();
 
 
         }

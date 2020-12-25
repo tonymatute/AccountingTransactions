@@ -25,7 +25,7 @@ export class ScoutEditComponent implements OnInit {
   charteredOrganization = environment.charteredOrganization;
   troopLocation = environment.troopLocation;
   scout: Scout;
-  maxDate: Date;
+
   patrols: LookUpTable[];
   @ViewChild('editForm') editForm: NgForm;
   @HostListener('window:beforeunload', ['$event']) unloadNotification(
