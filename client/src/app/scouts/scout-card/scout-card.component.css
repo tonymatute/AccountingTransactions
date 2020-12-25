@@ -40,3 +40,11 @@
     color: green;
 }
 
+:host >>> .tooltip-inner {
+    background-color: #1661ec;
+    color: #fff;
+  }
+  :host >>> .tooltip.top .tooltip-arrow:before,
+  :host >>> .tooltip.top .tooltip-arrow {
+    border-top-color: #1661ec;
+  }

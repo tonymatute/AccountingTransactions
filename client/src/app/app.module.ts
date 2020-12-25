@@ -2,7 +2,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { SharedModule } from './_modules/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule ,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -23,7 +23,7 @@ import { ErrorTestComponent } from './errors/error-test/error-test.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { ScoutCardComponent } from './scouts/scout-card/scout-card.component';
 import { ScoutEditComponent } from './scouts/scout-edit/scout-edit.component';
 import { AgGridModule } from 'ag-grid-angular';
@@ -32,10 +32,12 @@ import { BuckTransactionsComponent } from './buck-transactions/buck-transactions
 import { ScoutParentComponent } from './scouts/scout-parent/scout-parent.component';
 import { BtnCellRenderer } from './_buttons/btn-cell-renderer/btn-cell-renderer.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
-import { LoadingOverlayComponent } from 'ag-grid-community/dist/lib/components/framework/componentTypes';
+import { ScoutRankComponent } from './scouts/scout-rank/scout-rank.component';
+import { CheckboxRenderer } from './_component_extentions/checkbox-renderer/checkbox-renderer.component';
+import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 
 @NgModule({
-  declarations: [
+  declarations: [    
     AppComponent,
     NavComponent,
     LoginComponent,
@@ -56,7 +58,11 @@ import { LoadingOverlayComponent } from 'ag-grid-community/dist/lib/components/f
     BuckTransactionsComponent,
     ScoutParentComponent,
     BtnCellRenderer,
-    UserEditComponent
+    UserEditComponent,
+    ScoutRankComponent,
+    CheckboxRenderer,
+    PhotoEditorComponent
+    
   ],
   imports: [
     SharedModule,
@@ -67,8 +73,8 @@ import { LoadingOverlayComponent } from 'ag-grid-community/dist/lib/components/f
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    AgGridModule.withComponents([BtnCellRenderer])
-  ],  
+    AgGridModule.withComponents([BtnCellRenderer, CheckboxRenderer]),
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

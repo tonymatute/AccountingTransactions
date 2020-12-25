@@ -19,7 +19,8 @@ namespace API.Helpers
             CreateMap<Adult, AdultDto>();
             CreateMap<Rank, RankDto>();
             CreateMap<ScoutUpdateDto, Scout>();
-            
+            CreateMap<PhotoDto, Scout>();
+
 
         }
     }

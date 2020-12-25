@@ -15,6 +15,7 @@ namespace API.Interfaces
         Task<List<SelectList>> GetListTypesAsync(string listType);
         void Update(Scout scout);
         Task<Scout> FindScoutByIdAsync(int id);
+        Task<Scout> FindScoutByPublicIdAsync(string PublicId);
 
 
     }

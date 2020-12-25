@@ -13,6 +13,7 @@ import { ScoutService } from 'src/app/_services/scout.service';
 
 import { LookUpTable } from 'src/app/_models/lookUpTable';
 import { NgForm } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-scout-edit',
@@ -20,6 +21,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./scout-edit.component.css'],
 })
 export class ScoutEditComponent implements OnInit {
+  troop: string = environment.troop;
+  charteredOrganization = environment.charteredOrganization;
+  troopLocation = environment.troopLocation;
   scout: Scout;
   maxDate: Date;
   patrols: LookUpTable[];

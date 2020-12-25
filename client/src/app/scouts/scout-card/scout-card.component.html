@@ -3,12 +3,14 @@
         <img class="card-img-top" src="{{scout.photoUrl || './assets/user.png'}}" alt="{{scout.firstName}}">
          <ul class="list-inline member-icons animate text-center">
             <li class="list-inline-item">
-                <button class="btn btn-primary" routerLink="/scouts/{{scout.memberId}}">
+                <button class="btn btn-primary" routerLink="/scouts/{{scout.memberId}}" 
+                placement="top" tooltip="Transactions">
                     <i class="fa fa-table"></i>
                 </button>
             </li>    
             <li class="list-inline-item">
-                <button class="btn btn-primary" routerLink="/scout/edit/{{scout.memberId}}">
+                <button class="btn btn-primary" routerLink="/scout/edit/{{scout.memberId}}"
+                placement="top" tooltip="Profile">
                     <i class="fa fa-id-card-o"></i>
                 </button>
             </li>             

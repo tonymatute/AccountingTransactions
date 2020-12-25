@@ -89,4 +89,9 @@ export class ScoutService {
       })
     );
   }
+
+  deletePhoto(publicId: string) {
+    return this.http.delete(this.baseUrl + 'scout/delete-photo/' + publicId);
+  }
+
 }

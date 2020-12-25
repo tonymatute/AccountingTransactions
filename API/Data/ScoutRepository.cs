@@ -36,14 +36,26 @@ namespace API.Data
             setActivity(scout);
 
             return scout;
-
         }
 
         public async Task<Scout> FindScoutByIdAsync(int id)
         {
             return await _context.Scouts
-               .AsNoTracking()
+                .Include(t => t.Transactions)
+                .Include(b => b.BuckTransactions)
+                .Include(p => p.Parents)
+                .Include(r => r.Ranks)              
                .FirstOrDefaultAsync(s => s.MemberId == id);
+        }
+
+        public async Task<Scout> FindScoutByPublicIdAsync(string PublicId)
+        {
+            return await _context.Scouts
+                .Include(t => t.Transactions)
+                .Include(b => b.BuckTransactions)
+                .Include(p => p.Parents)
+                .Include(r => r.Ranks)               
+               .FirstOrDefaultAsync(s => s.PublicId == PublicId);
         }
 
         public async Task<PageList<ScoutDto>> GetScoutsAsync(SearchParams searchParams)

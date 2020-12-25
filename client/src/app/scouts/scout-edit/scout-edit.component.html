@@ -1,3 +1,9 @@
+<div>
+    <h4 class="text-center text-primary"><strong>{{charteredOrganization}}</strong> </h4>
+    <h4 class="text-center text-primary"><strong>{{troop}}</strong> </h4>
+    <h5 class="text-center text-primary">{{troopLocation}}</h5>
+</div>
+
 <div class="row" *ngIf="scout">
     <div class="col-4">
         <h1>Scout Profile</h1>
@@ -10,7 +16,7 @@
     <form #editForm="ngForm" id="editForm" (ngSubmit)="updateScout()">
         <div class="card">
             
-            <img src="{{scout.photoUrl || './assets/user.png'}}" alt="{{scout.firstName}}"
+            <img src="{{scout.photoUrl || './assets/user.png'}}"  style="height: 200px;width: 200px;" alt="{{scout.firstName}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div class="form-inline">
@@ -57,12 +63,16 @@
         </div>
     </form>
     <div class="col-8 ml-4 ">
+        
         <tabset class="member-tabset">
             <tab heading='Ranks'>
-                Ranks in here
+               <app-scout-rank [ranks]="scout.ranks"></app-scout-rank>
             </tab>
             <tab heading='Parents'>
                 Parents in here
+            </tab>
+            <tab heading='Photo'>
+                <photo-editor [scout]="scout"></photo-editor>
             </tab>
         </tabset>
     </div>

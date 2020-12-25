@@ -1,0 +1,18 @@
+<div class="mb-2">
+    <button class="btn btn-primary btn-sm rounded relocateButton"  (click)="addNewHandler()">Add New</button>
+</div>
+<ag-grid-angular 
+    #agGrid 
+    id="myGrid" 
+    style="width: 380px; " 
+    class="ag-theme-alpine" 
+    [pagination]="false"
+    [rowData]="ranks" 
+    [domLayout]="domLayout" 
+    [animateRows]="true"
+    [columnDefs]="columnDefs" 
+    [defaultColDef]="defaultColDef"
+    [frameworkComponents]="frameworkComponents"
+    (gridReady)="onGridReady($event)">
+
+    

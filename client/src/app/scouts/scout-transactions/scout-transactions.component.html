@@ -22,9 +22,9 @@
                         {{scout.rechartedDate | date: 'MM/dd/yyyy'}} </p>
                 </div>
                 <div>
-                    <p> <strong>Acitve : </strong>
+                    <p> <strong>Active : </strong>
                         {{scout.active == true ? 'Yes' : 'No'}} since
-                        {{scout.activeSinceDatetime }} </p>
+                        {{scout.activeSinceDatetime | timeago}} </p>
                 </div>
                 <div>
                     <p> <strong>Rank : </strong>

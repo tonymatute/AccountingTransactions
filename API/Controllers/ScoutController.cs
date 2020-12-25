@@ -6,6 +6,7 @@ using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -18,29 +19,18 @@ namespace API.Controllers
     [Authorize]
     public class ScoutController : BaseAPIController
     {
-        private readonly DataContext _context;
+
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IPhotoService _photoService;
 
-
-        public ScoutController(DataContext context ,IUnitOfWork unitOfWork, IMapper mapper)
+        public ScoutController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
         {
-            _context = context;
+
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-
+            _photoService = photoService;
         }
-
-        [HttpGet("scout-list")]
-        public async Task<ActionResult<List<ScoutDto>>> GetScoutLists()
-        {
-            return await _context.Scouts
-               .Include(t => t.Transactions)
-               .ProjectTo<ScoutDto>(_mapper.ConfigurationProvider)
-               .AsNoTracking()
-               .ToListAsync();
-        }
-
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ScoutDto>>> GetScouts([FromQuery] SearchParams searchParams)
@@ -54,11 +44,12 @@ namespace API.Controllers
         [HttpGet("{id}", Name = "GetScout")]
         public async Task<ActionResult<ScoutDto>> GetScout(int id)
         {
-             return await _unitOfWork.scoutRepository.GetScoutAsync(id);
+            return await _unitOfWork.scoutRepository.GetScoutAsync(id);
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateScout(ScoutUpdateDto scoutUpdateDto) {
+        public async Task<ActionResult> UpdateScout(ScoutUpdateDto scoutUpdateDto)
+        {
             var scout = await _unitOfWork.scoutRepository.FindScoutByIdAsync(scoutUpdateDto.MemberId);
             _mapper.Map(scoutUpdateDto, scout);
             _unitOfWork.scoutRepository.Update(scout);
@@ -66,6 +57,53 @@ namespace API.Controllers
 
             return BadRequest("Failed to update Scout!");
         }
-        
+
+        [HttpPost("add-photo")]
+        public async Task<ActionResult<ScoutDto>> AddPhoto(IFormFile file, int memberId)
+        {
+            var scout = await _unitOfWork.scoutRepository.FindScoutByIdAsync(memberId);
+            if (scout == null) return NotFound("Scout Not Found!");
+
+            var result = await _photoService.AddPhotoAsync(file);
+            if (result.Error != null) return BadRequest(result.Error.Message);
+
+            if (scout.PublicId != null)
+            {                
+                var deleteResult = await _photoService.DeletePhotoAsync(scout.PublicId);
+                if (deleteResult.Error != null) return BadRequest(deleteResult.Error.Message);
+            }
+
+            scout.PhotoUrl = result.SecureUrl.AbsoluteUri;
+            scout.PublicId = result.PublicId;
+
+            _unitOfWork.scoutRepository.Update(scout);
+            if (await _unitOfWork.Complete())
+            {
+                return CreatedAtRoute("GetScout", new { id = memberId }, _mapper.Map<ScoutDto>(scout));
+            }
+
+            return BadRequest("Problem adding photo!");
+        }
+
+        [HttpDelete("delete-photo/{PublicId}")]
+        public async Task<ActionResult> DeletePhoto(string PublicId)
+        {
+            var scout = await _unitOfWork.scoutRepository.FindScoutByPublicIdAsync(PublicId);
+            if (scout == null) return NotFound("Scout Not Found!");
+
+            if (scout.PublicId != null)
+            {
+                scout.PhotoUrl = null;
+                scout.PublicId = null;
+                var result = await _photoService.DeletePhotoAsync(PublicId);
+                if (result.Error != null) return BadRequest(result.Error.Message);
+            }
+
+            _unitOfWork.scoutRepository.Update(scout);
+            if (await _unitOfWork.Complete()) return Ok();
+
+            return BadRequest("Problem deleting photo!");
+
+        }
     }
 }
