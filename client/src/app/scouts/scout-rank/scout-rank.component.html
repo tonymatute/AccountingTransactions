@@ -7,12 +7,13 @@
     style="width: 380px; " 
     class="ag-theme-alpine" 
     [pagination]="false"
-    [rowData]="ranks" 
+    [rowData]="rowData" 
     [domLayout]="domLayout" 
     [animateRows]="true"
     [columnDefs]="columnDefs" 
     [defaultColDef]="defaultColDef"
     [frameworkComponents]="frameworkComponents"
+    [modules]="modules"
     (gridReady)="onGridReady($event)">
 
     

@@ -11,6 +11,7 @@ import { IAfterGuiAttachedParams } from '@ag-grid-community/core';
       class="form-check-input ml-2 mt-3"
       (click)="checkedHandler($event)"
       [checked]="params.value"
+      disabled
     />
 `,
 })

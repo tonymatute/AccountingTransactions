@@ -2,6 +2,9 @@ import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { CheckboxRenderer } from 'src/app/_component_extentions/checkbox-renderer/checkbox-renderer.component';
 import { Rank } from 'src/app/_models/rank';
+import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
+import { Module } from '@ag-grid-community/all-modules';
+
 
 @Component({
   selector: 'app-scout-rank',
@@ -11,6 +14,7 @@ import { Rank } from 'src/app/_models/rank';
 export class ScoutRankComponent implements OnInit {
   @Input() ranks: Rank[];
 
+  modules: Module[] = [ClientSideRowModelModule];
   gridApi;
   gridColumnApi;
   gridOptions;
@@ -19,8 +23,10 @@ export class ScoutRankComponent implements OnInit {
   columnDefs;
   defaultColDef;
   frameworkComponents;
+  rowData: Rank[];
 
   constructor() {
+    
     this.frameworkComponents = {
       checkboxRenderer: CheckboxRenderer,
     };
@@ -52,14 +58,17 @@ export class ScoutRankComponent implements OnInit {
       flex: 1,
       sortable: false,
       resizable: false,
+      suppressMovable:true
     };
     this.rowSelection = 'single';
     this.domLayout = 'autoHeight';
   }
 
+  
   ngOnInit(): void {}
 
   onGridReady(params) {
+    this.rowData = this.sortData;    
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
@@ -72,5 +81,11 @@ export class ScoutRankComponent implements OnInit {
 
   addNewHandler() {
     alert("add new");
+  }
+
+  get sortData() {
+    return this.ranks.sort((a, b) => {
+      return <any>new Date(b.rankDateTime) - <any>new Date(a.rankDateTime);
+    });
   }
 }
