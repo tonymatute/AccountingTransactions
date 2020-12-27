@@ -4,7 +4,8 @@ namespace API.Interfaces
 {
     public interface IUnitOfWork
     {
-        IScoutRepository scoutRepository { get; }
+        IScoutRepository ScoutRepository { get; }
+        IUserRepository UserRepository { get; }
         bool HasChanges();
         Task<bool> Complete();
 

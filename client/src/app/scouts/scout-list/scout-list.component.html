@@ -1,72 +1,58 @@
-<div class="text-center">
-    <h2 class="font-weight-bold" >{{pagination?.totalItems}} Active Scouts  </h2>
+<div class="text-center" *ngIf="scoutParams.active">
+    <h2 class="font-weight-bold">{{pagination?.totalItems}} Active Scouts </h2>
 </div>
-<div class="container mt3">
+<div class="text-center" *ngIf="!scoutParams.active">
+    <h2 class="font-weight-bold">{{pagination?.totalItems}} Unactive Scouts </h2>
+</div>
+<div class="container mt-3">
     <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadScouts()" autocomplete="off">
         <div class="form-group">
-            <label>LastName: </label>
-            <input type="text" class="from-control ml-1" style="width: 140px;" name="lastName"
-                [(ngModel)]="searchParams.lastName">
+            <label>Active: </label>
+            <input [checked]="scoutParams.active" (change)="onActiveChange($event)"
+                class="from-control ml-1" type="checkbox" id="active" />
+        </div>        
+        <div class="form-group px-2">           
+            <input #lastName type="text" class="form-control ml-1" style="width: 100px;" name="lastName"
+                [(ngModel)]="scoutParams.lastName" placeholder="Lastname" (keyup)="onKeyUp(lastName)" autocomplete="off">
         </div>
-        <div class="form-group px-2">
-            <label>FirstName: </label>
-            <input type="text" class="from-control ml-1" style="width: 140px;" name="firstName"
-                [(ngModel)]="searchParams.firstName">
+        <div class="form-group px-1">           
+            <input #firstName type="text" class="form-control ml-1" style="width: 100px;" name="firstName" autocomplete="off"
+                [(ngModel)]="scoutParams.firstName" placeholder="Firstname" (keyup)="onKeyUp(firstName)">
         </div>
-        <div class="form-group px-2">
-            <label>Patrol: </label>
-            <select name="patrolId" [(ngModel)]="searchParams.patrolId" style="width: 160px;height: 34px;" class="form-control ml-1">
+        <div class="form-group px-2">            
+            <select  name="patrolId" [(ngModel)]="scoutParams.patrolId"  class="form-control ml-1" (change)="selectedChange($event.target.value)">
+                <option value="0"  class="text-muted" disabled selected hidden>Select Patrol</option>
                 <option *ngFor="let patrol of patrols" [value]="patrol.id">
                     {{patrol.display}}
                 </option>
             </select>
         </div>
-        <div class="form-group px-2">
-            <label>Show: </label>
-            <select name="active" [(ngModel)]="searchParams.active" style="width: 110px;" class="form-control ml-1">
-                <option *ngFor="let active of activeList" [value]="active.value">
-                    {{active.display}}
-                </option>
-            </select>
-        </div>
-
-        <button class="btn btn-primary ml-1" type="submit">Find scout</button>
-        <!-- <button class="btn btn-info ml-1" (click)="resetFilter()" type="submit">Reset Filter</button> -->
-        <!-- <div class="ml-3">
+        <!-- <button class="btn btn-sm btn-primary ml-1 rounded" type="submit">Find Scout</button> -->
+        <button class="btn btn-sm btn-secondary ml-1 rounded" (click)="resetFilter()" type="submit">Reset
+            Filter
+        </button>
+        <div class="ml-3">
             <div class="btn-group float-right">
-                <button type="button" name="orderBy" (click)="loadScouts()" btnRadio="Name"
-                    [(ngModel)]="searchParams.orderBy" class="btn btn-primary">By Name</button>
+                <button type="button" name="orderBy" (click)="loadScouts()" btnRadio="name"
+                [(ngModel)]="scoutParams.orderBy" class="btn btn-sm btn-primary">By Name</button>
 
-                <button type="button" name="orderBy" (click)="loadScouts()" btnRadio="patrolname"
-                    [(ngModel)]="searchParams.orderBy" class="btn btn-primary">By Patrol</button>
+            <button type="button" name="orderBy" (click)="loadScouts()" btnRadio="patrol"
+                [(ngModel)]="scoutParams.orderBy" class="btn btn-sm btn-primary">By Patrol</button>
             </div>
-        </div> -->
+        </div> 
     </form>
 </div>
 
 <div class="row">
-    <div *ngFor="let scout of scouts$ | async" class="col-2" >
+    <div *ngFor="let scout of scouts" class="col-2">
         <app-scout-card [scout]='scout'></app-scout-card>
     </div>
 </div>
 
-<!-- <div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination 
-        [boundaryLinks]="true" 
-        [totalItems]="pagination.totalItems" 
-        [itemsPerPage]="pagination.itemsPerPage"
-        [(ngModel)]="pagination.currentPage"
-        (pageChanged)="pageChanged($event)" 
-        previousText="&lsaquo;"
-        nextText="&rsaquo;" 
-        firstText="&laquo;" 
+<div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination style="cursor: pointer;" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
         lastText="&raquo;">
     </pagination>
-</div> -->
-
-
-
-
-
-
-
+</div>

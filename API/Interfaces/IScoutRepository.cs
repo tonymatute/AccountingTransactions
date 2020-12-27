@@ -10,7 +10,7 @@ namespace API.Interfaces
 {
     public interface IScoutRepository
     { 
-        Task<PageList<ScoutDto>> GetScoutsAsync(SearchParams userParams);
+        Task<PageList<ScoutDto>> GetScoutsAsync(ScoutParams userParams);
         Task<ScoutDto> GetScoutAsync(int id);
         Task<List<SelectList>> GetListTypesAsync(string listType);
         void Update(Scout scout);

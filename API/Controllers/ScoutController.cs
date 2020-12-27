@@ -33,9 +33,9 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ScoutDto>>> GetScouts([FromQuery] SearchParams searchParams)
+        public async Task<ActionResult<IEnumerable<ScoutDto>>> GetScouts([FromQuery] ScoutParams scoutParams)
         {
-            var users = await _unitOfWork.scoutRepository.GetScoutsAsync(searchParams);
+            var users = await _unitOfWork.ScoutRepository.GetScoutsAsync(scoutParams);
             Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(users);
@@ -44,15 +44,15 @@ namespace API.Controllers
         [HttpGet("{id}", Name = "GetScout")]
         public async Task<ActionResult<ScoutDto>> GetScout(int id)
         {
-            return await _unitOfWork.scoutRepository.GetScoutAsync(id);
+            return await _unitOfWork.ScoutRepository.GetScoutAsync(id);
         }
 
         [HttpPut]
         public async Task<ActionResult> UpdateScout(ScoutUpdateDto scoutUpdateDto)
         {
-            var scout = await _unitOfWork.scoutRepository.FindScoutByIdAsync(scoutUpdateDto.MemberId);
+            var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(scoutUpdateDto.MemberId);
             _mapper.Map(scoutUpdateDto, scout);
-            _unitOfWork.scoutRepository.Update(scout);
+            _unitOfWork.ScoutRepository.Update(scout);
             if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to update Scout!");
@@ -61,7 +61,7 @@ namespace API.Controllers
         [HttpPost("add-photo")]
         public async Task<ActionResult<ScoutDto>> AddPhoto(IFormFile file, int memberId)
         {
-            var scout = await _unitOfWork.scoutRepository.FindScoutByIdAsync(memberId);
+            var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(memberId);
             if (scout == null) return NotFound("Scout Not Found!");
 
             var result = await _photoService.AddPhotoAsync(file);
@@ -76,7 +76,7 @@ namespace API.Controllers
             scout.PhotoUrl = result.SecureUrl.AbsoluteUri;
             scout.PublicId = result.PublicId;
 
-            _unitOfWork.scoutRepository.Update(scout);
+            _unitOfWork.ScoutRepository.Update(scout);
             if (await _unitOfWork.Complete())
             {
                 return CreatedAtRoute("GetScout", new { id = memberId }, _mapper.Map<ScoutDto>(scout));
@@ -88,7 +88,7 @@ namespace API.Controllers
         [HttpDelete("delete-photo/{PublicId}")]
         public async Task<ActionResult> DeletePhoto(string PublicId)
         {
-            var scout = await _unitOfWork.scoutRepository.FindScoutByPublicIdAsync(PublicId);
+            var scout = await _unitOfWork.ScoutRepository.FindScoutByPublicIdAsync(PublicId);
             if (scout == null) return NotFound("Scout Not Found!");
 
             if (scout.PublicId != null)
@@ -99,7 +99,7 @@ namespace API.Controllers
                 if (result.Error != null) return BadRequest(result.Error.Message);
             }
 
-            _unitOfWork.scoutRepository.Update(scout);
+            _unitOfWork.ScoutRepository.Update(scout);
             if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest("Problem deleting photo!");

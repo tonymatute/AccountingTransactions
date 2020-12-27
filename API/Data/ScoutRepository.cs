@@ -58,29 +58,31 @@ namespace API.Data
                .FirstOrDefaultAsync(s => s.PublicId == PublicId);
         }
 
-        public async Task<PageList<ScoutDto>> GetScoutsAsync(SearchParams searchParams)
+        public async Task<PageList<ScoutDto>> GetScoutsAsync(ScoutParams scoutParams)
         {
             var query = _context.Scouts.AsQueryable();
-            if (searchParams.LastName?.Length > 0)
-                query = query.Where(s => s.LastName == searchParams.LastName);
+            if (scoutParams.LastName?.Length > 0)
+                query = query.Where(s => s.LastName.Contains(scoutParams.LastName));
 
-            if (searchParams.FirstName?.Length == 0)
-                query = query.Where(s => s.FirstName == searchParams.FirstName);
+            if (scoutParams.FirstName?.Length > 0)
+                query = query.Where(s => s.FirstName.Contains(scoutParams.FirstName));
 
-            if (searchParams.PatrolId > 0)
-                query = query.Where(s => s.PatrolId == searchParams.PatrolId);
+            if (scoutParams.PatrolId > 0)
+                query = query.Where(s => s.PatrolId == scoutParams.PatrolId);
 
-            query = searchParams.OrderBy switch
+            query = query.Where(s => s.Active == scoutParams.Active);
+
+            query = scoutParams.OrderBy switch
             {
-                "Name" => query.OrderBy(o => o.LastName).ThenBy(o => o.FirstName),
+                "name" => query.OrderBy(o => o.LastName).ThenBy(o => o.FirstName),
                 _ => query.OrderBy(o => o.PatrolId).ThenBy(o => o.LastName)
             };
-            
+
             var scouts = await PageList<ScoutDto>.CreateAsync(
                            query.ProjectTo<ScoutDto>(_mapper.ConfigurationProvider)
                            .AsNoTracking(),
-                           searchParams.PageNumber,
-                           searchParams.PageSize);
+                           scoutParams.PageNumber,
+                           scoutParams.PageSize);
 
             foreach (var scout in scouts)
             {

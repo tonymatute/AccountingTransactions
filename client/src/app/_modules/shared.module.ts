@@ -11,7 +11,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeagoModule } from 'ngx-timeago';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 
 @NgModule({
@@ -29,7 +29,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     PaginationModule.forRoot(),   
     BrowserAnimationsModule,
     TimeagoModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    ButtonsModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
@@ -41,7 +42,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     BrowserAnimationsModule,
     FileUploadModule,
     TimeagoModule,
-    TooltipModule
+    TooltipModule,
+    ButtonsModule
   ]
 })
 export class SharedModule { }

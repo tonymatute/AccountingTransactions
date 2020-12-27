@@ -7,7 +7,7 @@ namespace API.Entities
 {
     [Table("Scout")]
     public class Scout
-    { 
+    {
         [Key]
         public int MemberId { get; set; }
         public string LastName { get; set; }
@@ -17,14 +17,13 @@ namespace API.Entities
         public bool Active { get; set; }
         public DateTime ActiveSinceDatetime { get; set; }
         public string PhotoUrl { get; set; }
-        public string PublicId { get; set; }       
+        public string PublicId { get; set; }
         public int PatrolId { get; set; }
-        public DateTime Created{ get; set; }
-        
+        public DateTime Created { get; set; }
 
-        public ICollection<Transaction>Transactions{ get; set; }
-        public ICollection<BuckTransaction>BuckTransactions { get; set; }
-        public ICollection<Adult>Parents { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<BuckTransaction> BuckTransactions { get; set; }
+        public ICollection<Adult> Parents { get; set; }
         public ICollection<Rank> Ranks { get; set; }
     }
 }
