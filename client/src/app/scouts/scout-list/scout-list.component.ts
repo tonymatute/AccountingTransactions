@@ -30,6 +30,7 @@ export class ScoutListComponent implements OnInit {
   }
 
   loadScouts() {
+  
     this.scoutService.setScoutParams(this.scoutParams);
     this.scoutService.getScouts(this.scoutParams).subscribe((response) => {
       this.scouts = response.result;
@@ -80,5 +81,8 @@ export class ScoutListComponent implements OnInit {
     this.loadScouts();
   }
 
+  deleteScoutFromCache() {
+    this.scoutService.deleteScoutFromCache(this.scoutParams);
+    }
 
 }

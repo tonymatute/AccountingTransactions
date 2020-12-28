@@ -1,3 +1,5 @@
+import { ScoutDetailedResolver } from './_resolvers/scout-detail-resolver';
+import { Scout } from './_models/scout';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { ScoutEditComponent } from './scouts/scout-edit/scout-edit.component';
@@ -25,8 +27,12 @@ const routes: Routes = [
       { path: 'adults', component: AdultListComponent },
       { path: 'adults/:id', component: AdultTransactionsComponent },
       { path: 'scouts', component: ScoutListComponent},
-      { path: 'scouts/:id', component: ScoutTransactionsComponent },
-      { path: 'scout/edit/:id', component: ScoutEditComponent, canDeactivate: [PreventUnsavedChangesGuard]  },
+      { path: 'scouts/:id', component: ScoutTransactionsComponent , resolve: { scout: ScoutDetailedResolver}},
+      {
+        path: 'scout/edit/:id', component: ScoutEditComponent,
+        canDeactivate: [PreventUnsavedChangesGuard],
+        resolve: { scout: ScoutDetailedResolver}
+      },
       { path: 'user/edit', component: UserEditComponent }
     ]
   },

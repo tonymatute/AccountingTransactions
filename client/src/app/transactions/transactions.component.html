@@ -13,7 +13,10 @@
     [animateRows]="true"
     [columnDefs]="columnDefs" 
     [defaultColDef]="defaultColDef" 
+    [gridOptions]="gridOptions" 
     [frameworkComponents]="frameworkComponents"
+    (cell-clicked)="onCellClicked($event)"
+    [getRowNodeId]="getRowNodeId"
     (gridReady)="onGridReady($event)">
 </ag-grid-angular>
 <div class="container mt-3" style="padding-left: 10px; ">

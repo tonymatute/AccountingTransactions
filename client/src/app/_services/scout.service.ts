@@ -23,6 +23,13 @@ export class ScoutService {
     this.scoutParams = new ScoutParams();
   }  
 
+  deleteScoutFromCache(scoutParams: ScoutParams) {
+    var response = this.scoutCache.get(Object.values(scoutParams).join('-'));
+    if (response) {
+      this.scoutCache.delete(Object.values(scoutParams).join('-'));
+    }
+  }
+
   getScouts(scoutParams: ScoutParams) {
     var response = this.scoutCache.get(Object.values(scoutParams).join('-'));
     if (response) {

@@ -2,9 +2,6 @@ import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { CheckboxRenderer } from 'src/app/_component_extentions/checkbox-renderer/checkbox-renderer.component';
 import { Rank } from 'src/app/_models/rank';
-import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-model';
-import { Module } from '@ag-grid-community/all-modules';
-
 
 @Component({
   selector: 'app-scout-rank',
@@ -12,9 +9,7 @@ import { Module } from '@ag-grid-community/all-modules';
   styleUrls: ['./scout-rank.component.css'],
 })
 export class ScoutRankComponent implements OnInit {
-  @Input() ranks: Rank[];
-
-  modules: Module[] = [ClientSideRowModelModule];
+  @Input() ranks: Rank[];  
   gridApi;
   gridColumnApi;
   gridOptions;

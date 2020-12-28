@@ -27,12 +27,17 @@ export class ScoutTransactionsComponent implements OnInit {
   }
 
   loadScout() {
-    this.scoutService
-      .getScout(Number(this.route.snapshot.paramMap.get('id')))
-      .subscribe((scout) => {
-        this.scout = scout;
-      });
+    this.route.data.subscribe(data => {
+      this.scout = data.scout;
+    });
   }
 
+  get myMethodFunc() {
+    return this.myMethod.bind(this);
+    }
 
+    myMethod() {
+    alert("Hello From Parent");
+  }
+  
 }

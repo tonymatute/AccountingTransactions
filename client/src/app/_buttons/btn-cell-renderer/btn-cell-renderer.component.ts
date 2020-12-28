@@ -5,19 +5,17 @@ import { IAfterGuiAttachedParams } from 'ag-grid-community';
 
 @Component({
   selector: 'btn-cell-renderer',
-  template: `
-  
+  template: `  
     <button class="btn btn-sm btn-primary rounded mr-2" (click)="btnEditHandler($event)">Edit</button>
-    
     `,
   
 })
 export class BtnCellRenderer implements ICellRendererAngularComp, OnDestroy {
   refresh(params: any): boolean {
-    throw new Error('Method not implemented.');
+    return false;
   }
   afterGuiAttached?(params?: IAfterGuiAttachedParams): void {
-    throw new Error('Method not implemented.');
+    
   }
   
   private params: any;

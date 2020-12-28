@@ -1,10 +1,11 @@
 import { LookUpTable } from './../_models/lookUpTable';
 import { environment } from 'src/environments/environment';
 import { Transaction } from './../_models/transaction';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { BtnCellRenderer } from '../_buttons/btn-cell-renderer/btn-cell-renderer.component';
-
+import { AgGridAngular } from 'ag-grid-angular';
+import { identifierName } from '@angular/compiler';
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
@@ -13,6 +14,9 @@ import { BtnCellRenderer } from '../_buttons/btn-cell-renderer/btn-cell-renderer
 export class TransactionsComponent implements OnInit {
   @Input() transactions: Transaction[];
   @Input() lookUpTable: LookUpTable[];
+  @Input() myMethod: Function;
+
+  @ViewChild('agGrid') agGrid: AgGridAngular;
 
   gridApi;
   gridColumnApi;
@@ -28,6 +32,7 @@ export class TransactionsComponent implements OnInit {
   TotalDebit: number = 0;
   total: number = 0;
   rowData: Transaction[];
+  getRowNodeId;
 
   frameworkComponents: { btnCellRenderer: typeof BtnCellRenderer; };
 
@@ -36,14 +41,29 @@ export class TransactionsComponent implements OnInit {
       btnCellRenderer: BtnCellRenderer
     };
 
+    this.getRowNodeId = function (data) {
+      return data.id;
+    };
+
     this.columnDefs = [
       {
+        colId: 'transactionId',
         headerName: '',
         maxWidth: 65,  
+        field: 'transactionId',
         cellRenderer: "btnCellRenderer",
         cellRendererParams: {
-          clicked: function(field: any) {
-            alert(`${field} was clicked`);
+          clicked: function (field: any) {
+            
+            // const selectedNodes = this.agGrid.api.getSelectedNodes();
+            // const selectedData = selectedNodes.map(node => node.data );
+            // const selectedDataStringPresentation = selectedData.map(node => node.make + ' ' + node.model).join(', ');
+        
+            // alert(`Selected nodes: ${selectedDataStringPresentation}`);
+
+            //getSelectedRowData();
+            // this.test(`${ field }`);
+            alert(`${ field } was clicked`);
           }
         },               
       },
@@ -135,6 +155,8 @@ export class TransactionsComponent implements OnInit {
       resizable: false,
     };
 
+    // this.gridOptions.onRowClicked = this.myRowClickedHandler;
+
     this.rowSelection = 'single';
     this.domLayout = 'autoHeight';
     this.paginationPageSize = 10;
@@ -190,5 +212,36 @@ export class TransactionsComponent implements OnInit {
   addNewHandler() {
     alert('Add new');
   }
+
+   
+   test(id) {
+    alert(id);
+    this.myMethod();
   
+  }
+  
+
+  onCellClicked(e) {
+    alert(e);
+
+  }
+
+}
+
+
+
+function getSelectedRows() {
+  const selectedNodes = this.agGrid.api.getSelectedNodes();
+  const selectedData = selectedNodes.map(node => node.data );
+  const selectedDataStringPresentation = selectedData.map(node => node.make + ' ' + node.model).join(', ');
+
+  alert(`Selected nodes: ${selectedDataStringPresentation}`);
+}
+
+function getSelectedRowData() {
+  alert("hello");
+  let selectedNodes = this.gridApi.getSelectedNodes();
+  let selectedData = selectedNodes.map(node => node.data);
+  alert(`Selected Nodes:\n${JSON.stringify(selectedData)}`);
+  return selectedData;
 }

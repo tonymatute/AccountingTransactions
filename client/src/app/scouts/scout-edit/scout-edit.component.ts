@@ -14,8 +14,10 @@ import { ScoutService } from 'src/app/_services/scout.service';
 import { LookUpTable } from 'src/app/_models/lookUpTable';
 import { NgForm } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { ScoutListComponent } from '../scout-list/scout-list.component';
 
 @Component({
+  providers:[ScoutListComponent ],
   selector: 'app-scout-edit',
   templateUrl: './scout-edit.component.html',
   styleUrls: ['./scout-edit.component.css'],
@@ -40,7 +42,8 @@ export class ScoutEditComponent implements OnInit {
     private scoutService: ScoutService,
     private route: ActivatedRoute,
     private lookUpServices: LookupService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private scoutListComponent: ScoutListComponent
   ) {}
 
   ngOnInit(): void {
@@ -49,12 +52,9 @@ export class ScoutEditComponent implements OnInit {
   }
 
   loadScout() {
-    let id = Number(this.route.snapshot.paramMap.get('id'));
-
-    this.scoutService
-      .getScout(id).subscribe((scout) => {
-        this.scout = scout;
-      });
+    this.route.data.subscribe(data => {
+      this.scout = data.scout;
+    })
   }
 
   getPatrols() {
@@ -67,6 +67,8 @@ export class ScoutEditComponent implements OnInit {
     this.scoutService.updateScout(this.scout).subscribe(() => {
       this.toastr.success('Scout Updated Succesfully!'); 
       this.editForm.form.markAsPristine();
+      this.scoutListComponent.deleteScoutFromCache();
+      this.scoutListComponent.loadScouts();
     });
   }
 }
