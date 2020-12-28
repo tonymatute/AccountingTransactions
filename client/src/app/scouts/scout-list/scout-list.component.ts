@@ -16,6 +16,7 @@ export class ScoutListComponent implements OnInit {
   scouts: Scout[];
   scoutParams: ScoutParams;
   patrols: LookUpTable[];
+  loading: boolean = false;
 
   constructor(
     private scoutService: ScoutService,
@@ -30,11 +31,12 @@ export class ScoutListComponent implements OnInit {
   }
 
   loadScouts() {
-  
+    this.loading = true;
     this.scoutService.setScoutParams(this.scoutParams);
     this.scoutService.getScouts(this.scoutParams).subscribe((response) => {
       this.scouts = response.result;
       this.pagination = response.pagination;
+      this.loading = false;
     });
   }
 
