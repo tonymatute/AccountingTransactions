@@ -14,8 +14,6 @@ import { identifierName } from '@angular/compiler';
 export class TransactionsComponent implements OnInit {
   @Input() transactions: Transaction[];
   @Input() lookUpTable: LookUpTable[];
-  @Input() myMethod: Function;
-
   @ViewChild('agGrid') agGrid: AgGridAngular;
 
   gridApi;
@@ -213,10 +211,9 @@ export class TransactionsComponent implements OnInit {
     alert('Add new');
   }
 
-   
    test(id) {
     alert(id);
-    this.myMethod();
+  
   
   }
   

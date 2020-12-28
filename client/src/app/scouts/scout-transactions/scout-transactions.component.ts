@@ -32,12 +32,6 @@ export class ScoutTransactionsComponent implements OnInit {
     });
   }
 
-  get myMethodFunc() {
-    return this.myMethod.bind(this);
-    }
 
-    myMethod() {
-    alert("Hello From Parent");
-  }
   
 }
