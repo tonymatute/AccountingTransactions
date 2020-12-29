@@ -12,6 +12,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { TimeagoModule } from 'ngx-timeago';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -30,7 +31,9 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     BrowserAnimationsModule,
     TimeagoModule.forRoot(),
     TooltipModule.forRoot(),
-    ButtonsModule.forRoot()
+    ButtonsModule.forRoot(),
+    ModalModule.forRoot()
+    
   ],
   exports: [
     BsDropdownModule,
@@ -43,7 +46,8 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
     FileUploadModule,
     TimeagoModule,
     TooltipModule,
-    ButtonsModule
+    ButtonsModule,
+    ModalModule
   ]
 })
 export class SharedModule { }

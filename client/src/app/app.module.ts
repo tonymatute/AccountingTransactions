@@ -35,6 +35,10 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { ScoutRankComponent } from './scouts/scout-rank/scout-rank.component';
 import { CheckboxRenderer } from './_component_extentions/checkbox-renderer/checkbox-renderer.component';
 import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
+import { HasRoleDirective } from './_directives/has-role.directive';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { RoleManagementComponent } from './admin/role-management/role-management.component';
+import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 
 @NgModule({
   declarations: [    
@@ -61,7 +65,11 @@ import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
     UserEditComponent,
     ScoutRankComponent,
     CheckboxRenderer,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    HasRoleDirective,
+    AdminPanelComponent,
+    RoleManagementComponent,
+    RolesModalComponent
     
   ],
   imports: [

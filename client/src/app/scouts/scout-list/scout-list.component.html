@@ -9,7 +9,7 @@
         <div class="form-group">
             <label>Active: </label>
             <input [checked]="scoutParams.active" (change)="onActiveChange($event)"
-                class="from-control ml-1" type="checkbox" id="active" />
+                class="form-check-input ml-1" type="checkbox" id="active" style="cursor: pointer;"/>
         </div>        
         <div class="form-group px-2">           
             <input #lastName type="text" class="form-control ml-1" style="width: 100px;" name="lastName"

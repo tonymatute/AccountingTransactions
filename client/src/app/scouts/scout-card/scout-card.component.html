@@ -8,7 +8,7 @@
                     <i class="fa fa-table"></i>
                 </button>
             </li>    
-            <li class="list-inline-item">
+            <li class="list-inline-item" *appHasRole='["Admin"]'>
                 <button class="btn btn-primary" routerLink="/scout/edit/{{scout.memberId}}"
                 placement="top" tooltip="Profile">
                     <i class="fa fa-id-card-o"></i>

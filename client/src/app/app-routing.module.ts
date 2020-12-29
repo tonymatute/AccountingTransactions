@@ -1,3 +1,4 @@
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { ScoutDetailedResolver } from './_resolvers/scout-detail-resolver';
 import { Scout } from './_models/scout';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
@@ -16,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { AdultTransactionsComponent } from './adults/adult-transactions/adult-transactions.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { AdminGuard } from './_guards/admin.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,7 +35,8 @@ const routes: Routes = [
         canDeactivate: [PreventUnsavedChangesGuard],
         resolve: { scout: ScoutDetailedResolver}
       },
-      { path: 'user/edit', component: UserEditComponent }
+      { path: 'user/edit', component: UserEditComponent },
+      { path: 'admin', component: AdminPanelComponent ,canActivate: [AdminGuard]}
     ]
   },
   { path: 'lookup', component: ScoutListComponent },

@@ -31,9 +31,9 @@ namespace API.Data
                .AsNoTracking()
                .FirstOrDefaultAsync(s => s.MemberId == id);
 
-            setTransactionType(scout);
-            setPatrolName(scout);
-            setActivity(scout);
+            SetTransactionType(scout);
+            SetPatrolName(scout);
+            SetActivity(scout);
 
             return scout;
         }
@@ -86,9 +86,9 @@ namespace API.Data
 
             foreach (var scout in scouts)
             {
-                setTransactionType(scout);
-                setPatrolName(scout);
-                setActivity(scout);
+                SetTransactionType(scout);
+                SetPatrolName(scout);
+                SetActivity(scout);
             }
             return scouts;
         }
@@ -110,7 +110,7 @@ namespace API.Data
                .ToList();
         }      
 
-        private void setTransactionType(ScoutDto scout)
+        private void SetTransactionType(ScoutDto scout)
         {
             foreach (var row in GetListTypes("Transaction Type"))
             {
@@ -132,7 +132,7 @@ namespace API.Data
             }
         }
 
-        private void setPatrolName(ScoutDto scout)
+        private void SetPatrolName(ScoutDto scout)
         {
             foreach (var row in GetListTypes("Patrol"))
             {
@@ -143,7 +143,7 @@ namespace API.Data
                 }
             }
         }
-        private void setActivity(ScoutDto scout)
+        private void SetActivity(ScoutDto scout)
         {
             foreach (var row in GetListTypes("Activity"))
             {

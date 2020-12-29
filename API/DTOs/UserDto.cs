@@ -1,4 +1,6 @@
-﻿using System;
+﻿using API.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace API.DTOs
 {
@@ -9,6 +11,7 @@ namespace API.DTOs
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public DateTime LastActiveDateTime { get; set; } 
-        public DateTime Created { get; set; } 
+        public DateTime Created { get; set; }
+        
     }
 }

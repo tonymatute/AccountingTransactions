@@ -5,4 +5,5 @@ export interface User {
     firstName: string;
     lastActiveDateTime: Date;
     created: Date;
+    roles: string[];
 }

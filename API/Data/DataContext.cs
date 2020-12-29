@@ -1,4 +1,6 @@
 ﻿using API.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -7,13 +9,20 @@ using System;
 
 namespace API.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<
+        AppUser,
+        AppRole, int,
+        IdentityUserClaim<int>,
+        AppUserRole,
+        IdentityUserLogin<int>,
+        IdentityRoleClaim<int>,
+        IdentityUserToken<int>
+        >
     {
         public DataContext(DbContextOptions options) : base(options)
         {
         }
 
-        public DbSet<AppUser> Users { get; set; }
         public DbSet<Scout> Scouts { get; set; }
         public DbSet<SelectList> SelectList { get; set; }
         public DbSet<Adult> Parents { get; set; }
@@ -23,8 +32,20 @@ namespace API.Data
         {
 
             base.OnModelCreating(builder);
-            builder.ApplyUtcDateTimeConverter();
 
+            builder.Entity<AppUser>()
+                  .HasMany(ur => ur.UserRoles)
+                  .WithOne(u => u.User)
+                  .HasForeignKey(ur => ur.UserId)
+                  .IsRequired();
+
+            builder.Entity<AppRole>()
+                .HasMany(ur => ur.UserRoles)
+                .WithOne(u => u.Role)
+                .HasForeignKey(ur => ur.RoleId)
+                .IsRequired();
+
+            builder.ApplyUtcDateTimeConverter();
 
             //modelBuilder.Entity<SelectList>()
             //    .HasMany(b => b.Transaction)
