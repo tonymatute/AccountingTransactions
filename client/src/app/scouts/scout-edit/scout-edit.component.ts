@@ -1,3 +1,4 @@
+import { ConfirmService } from './../../_services/confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import { LookupService } from './../../_services/lookup.service';
 import {
@@ -17,7 +18,7 @@ import { environment } from 'src/environments/environment';
 import { ScoutListComponent } from '../scout-list/scout-list.component';
 
 @Component({
-  providers:[ScoutListComponent ],
+  providers: [ScoutListComponent],
   selector: 'app-scout-edit',
   templateUrl: './scout-edit.component.html',
   styleUrls: ['./scout-edit.component.css'],
@@ -43,7 +44,8 @@ export class ScoutEditComponent implements OnInit {
     private route: ActivatedRoute,
     private lookUpServices: LookupService,
     private toastr: ToastrService,
-    private scoutListComponent: ScoutListComponent
+    private scoutListComponent: ScoutListComponent,
+    private confirmService: ConfirmService
   ) {}
 
   ngOnInit(): void {
@@ -52,9 +54,9 @@ export class ScoutEditComponent implements OnInit {
   }
 
   loadScout() {
-    this.route.data.subscribe(data => {
+    this.route.data.subscribe((data) => {
       this.scout = data.scout;
-    })
+    });
   }
 
   getPatrols() {
@@ -64,11 +66,17 @@ export class ScoutEditComponent implements OnInit {
   }
 
   updateScout() {
-    this.scoutService.updateScout(this.scout).subscribe(() => {
-      this.toastr.success('Scout Updated Succesfully!'); 
-      this.editForm.form.markAsPristine();
-      this.scoutListComponent.deleteScoutFromCache();
-      this.scoutListComponent.loadScouts();
-    });
+    this.confirmService
+      .confirm('Confirm Update', 'Are you sure you want to update this profile?',"Yes","No")
+      .subscribe((result) => {
+        if (result){
+          this.scoutService.updateScout(this.scout).subscribe(() => {
+            this.toastr.success('Scout Updated Succesfully!');
+            this.editForm.form.markAsPristine();
+            this.scoutListComponent.deleteScoutFromCache();
+            this.scoutListComponent.loadScouts();
+          });
+        }
+      });
   }
 }

@@ -41,6 +41,7 @@ import { RoleManagementComponent } from './admin/role-management/role-management
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { ExportPdfComponent } from './export-pdf/export-pdf.component';
 import { CustomTooltip } from './_component_tooltips/custom-tooltip/custom-tooltip.component';
+import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 
 
 @NgModule({
@@ -74,7 +75,8 @@ import { CustomTooltip } from './_component_tooltips/custom-tooltip/custom-toolt
     RoleManagementComponent,
     RolesModalComponent,
     ExportPdfComponent,
-    CustomTooltip
+    CustomTooltip,
+    ConfirmDialogComponent
   ],
   imports: [
     SharedModule,
