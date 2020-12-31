@@ -18,7 +18,7 @@ namespace API.Entities
         public decimal TransactionDebit { get; set; }
         public int? CheckNumber { get; set; }
         public DateTime TransactionDateTime { get; set; }
-        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime Created { get; set; } = DateTime.Now;
         public bool Reconciliated { get; set; }
         
         public Scout Scout { get; set; }

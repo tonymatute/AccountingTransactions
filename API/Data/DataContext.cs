@@ -45,7 +45,7 @@ namespace API.Data
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
 
-            builder.ApplyUtcDateTimeConverter();
+           // builder.ApplyUtcDateTimeConverter();
 
             //modelBuilder.Entity<SelectList>()
             //    .HasMany(b => b.Transaction)

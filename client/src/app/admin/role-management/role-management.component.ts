@@ -1,3 +1,5 @@
+import { GridtService } from './../../_services/grid.service';
+
 import { RolesModalComponent } from './../../modals/roles-modal/roles-modal.component';
 import { AdminService } from './../../_services/admin.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,9 +19,14 @@ export class RoleManagementComponent implements OnInit {
 
   bsModalRef: BsModalRef;
 
-  constructor(private adminService: AdminService, private modalService: BsModalService) { }
+  constructor(
+    private adminService: AdminService,
+    private modalService: BsModalService,
+    private gridService: GridtService) { }
 
   ngOnInit(): void {
+    this.gridService.loadSortableScripts();
+    
     this.getavailableRoles()
     this.getUsersWithRoles();
   }
@@ -79,5 +86,7 @@ export class RoleManagementComponent implements OnInit {
     })
   }
 
+  
+  
 
 }

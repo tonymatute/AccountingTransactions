@@ -16,7 +16,7 @@ namespace API.Entities
         [Column(TypeName = "decimal(18,2)")]
         public decimal TransactionDebit { get; set; }
         public DateTime TransactionDateTime { get; set; }
-        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime Created { get; set; } = DateTime.Now;
 
         public Scout Scout { get; set; }
 

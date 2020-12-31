@@ -12,7 +12,7 @@ namespace API.DTOs
         public decimal TransactionCredit { get; set; }
         public decimal TransactionDebit { get; set; }
         public DateTime TransactionDateTime { get; set; }
-        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime Created { get; set; } 
 
     }
 }

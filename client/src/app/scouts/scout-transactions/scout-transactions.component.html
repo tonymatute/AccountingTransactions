@@ -1,54 +1,56 @@
-<div>
-    <h4 class="text-center text-primary"><strong>{{charteredOrganization}}</strong> </h4>
-    <h4 class="text-center text-primary"><strong>{{troop}}</strong> </h4>
-    <h5 class="text-center text-primary">{{troopLocation}}</h5>
-</div>
-<div class="row" *ngIf="scout">
+<div class="row" *ngIf="scout" id="printScreenDiv">
     <div class="col-3">
         <div class="card">
             <img src="{{scout.photoUrl || './assets/user.png'}}" alt="{{scout.firstName}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
-                <div>
-                    <p> <strong>Scout : </strong>
-                        {{scout.firstName}} {{scout.lastName}} </p>
+                <div class="text-center font-weight-bold">
+                    {{charteredOrganization}}
                 </div>
-                <div>
-                    <p> <strong>Age : </strong>
-                        {{scout.age}} </p>
+                <div class="text-center font-weight-bold mt-1">
+                    {{troop}}
+                </div>               
+                <div class="text-center font-weight-bold mt-2">
+                    {{troopLocation}}
                 </div>
-                <div>
-                    <p> <strong>Recharted Date : </strong>
-                        {{scout.rechartedDate | date}} </p>
+                 <hr />
+                <div class=" mt-1"><strong> Scout :</strong>
+                    {{scout.firstName}} {{scout.lastName}}
                 </div>
-                <div>
-                    <p> <strong>Active : </strong>
-                        {{scout.active == true ? 'Yes' : 'No'}} since
-                        {{scout.activeSinceDatetime | timeago}} </p>
+                <div class=" mt-1"><strong>Age : </strong>
+                    {{scout.age}}
                 </div>
-                <div>
-                    <p> <strong>Rank : </strong>
-                        {{scout.rankName}} </p>
+                <div class=" mt-1"><strong>Recharted Date : </strong>
+                    {{scout.rechartedDate | date}}
                 </div>
-                <div>
-                    <p> <strong>Patrol : </strong>
-                        {{scout.patrolName}} </p>
+                <div class=" mt-1">
+                    <strong>Active : </strong>
+                    {{scout.active == true ? 'Yes' : 'No'}} since
+                    {{scout.activeSinceDatetime | timeago}}
                 </div>
-            </div>
+                <div class=" mt-1">
+                    <strong>Rank : </strong>
+                    {{scout.rankName}}
+                </div>
+                <div class=" mt-1 mb-2">
+                    <strong>Patrol : </strong>
+                    {{scout.patrolName}}
+                </div>
+            </div>            
         </div>
     </div>
     <div class="col-8">
 
         <tabset class="member-tabset">
-            <tab heading='Transactions' >
-                <app-transactions [transactions]="scout.transactions"  ></app-transactions>
+            <tab heading='Transactions'>
+                <app-transactions [transactions]="scout.transactions"></app-transactions>
             </tab>
             <tab heading='Buck Transactions'>
-               <buck-transactions [transactions]="scout.buckTransactions"></buck-transactions>
+                <buck-transactions [transactions]="scout.buckTransactions"></buck-transactions>
             </tab>
             <tab heading='Parents'>
-               <app-scout-parent [parents]="scout.parents"></app-scout-parent>
+                <app-scout-parent [parents]="scout.parents"></app-scout-parent>
             </tab>
-        </tabset>        
+        </tabset>
     </div>
 </div>

@@ -1,36 +1,73 @@
 <div class="">
-    <button class="btn btn-primary btn-sm rounded relocateButton"  (click)="addNewHandler()">Add New</button>
+    <button class="btn btn-primary   mb-2 " (click)="addNewHandler()">Add Transaction</button>
+    <input class="btn btn-primary   mb-2 " type="button" value="Print Preview" (click)='onPrintPreview()' />
+    <!-- <button  class="btn btn-primary   mb-2 " type="button"  (click)="exportToPDF()">Export</button> -->
 </div>
-<ag-grid-angular 
-    #agGrid 
-    id="myGrid" 
-    style="width: 860px; " 
-    class="ag-theme-alpine" 
-    [pagination]="true"
-    [paginationPageSize]="paginationPageSize" 
-    [rowData]="rowData" 
-    [domLayout]="domLayout" 
-    [animateRows]="true"
-    [columnDefs]="columnDefs" 
-    [defaultColDef]="defaultColDef" 
-    [gridOptions]="gridOptions" 
-    [frameworkComponents]="frameworkComponents"
-    (cell-clicked)="onCellClicked($event)"
-    [getRowNodeId]="getRowNodeId"
-    (gridReady)="onGridReady($event)">
-</ag-grid-angular>
-<div class="container mt-3" style="padding-left: 10px; ">
-    <div class="d-flex  ">
-        <div class=" mr-4 pl-1">
-            <h5><strong> Total Credit:</strong> {{totalCredit | currency }} </h5>
-        </div>
-        <div class="mr-4">
-            <h5><strong>Total Debit: </strong>{{TotalDebit | currency}} </h5>
-        </div>
-        <div class="" [ngStyle]="{'color': getColor(total)}">
-            <h5><strong>Total: </strong> {{total | currency}}</h5>
-        </div>
-    </div>
+<div id="printareaDiv">
+    <table class="table sortable" id="transactions" style="width: 900px;">
+        <thead>
+            <tr>
+                <th style="width: 20%;">Type</th>
+                <th style="width: 3%;">Ckeck</th>
+                <th style="width: 20%;">Activity</th>
+                <th style="width: 11%;">Credit</th>
+                <th style="width: 11%;">Debit</th>
+                <th style="width: 12%;">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="transactions.length == 0">
+                <td colspan="6" class="text-center font-weight-bold" >
+                    No transactions Found
+                </td>
+            </tr>           
+            <tr *ngFor="let transaction of transactions | paginate: { itemsPerPage: 10, currentPage: page }"
+                class="item" class="item">
+                <td>{{transaction.transactionType}} </td>
+                <td>{{transaction.checkNumber}} </td>
+                <td>{{transaction.activity}}</td>
+                <td>{{transaction.transactionCredit | currency}}</td>
+                <td>{{transaction.transactionDebit | currency}}</td>
+                <td>{{transaction.transactionDateTime| date: 'MM/dd/yyyy'}}</td>
+            </tr>
+        </tbody>
+        <tfoot *ngIf="transactions.length > 0">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
+                    <h5>{{totalCredit | currency }}</h5>
+                </td>
+                <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
+                    <h5>{{TotalDebit | currency}} </h5>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="font-weight-bold">
+
+                </td>
+                <td class="font-weight-bold text-right">
+                    <h5>Total:</h5>
+                </td>
+                <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
+                    <h5>{{total | currency}}</h5>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" class="text-center border-top ">
+                    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
 
 
-</div>
+
+
+

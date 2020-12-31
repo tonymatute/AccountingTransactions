@@ -1,11 +1,14 @@
+
 import { LookUpTable } from './../_models/lookUpTable';
-import { environment } from 'src/environments/environment';
 import { Transaction } from './../_models/transaction';
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { formatDate } from '@angular/common';
-import { BtnCellRenderer } from '../_buttons/btn-cell-renderer/btn-cell-renderer.component';
-import { AgGridAngular } from 'ag-grid-angular';
-import { identifierName } from '@angular/compiler';
+
+
+
+import { Router } from '@angular/router';
+
+
+
 @Component({
   selector: 'app-transactions',
   templateUrl: './transactions.component.html',
@@ -14,173 +17,23 @@ import { identifierName } from '@angular/compiler';
 export class TransactionsComponent implements OnInit {
   @Input() transactions: Transaction[];
   @Input() lookUpTable: LookUpTable[];
-  @ViewChild('agGrid') agGrid: AgGridAngular;
-
-  gridApi;
-  gridColumnApi;
-  gridOptions;
-  paginationPageSize;
-  paginationNumberFormatter;
-  rowSelection;
-  domLayout;
-  statusBar;
-  columnDefs;
-  defaultColDef;
   totalCredit: number = 0;
   TotalDebit: number = 0;
   total: number = 0;
-  rowData: Transaction[];
-  getRowNodeId;
+  public page: number = 1;
 
-  frameworkComponents: { btnCellRenderer: typeof BtnCellRenderer; };
-
-  constructor() {
-    this.frameworkComponents = {
-      btnCellRenderer: BtnCellRenderer
-    };
-
-    this.getRowNodeId = function (data) {
-      return data.id;
-    };
-
-    this.columnDefs = [
-      {
-        colId: 'transactionId',
-        headerName: '',
-        maxWidth: 65,  
-        field: 'transactionId',
-        cellRenderer: "btnCellRenderer",
-        cellRendererParams: {
-          clicked: function (field: any) {
-            
-            // const selectedNodes = this.agGrid.api.getSelectedNodes();
-            // const selectedData = selectedNodes.map(node => node.data );
-            // const selectedDataStringPresentation = selectedData.map(node => node.make + ' ' + node.model).join(', ');
-        
-            // alert(`Selected nodes: ${selectedDataStringPresentation}`);
-
-            //getSelectedRowData();
-            // this.test(`${ field }`);
-            alert(`${ field } was clicked`);
-          }
-        },               
-      },
-      {
-        headerName: 'Type',
-        field: 'transactionType',
-        maxWidth: 200, 
-        filter: 'agTextColumnFilter',
-        filterParams: {
-          buttons: ['reset', 'apply'],
-          debounceMs: 200,
-        },
-      },
-      {
-        headerName: 'Check',
-        field: 'checkNumber',
-        maxWidth: 115,
-        filter: 'agNumberColumnFilter',
-        filterParams: {
-          buttons: ['reset', 'apply'],
-          debounceMs: 200,
-        },
-      },
-      {
-        headerName: 'Trip',
-        field: 'activity',
-        maxWidth: 200,
-        filter: 'agTextColumnFilter',
-        filterParams: {
-          buttons: ['reset', 'apply'],
-          debounceMs: 200,
-        },
-      },
-      {
-        headerName: 'Credit',
-        field: 'transactionCredit',
-        valueFormatter: (params) =>
-          this.currencyFormatter(params.data.transactionCredit, '$'),
-        maxWidth: 115,
-        filter: 'agNumberColumnFilter',
-        cellStyle: function (params) {
-          if (params.value < '0') {
-            return { color: 'red' };
-          } else {
-            return null;
-          }
-        },
-        filterParams: {
-          buttons: ['reset', 'apply'],
-          debounceMs: 200,
-        },
-      },
-      {
-        headerName: 'Debit',
-        field: 'transactionDebit',
-        valueFormatter: (params) =>
-          this.currencyFormatter(params.data.transactionDebit, '$'),
-        maxWidth: 110,
-        filter: 'agNumberColumnFilter',
-        cellStyle: function (params) {
-          if (params.value < '0') {
-            return { color: 'red' };
-          } else {
-            return null;
-          }
-        },
-        filterParams: {
-          buttons: ['reset', 'apply'],
-          debounceMs: 200,
-        },
-      },
-      {
-        headerName: 'Date',
-        valueFormatter: (params) =>
-          this.dateFormatter(params.data.transactionDateTime),
-        field: 'transactionDateTime',
-        maxWidth: 160,       
-        filter: 'agDateColumnFilter',
-        filterParams: {
-          buttons: ['reset', 'apply'],
-          debounceMs: 200,
-        },
-      },
-    ];
-
-    this.defaultColDef = {
-      flex: 1,
-      sortable: true,
-      resizable: false,
-    };
-
-    // this.gridOptions.onRowClicked = this.myRowClickedHandler;
-
-    this.rowSelection = 'single';
-    this.domLayout = 'autoHeight';
-    this.paginationPageSize = 10;
-    this.paginationNumberFormatter = function (params) {
-      return '[' + params.value.toLocaleString() + ']';
-    };
-  }
-
+  constructor(private router: Router) { }
+    
+    
   ngOnInit(): void {
-    this.initGrid();
-  }
-
-  initGrid() {
-    this.calculateTotals(this.transactions);    
-  }
-
-  onGridReady(params) {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-    this.rowData = this.transactions;
+    this.transactions = this.sortData;
+    this.calculateTotals(this.transactions);  
   }
 
   calculateTotals(totalTransactions) {
     var result = 0;
 
-    totalTransactions.forEach((transaction:Transaction) => {
+    totalTransactions.forEach((transaction: Transaction) => {
       if (typeof transaction.transactionCredit === 'number')
         this.totalCredit += transaction.transactionCredit;
       if (typeof transaction.transactionDebit === 'number')
@@ -189,56 +42,121 @@ export class TransactionsComponent implements OnInit {
     this.total = this.totalCredit - this.TotalDebit;
   }
 
-  currencyFormatter(currency: number, sign: string) {
-    var sansDec = currency.toFixed(2);
-    var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    return sign + `${formatted}`;
-  }
-
   getColor(balance: number): string {
     if (balance === 0) return null;
     return balance > 0 ? 'green' : 'red';
   }
 
-  dateFormatter(date) {
-    var format = 'short';
-    var locale = 'en-US';
-    var formattedDate = formatDate(date, format, locale);
-    return formattedDate;
-  }  
-
+ 
+  
   addNewHandler() {
     alert('Add new');
   }
 
-   test(id) {
-    alert(id);
-  
-  
-  }
-  
-
-  onCellClicked(e) {
-    alert(e);
-
+  get sortData() {
+    return this.transactions.sort((a, b) => {
+      return <any>new Date(a.transactionDateTime) - <any>new Date(b.transactionDateTime);
+    });
   }
 
+  
+  onPrintPreview() {
+    let innerContents = document.getElementById("printareaDiv").innerHTML; 
+    const popupWinindow = window.open();
+    popupWinindow.document.open();
+    popupWinindow.document.write('<html><head></head><body onload="window.print()">' +
+      '<div><h4 style="text-align: center;font-weight: bold"><strong>Heritage United Methodist Church</strong> </h4>' +
+      '<h4 style="text-align: center;"font-weight: bold><strong>Troop 425</strong> </h4>' +
+      '<h5 style="text-align: center;font-weight: bold">Overland Park, Kansas</h5>' +
+      '<h5 style="text-align: center;font-weight: bold">Layne Jones</h5></div><div style="text-align: center"> '
+      +   innerContents + '</div></html>');
+    popupWinindow.document.write(`<style>
+    #transactions {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse:collapse;
+      width: 100%;
+      border: 1px solid #ddd; 
+    }
+    
+    #transactions td, #transactions th {
+      border: none;    
+    }
+    
+    #transactions tbody tr:nth-child(even){background-color: #f2f2f2;}  
+    #transactions tbody tr:hover {background-color: #ddd;}
+    #transactions th:hover {background-color: rgb(3, 23, 90);}
+    
+    #transactions th {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      text-align: left;
+      background-color: #e8e8e8;
+      color: black;
+      cursor: pointer;  
+    }
+    
+    #transactions tfoot {
+      background-color: #e8e8e8;
+    }
+    
+    </style>
+  `);
+    popupWinindow.document.close();
+
+    // const printContents = document.getElementById(e).innerHTML
+    //   const WindowObject = window.open('','PrintWindow','width=750,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes'
+    //   );
+    //   const htmlData = `<html><body>${printContents}</body></html>`;
+    
+    //   WindowObject.document.writeln(htmlData);
+    //   WindowObject.document.close();
+    //   WindowObject.focus();
+    //   // setTimeout(() => {
+    //   //   WindowObject.close();
+    //   // }, 0.5);
+    };
+
+   printPreview(){
+    let printContents = '';
+    const WindowObject = window.open('','PrintWindow','width=750,height=650,top=50,left=50,toolbars=no,scrollbars=yes,status=no,resizable=yes'
+     );
+     
+    printContents += `<table class="table" id="transactions" style="width: 900px;">
+                     <tr>
+                      <th style="width: 20%;">Type</th>
+                <th style="width: 3%;">Ckeck</th>
+                <th style="width: 20%;">Activity</th>
+                <th style="width: 11%;">Credit</th>
+                <th style="width: 11%;">Debit</th>
+                <th style="width: 12%;">Date</th>
+                     </tr>`;
+    // filteredDataAfterDate.map(data => {
+    //      printContents += `<tr>
+    //                    <td>${data.Date}</td>
+    //                    <td>${data.ApplicationStatus}</td> 
+    //                    <td>${data.SubmittedBy}</td>
+    //                  </tr>`;
+    const htmlData = `<html><body>${printContents}</body></html>`;
+  
+    WindowObject.document.writeln(htmlData);
+    WindowObject.document.close();
+    WindowObject.focus();
+    setTimeout(() => {
+      WindowObject.close();
+    }, 0.5);
+  }
+
+  printComponent(cmpName) {
+    let printContents = document.getElementById(cmpName).innerHTML;
+    let originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+}
+  
+ 
 }
 
-
-
-function getSelectedRows() {
-  const selectedNodes = this.agGrid.api.getSelectedNodes();
-  const selectedData = selectedNodes.map(node => node.data );
-  const selectedDataStringPresentation = selectedData.map(node => node.make + ' ' + node.model).join(', ');
-
-  alert(`Selected nodes: ${selectedDataStringPresentation}`);
-}
-
-function getSelectedRowData() {
-  alert("hello");
-  let selectedNodes = this.gridApi.getSelectedNodes();
-  let selectedData = selectedNodes.map(node => node.data);
-  alert(`Selected Nodes:\n${JSON.stringify(selectedData)}`);
-  return selectedData;
-}

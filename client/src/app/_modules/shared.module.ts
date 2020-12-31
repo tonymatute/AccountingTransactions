@@ -13,6 +13,7 @@ import { TimeagoModule } from 'ngx-timeago';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TimeagoModule.forRoot(),
     TooltipModule.forRoot(),
     ButtonsModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgxPaginationModule
     
   ],
   exports: [
@@ -47,7 +49,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     TimeagoModule,
     TooltipModule,
     ButtonsModule,
-    ModalModule
+    ModalModule,
+    NgxPaginationModule
   ]
 })
 export class SharedModule { }

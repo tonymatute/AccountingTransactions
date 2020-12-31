@@ -8,6 +8,6 @@ namespace API.DTOs
         public int RankId { get; set; }
         public string RankName { get; set; }
         public bool ActiveRank { get; set; }
-        public DateTime RankDateTime { get; set; }
+        public DateTime Created { get; set; }
     }
 }

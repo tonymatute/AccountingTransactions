@@ -19,7 +19,7 @@ namespace API.Entities
         public string PhotoUrl { get; set; }
         public string PublicId { get; set; }
         public int PatrolId { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
 
         public ICollection<Transaction> Transactions { get; set; }
         public ICollection<BuckTransaction> BuckTransactions { get; set; }

@@ -1,8 +1,37 @@
-.relocateButton {
-
-    position:absolute;
-    z-index: 1;
-    top:13%; /* if circle bulb in image is at 60% set at 60% */
-    left:3%;
-  
+#transactions {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse:collapse;
+  width: 100%;
+  border: 1px solid #ddd; 
 }
+
+#transactions td, #transactions th {
+  border: none;    
+}
+
+#transactions tbody tr:nth-child(even){background-color: #f2f2f2;}  
+#transactions tbody tr:hover {background-color: #ddd;}
+#transactions th:hover {background-color: rgb(3, 23, 90);}
+
+#transactions th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: left;
+  background-color: #e8e8e8;
+  color: black;
+  cursor: pointer;  
+}
+
+#transactions tfoot {
+  background-color: #e8e8e8;
+}
+@media print {
+  :host {
+    display: none;
+    color: #000 !important;
+        text-shadow: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+  }
+}
+

@@ -310,6 +310,22 @@
   {
     "ListType": "Activity",
     "Display": "Pancake Auction"
+  },
+  {
+    "ListType": "Transaction Type",
+    "Display": "Fund Raising Working Hours"
+  },
+  {
+    "ListType": "Transaction Type",
+    "Display": "Popcorn Sale"
+  },
+  {
+    "ListType": "Transaction Type",
+    "Display": "May Orienteering Event"
+  },
+  {
+    "ListType": "Activity",
+    "Display": "Cosmo Salt Mine"
   }
 ]
 

@@ -39,6 +39,9 @@ import { HasRoleDirective } from './_directives/has-role.directive';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { RoleManagementComponent } from './admin/role-management/role-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
+import { ExportPdfComponent } from './export-pdf/export-pdf.component';
+import { CustomTooltip } from './_component_tooltips/custom-tooltip/custom-tooltip.component';
+
 
 @NgModule({
   declarations: [    
@@ -69,8 +72,9 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
     HasRoleDirective,
     AdminPanelComponent,
     RoleManagementComponent,
-    RolesModalComponent
-    
+    RolesModalComponent,
+    ExportPdfComponent,
+    CustomTooltip
   ],
   imports: [
     SharedModule,
@@ -81,7 +85,7 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    AgGridModule.withComponents([BtnCellRenderer, CheckboxRenderer]),
+    AgGridModule.withComponents([BtnCellRenderer, CheckboxRenderer,CustomTooltip])
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

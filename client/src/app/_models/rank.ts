@@ -3,5 +3,5 @@ export interface Rank {
     rankId: number;
     rankName: string;
     activeRank: boolean;
-    rankDateTime: Date;
+    created: Date;
   }

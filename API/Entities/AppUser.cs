@@ -8,8 +8,8 @@ namespace API.Entities
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }
-        public DateTime  LastActiveDateTime { get; set; } = DateTime.UtcNow;
-        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime  LastActiveDateTime { get; set; } = DateTime.Now;
+        public DateTime Created { get; set; } = DateTime.Now;
 
         public ICollection<AppUserRole> UserRoles { get; set; }
     }

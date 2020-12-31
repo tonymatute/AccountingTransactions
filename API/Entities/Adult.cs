@@ -16,8 +16,8 @@ namespace API.Entities
         public bool Active { get; set; }
         public DateTime? ActiveSinceDatetime { get; set; }
         public string PhotoUrl { get; set; }
-        public string PublicId { get; set; }       
-        public DateTime Created { get; set; }
+        public string PublicId { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
 
         public Scout Scout { get; set; }
     }

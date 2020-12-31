@@ -1,18 +1,24 @@
-<div class="mb-2">
-    <button class="btn btn-primary btn-sm rounded relocateButton"  (click)="addNewHandler()">Add New</button>
+<div class="row mt-2">
+    <div class="container pl-0">
+        <button class="btn btn-primary  rounded mb-2" (click)="addNewHandler()" [disabled]="lastRank">New
+            Rank
+        </button>
+    </div>
+    <table class="table sortable" id="Ranks" style="width: 60%;">
+        <thead>
+            <tr>
+                <th style="width: 1%;">Active</th>
+                <th style="width: 3%;">Rank</th>
+                <th style="width: 3%;">Completed On</th>               
+            </tr>
+        </thead>
+        <tbody>           
+            <tr *ngFor="let rank of ranks" class="item">
+                <td><input type="checkbox" [checked]="rank.activeRank" class="form-check-input ml-2"> </td>
+                <td>{{rank.rankName}}</td>
+                <td>{{rank.created | date}}</td>
+            </tr>
+        </tbody>
+    </table>
+   
 </div>
-<ag-grid-angular 
-    #agGrid 
-    id="myGrid" 
-    style="width: 380px; " 
-    class="ag-theme-alpine" 
-    [pagination]="false"
-    [rowData]="rowData" 
-    [domLayout]="domLayout" 
-    [animateRows]="true"
-    [columnDefs]="columnDefs" 
-    [defaultColDef]="defaultColDef"
-    [frameworkComponents]="frameworkComponents"    
-    (gridReady)="onGridReady($event)">
-
-    

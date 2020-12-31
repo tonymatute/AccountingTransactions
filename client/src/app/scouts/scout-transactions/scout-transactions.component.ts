@@ -4,6 +4,7 @@ import { Scout } from './../../_models/scout';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { GridtService } from 'src/app/_services/grid.service';
 
 @Component({
   selector: 'app-scout-transactions',
@@ -18,10 +19,12 @@ export class ScoutTransactionsComponent implements OnInit {
 
   constructor(
     private scoutService: ScoutService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private gridService: GridtService
   ) {}
 
   ngOnInit(): void {
+    this.gridService.loadSortableScripts();
     this.loadScout();
     
   }
@@ -32,6 +35,7 @@ export class ScoutTransactionsComponent implements OnInit {
     });
   }
 
+  
 
   
 }

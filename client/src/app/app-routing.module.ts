@@ -18,6 +18,7 @@ import { RegisterComponent } from './register/register.component';
 import { AdultTransactionsComponent } from './adults/adult-transactions/adult-transactions.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { AdminGuard } from './_guards/admin.guard';
+import { ExportPdfComponent } from './export-pdf/export-pdf.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,9 +37,10 @@ const routes: Routes = [
         resolve: { scout: ScoutDetailedResolver}
       },
       { path: 'user/edit', component: UserEditComponent },
-      { path: 'admin', component: AdminPanelComponent ,canActivate: [AdminGuard]}
+      { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard] }
     ]
   },
+  { path: 'export-pdf', component: ExportPdfComponent},
   { path: 'lookup', component: ScoutListComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },

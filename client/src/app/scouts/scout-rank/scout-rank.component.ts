@@ -1,7 +1,8 @@
+
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { CheckboxRenderer } from 'src/app/_component_extentions/checkbox-renderer/checkbox-renderer.component';
 import { Rank } from 'src/app/_models/rank';
+import { GridtService } from 'src/app/_services/grid.service';
 
 @Component({
   selector: 'app-scout-rank',
@@ -10,63 +11,27 @@ import { Rank } from 'src/app/_models/rank';
 })
 export class ScoutRankComponent implements OnInit {
   @Input() ranks: Rank[];  
-  gridApi;
-  gridColumnApi;
-  gridOptions;
-  rowSelection;
-  domLayout;
-  columnDefs;
-  defaultColDef;
-  frameworkComponents;
-  rowData: Rank[];
-
-  constructor() {
-    
-    this.frameworkComponents = {
-      checkboxRenderer: CheckboxRenderer,
-    };
-
-    this.columnDefs = [
-      {
-        headerName: 'Active',
-        field: 'activeRank',
-        maxWidth: 90,
-        cellRenderer: 'checkboxRenderer',
-        editable: false,
-      },
-
-      {
-        headerName: 'Rank',
-        field: 'rankName',
-        maxWidth: 160,
-      },
-      {
-        headerName: 'Rank Date',
-        field: 'rankDateTime',
-        maxWidth: 140,
-        valueFormatter: (params) =>
-          this.dateFormatter(params.data.rankDateTime),
-      },
-    ];
-
-    this.defaultColDef = {
-      flex: 1,
-      sortable: false,
-      resizable: false,
-      suppressMovable:true
-    };
-    this.rowSelection = 'single';
-    this.domLayout = 'autoHeight';
+   lastRank = false;
+   public p: number = 1;
+  constructor(private gridService: GridtService) {
+  }
+  
+  ngOnInit(): void {
+    this.gridService.loadSortableScripts();
+    this.ranks = this.sortData;
+    this.lastRank = this.isContains(this.ranks, "Eagle");
   }
 
   
-  ngOnInit(): void {}
+   isContains(json, value) {
+    let contains = false;
+    Object.keys(json).some(key => {
+      contains =  json[key].rankName === value;            
+         return contains;
+    });
+    return contains;
+ }
 
-  onGridReady(params) {
-    this.rowData = this.sortData;    
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-  }
   dateFormatter(date) {
     var format = 'MM/dd/yyyy';
     var locale = 'en-US';
@@ -80,7 +45,14 @@ export class ScoutRankComponent implements OnInit {
 
   get sortData() {
     return this.ranks.sort((a, b) => {
-      return <any>new Date(b.rankDateTime) - <any>new Date(a.rankDateTime);
+      return <any>new Date(b.created) - <any>new Date(a.created);
     });
   }
+
+  
+
+
+
 }
+
+

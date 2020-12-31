@@ -11,9 +11,9 @@ namespace API.DTOs
         public string Activity { get; set; }
         public decimal TransactionCredit { get; set; }       
         public decimal TransactionDebit { get; set; }
-        public int CheckNumber { get; set; }
+        public int? CheckNumber { get; set; }
         public DateTime TransactionDateTime { get; set; }
-        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public DateTime Created { get; set; } 
         public bool Reconciliated { get; set; }
        
     }
