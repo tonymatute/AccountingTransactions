@@ -37,10 +37,10 @@
                 <td></td>
                 <td></td>
                 <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
-                    <h5>{{totalCredit | currency }}</h5>
+                    {{totalCredit | currency }}
                 </td>
                 <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
-                    <h5>{{TotalDebit | currency}} </h5>
+                    {{TotalDebit | currency}}
                 </td>
                 <td></td>
             </tr>
@@ -52,14 +52,14 @@
 
                 </td>
                 <td class="font-weight-bold text-right">
-                    <h5>Total:</h5>
+                    Total:
                 </td>
                 <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
-                    <h5>{{total | currency}}</h5>
+                    {{total | currency}}
                 </td>
             </tr>
             <tr>
-                <td colspan="6" class="text-center border-top ">
+                <td colspan="6" class="text-center border-top "  >
                     <pagination-controls (pageChange)="page = $event"></pagination-controls>
                 </td>
             </tr>
