@@ -12,7 +12,7 @@ export class LookupService {
 
 
   getPatrols() {
-    return this.http.get<LookUpTable[]>(this.baseUrl + 'lookup/patrol');
+    return this.http.get<LookUpTable[]>(this.baseUrl + 'lookup/Patrol');
   }
 
   getActivities() {

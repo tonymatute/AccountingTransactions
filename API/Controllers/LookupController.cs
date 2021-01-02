@@ -22,8 +22,9 @@ namespace API.Controllers
 
         [HttpGet("{listType}")]
         public async Task<List<SelectList>> GetListTypesAsync(string listType)
-        {
-            return await _unitOfWork.ScoutRepository.GetListTypesAsync(listType);
+        {           
+            var loopUpTable =  await _unitOfWork.ScoutRepository.GetListTypesAsync(listType);
+            return loopUpTable;
         }
 
 
