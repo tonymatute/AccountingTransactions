@@ -36,8 +36,25 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(20)]],
       confirmPassword: ["", [Validators.required, this.matchPasswords('password')]],
       lastName: ["", Validators.required],
-      firstName: ["", Validators.required]
+      firstName: ["", Validators.required],
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')
+      ]),
+      confirmEmail: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        this.matchEmail('email')
+      ]),
     });
+  }
+
+  matchEmail(email: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control?.value === control?.parent?.controls[email].value
+        ? null
+        : { emailMatch: true };
+    };
   }
 
   matchPasswords(matchTo: string): ValidatorFn {
@@ -48,15 +65,14 @@ export class RegisterComponent implements OnInit {
 
   register() {    
     this.accountService.register(this.registerForm.value).subscribe(response => {
-     //remove this navigation when confirm account on email is created
-      this.router.navigateByUrl("/members");
+      this.router.navigateByUrl("/confirmed-email-sent");
     }, error => {   
         this.validationErrors = error;
     })
   }
   
   cancel() {
-    this.cancelRegister.emit(false);
+    this.router.navigateByUrl('/');
   }
 
 }

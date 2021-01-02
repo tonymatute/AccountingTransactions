@@ -1,0 +1,18 @@
+C:\Angular Code\Source Code\DatingApp\EmailService\bin\Debug\netcoreapp3.1\EmailService.deps.json
+C:\Angular Code\Source Code\DatingApp\EmailService\bin\Debug\netcoreapp3.1\EmailService.dll
+C:\Angular Code\Source Code\DatingApp\EmailService\bin\Debug\netcoreapp3.1\EmailService.pdb
+C:\Angular Code\Source Code\DatingApp\EmailService\obj\Debug\netcoreapp3.1\EmailService.AssemblyInfoInputs.cache
+C:\Angular Code\Source Code\DatingApp\EmailService\obj\Debug\netcoreapp3.1\EmailService.AssemblyInfo.cs
+C:\Angular Code\Source Code\DatingApp\EmailService\obj\Debug\netcoreapp3.1\EmailService.dll
+C:\Angular Code\Source Code\DatingApp\EmailService\obj\Debug\netcoreapp3.1\EmailService.pdb
+C:\Angular Code\Source Code\DatingApp\EmailService\obj\Debug\netcoreapp3.1\EmailService.csprojAssemblyReference.cache
+C:\Angular Code\Source Code\DatingApp\EmailService\obj\Debug\netcoreapp3.1\EmailService.csproj.CoreCompileInputs.cache
+C:\Source\Accounting\EmailService\bin\Debug\netcoreapp3.1\EmailService.deps.json
+C:\Source\Accounting\EmailService\bin\Debug\netcoreapp3.1\EmailService.dll
+C:\Source\Accounting\EmailService\bin\Debug\netcoreapp3.1\EmailService.pdb
+C:\Source\Accounting\EmailService\obj\Debug\netcoreapp3.1\EmailService.csprojAssemblyReference.cache
+C:\Source\Accounting\EmailService\obj\Debug\netcoreapp3.1\EmailService.AssemblyInfoInputs.cache
+C:\Source\Accounting\EmailService\obj\Debug\netcoreapp3.1\EmailService.AssemblyInfo.cs
+C:\Source\Accounting\EmailService\obj\Debug\netcoreapp3.1\EmailService.csproj.CoreCompileInputs.cache
+C:\Source\Accounting\EmailService\obj\Debug\netcoreapp3.1\EmailService.dll
+C:\Source\Accounting\EmailService\obj\Debug\netcoreapp3.1\EmailService.pdb

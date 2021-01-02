@@ -33,8 +33,11 @@ namespace API.Data
                 {
                     UserName = "admin",
                     LastName = "Admin",
-                    FirstName = "Admin",
+                    FirstName = "Admin"
+                    
                 };
+
+                admin.EmailConfirmed = true;
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
                 await userManager.AddToRolesAsync(admin , new[] {"Admin", "Operator"});
             }            

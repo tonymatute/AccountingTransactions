@@ -16,6 +16,7 @@ namespace API.Extentions
             services.AddIdentityCore<AppUser>(opt =>
             {
                 opt.Password.RequireNonAlphanumeric = false;
+                opt.SignIn.RequireConfirmedEmail = true;
 
             })
                 .AddRoles<AppRole>()

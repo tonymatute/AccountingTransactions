@@ -6,19 +6,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  registerMode: boolean = false;
+  registerMode = false;
+  loginMode = false;
+  formMode = false;
   constructor() {}
 
   ngOnInit(): void {
     
   }
 
-  registerToggle() {
-    this.registerMode = !this.registerMode;
-  }
-
-  cancelRegisterMode(event: boolean) {
-    this.registerMode = event;
-  }
-
+  loginToggle(){
+    this.loginMode = !this.loginMode;
+    this.formMode = this.loginMode;
+   }
+   registerToggle() {
+     this.registerMode = !this.registerMode;
+     this.formMode = this.registerMode;
+   }
+ 
+   cancelRegisterMode(event: boolean) {
+     this.registerMode = event;
+     this.formMode = this.registerMode;
+   }
+ 
+   cancelLoginMode(event: boolean) {
+     this.loginMode = event;
+     this.formMode = this.loginMode;
+   }
 }

@@ -3,6 +3,7 @@ using API.Helpers;
 using API.Interfaces;
 using API.Services;
 using AutoMapper;
+using EmailService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,11 @@ namespace API.Extentions
             {
                 options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
+            var emailConfig = config
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
+            services.AddScoped<IEmailSender, EmailSender>();
 
             return services;
         }

@@ -42,6 +42,12 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
 import { ExportPdfComponent } from './export-pdf/export-pdf.component';
 import { CustomTooltip } from './_component_tooltips/custom-tooltip/custom-tooltip.component';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
+import { ConfirmedEmailComponent } from './confirmed-email/confirmed-email.component';
+import { ConfirmedEmailSentComponent } from './confirmed-email-sent/confirmed-email-sent.component';
+import { ResetPasswordSentComponent } from './reset-password-sent/reset-password-sent.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordCompleteComponent } from './reset-password-complete/reset-password-complete.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 
 @NgModule({
@@ -76,7 +82,13 @@ import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.c
     RolesModalComponent,
     ExportPdfComponent,
     CustomTooltip,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    ConfirmedEmailComponent,
+    ConfirmedEmailSentComponent,
+    ResetPasswordSentComponent,
+    ResetPasswordComponent,
+    ResetPasswordCompleteComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     SharedModule,

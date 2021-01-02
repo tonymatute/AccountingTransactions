@@ -10,27 +10,38 @@ import { AccountService } from '../_services/account.service';
 })
 export class LoginComponent implements OnInit {
   @Output() cancelLogin = new EventEmitter();
+  loginForm: FormGroup;
   model: any = {};
+  validationErrors: string[] = [];
 
-  constructor(public accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initializeForm();
+  }
+
+  initializeForm() {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', [Validators.required]],
+    });
+  }
 
   login() {
-    this.accountService.login(this.model).subscribe(
-      (user) => {
-        console.log(user);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.accountService.login(this.model).subscribe((response) => {
+      this.router.navigateByUrl('/scouts');
+    });
   }
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl('/');
   }
   cancel() {
-    this.cancelLogin.emit(false);
+    this.router.navigateByUrl('/');
   }
 }

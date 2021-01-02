@@ -1,3 +1,7 @@
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordCompleteComponent } from './reset-password-complete/reset-password-complete.component';
+import { ResetPasswordSentComponent } from './reset-password-sent/reset-password-sent.component';
+import { ConfirmedEmailSentComponent } from './confirmed-email-sent/confirmed-email-sent.component';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { ScoutDetailedResolver } from './_resolvers/scout-detail-resolver';
 import { Scout } from './_models/scout';
@@ -19,6 +23,8 @@ import { AdultTransactionsComponent } from './adults/adult-transactions/adult-tr
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { AdminGuard } from './_guards/admin.guard';
 import { ExportPdfComponent } from './export-pdf/export-pdf.component';
+import { ConfirmedEmailComponent } from './confirmed-email/confirmed-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -47,6 +53,12 @@ const routes: Routes = [
   { path: 'errors', component: ErrorTestComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'confirm-email', component: ConfirmedEmailComponent },
+  { path: 'confirmed-email-sent', component: ConfirmedEmailSentComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password-sent', component: ResetPasswordSentComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'reset-password-complete', component: ResetPasswordCompleteComponent },
   { path: '**', component: HomeComponent , pathMatch: 'full'},
 ];
 

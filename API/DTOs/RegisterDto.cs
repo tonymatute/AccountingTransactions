@@ -13,6 +13,8 @@ namespace API.DTOs
         [Required]
         public string LastName { get; set; }
         [Required]
-        public string FirstName { get; set; }        
+        public string FirstName { get; set; }
+        public string Email { get; set; }
+        public bool confirmedEmail { get; set; }
     }
 }
