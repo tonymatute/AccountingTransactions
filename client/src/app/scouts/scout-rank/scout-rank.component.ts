@@ -3,7 +3,7 @@ import { LookUpTable } from './../../_models/lookUpTable';
 import { LookupService } from './../../_services/lookup.service';
 import { Scout } from './../../_models/scout';
 import { RankAddModalComponent } from './../../modals/rank-add-modal/rank-add-modal.component';
-import { formatDate } from '@angular/common';
+
 import { Component, Input, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Rank } from 'src/app/_models/rank';
@@ -33,7 +33,7 @@ export class ScoutRankComponent implements OnInit {
 
   ngOnInit(): void {
     this.gridService.loadSortableScripts();
-    this.ranks = this.sortData;
+    this.ranks = this.gridService.sortRanksByDateDesc(this.ranks);
     this.lastRank = this.isContains(this.ranks, 'Eagle');
     this.getRankList();
   }
@@ -45,19 +45,6 @@ export class ScoutRankComponent implements OnInit {
       return contains;
     });
     return contains;
-  }
-
-  dateFormatter(date) {
-    var format = 'MM/dd/yyyy';
-    var locale = 'en-US';
-    var formattedDate = formatDate(date, format, locale);
-    return formattedDate;
-  }
-
-  get sortData() {
-    return this.ranks.sort((a, b) => {
-      return <any>new Date(b.created) - <any>new Date(a.created);
-    });
   }
 
   getRankList() {
@@ -94,18 +81,13 @@ export class ScoutRankComponent implements OnInit {
           });
 
           scout.ranks.push(newRank.rank);
-          scout.ranks = this.sortRanks(scout.ranks);
+          scout.ranks = this.gridService.sortRanksByDateDesc(scout.ranks);
           this.lastRank = this.isContains(scout.ranks, 'Eagle');
         });      
       }
     });
   }
 
-   sortRanks(ranks: Rank[]) {
-    return ranks.sort((a, b) => {
-      return <any>new Date(b.created) - <any>new Date(a.created);
-    });
-  }
 
   private getRankArray() {
     const ranks = [];

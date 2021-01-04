@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Rank } from '../_models/rank';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +19,19 @@ export class GridtService {
       node.charset = 'utf-8';
       document.getElementsByTagName('head')[0].appendChild(node);
     }
+  }
+
+  sortRanksByDateDesc(ranks: Rank[]) {
+    return ranks.sort((a, b) => {
+      return <any>new Date(b.created) - <any>new Date(a.created);
+    });
+  }
+
+  dateFormatter(date) {
+    var format = 'MM/dd/yyyy';
+    var locale = 'en-US';
+    var formattedDate = formatDate(date, format, locale);
+    return formattedDate;
   }
 
 }
