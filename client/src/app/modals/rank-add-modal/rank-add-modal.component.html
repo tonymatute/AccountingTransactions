@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">New rank for {{scout.firstName}} {{scout.lastName}}</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body ">
+    <form #rankForm='ngForm' id="rankForm" class="form-inline">
+        <div class="from-group ">
+            <label class="text-left font-weight-bold">Rank:</label>
+            <select class="form-control mr-4" [(ngModel)]="rank.rankId" ngModel name="rankId">
+                <option value='0'>Select new rank </option>
+                <option *ngFor="let rankLookup of rankLookupTable" [ngValue]="rankLookup.id">
+                    {{rankLookup.display}}
+                </option>
+            </select>
+        </div>
+        <div class="from-group ">
+            <label class="text-left font-weight-bold">Complete On:</label>
+            <input [ngModel]="rank.created" ngModel (ngModelChange)="rank.created = $event" type="date" placeholder="Completed On" name="created"
+                class="form-control">
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary rounded" (click)="addRank()">Add</button>
+    <button type="button" class="btn btn-outline-secondary rounded" (click)="bsModalRef.hide()">Cancel</button>
+</div>

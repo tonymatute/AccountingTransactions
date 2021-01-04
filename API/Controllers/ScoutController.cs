@@ -4,13 +4,11 @@ using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -23,13 +21,19 @@ namespace API.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IPhotoService _photoService;
+        private readonly DataContext _context;
 
-        public ScoutController(IUnitOfWork unitOfWork, IMapper mapper, IPhotoService photoService)
+        public ScoutController(
+            IUnitOfWork unitOfWork, 
+            IMapper mapper, 
+            IPhotoService photoService,
+            DataContext context)
         {
 
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _photoService = photoService;
+            _context = context;
         }
 
         [HttpGet]
@@ -105,5 +109,41 @@ namespace API.Controllers
             return BadRequest("Problem deleting photo!");
 
         }
+
+        [HttpPost("add-rank/{memberId}")]
+        public async Task<ActionResult<RankDto>> AddRank(int memberId, [FromQuery()] RankParams rankParams)
+        {
+            var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(memberId);
+            if (scout == null) return NotFound("Scout Not Found!");
+
+            var rankName =  _unitOfWork.ScoutRepository.SelectRankNameByID(rankParams.RankId);
+
+            var currentRank = await _unitOfWork.ScoutRepository.FindActiveRankByIdAsync(memberId);
+            if (currentRank != null)
+            {
+                currentRank.ActiveRank = false;
+                _unitOfWork.ScoutRepository.UpdateRank(currentRank);
+                if (!await _unitOfWork.Complete()) return BadRequest("Failed to Update Current rank.");
+            }
+
+            var newRank = new Rank
+            {
+                ActiveRank = rankParams.ActiveRank,
+                Created = rankParams.Created,
+                RankId = rankParams.RankId,
+                RankName = rankName,
+                Scout = scout
+            };
+
+            _context.Ranks.Add(newRank);         
+
+            if (await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Failed to add rank to scout.");
+
+        }
+
+
+
     }
 }

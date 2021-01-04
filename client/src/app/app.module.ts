@@ -48,6 +48,7 @@ import { ResetPasswordSentComponent } from './reset-password-sent/reset-password
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResetPasswordCompleteComponent } from './reset-password-complete/reset-password-complete.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { RankAddModalComponent } from './modals/rank-add-modal/rank-add-modal.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     ResetPasswordSentComponent,
     ResetPasswordComponent,
     ResetPasswordCompleteComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    RankAddModalComponent
   ],
   imports: [
     SharedModule,

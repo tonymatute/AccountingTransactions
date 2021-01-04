@@ -48,6 +48,12 @@ namespace API.Data
                .FirstOrDefaultAsync(s => s.MemberId == id);
         }
 
+        public async Task<Rank> FindActiveRankByIdAsync(int id)
+        {
+            return await _context.Ranks
+               .FirstOrDefaultAsync(r => r.Scout.MemberId == id && r.ActiveRank == true);
+        }
+
         public async Task<Scout> FindScoutByPublicIdAsync(string PublicId)
         {
             return await _context.Scouts
@@ -169,6 +175,25 @@ namespace API.Data
             _context.Entry(scout).State = EntityState.Modified;
         }
 
-      
+        public void UpdateRank(Rank rank)
+        {
+            _context.Entry(rank).State = EntityState.Modified;
+        }
+
+
+        public string SelectRankNameByID(int id)        {
+            return _context.SelectList
+               .AsNoTracking()
+               .FirstOrDefault(s => s.Id == id).Display;               
+        }
+
+        public void UpdateActiveRank(int scoutId)
+        {
+
+
+        }
+
+
+
     }
 }

@@ -37,6 +37,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                     this.toastr.error(err);
                   });
                   break;
+                } else {
+                  this.toastr.error(error.error);
+                  break;
                 }
 
                 if (error.error.errors instanceof Array) {
@@ -51,6 +54,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                   break;
                 }
               }
+
               this.toastr.error(error.statusText);
               break;
             case 401:

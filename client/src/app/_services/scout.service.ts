@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { getPaginationHeaders, getPaginationResult } from './paginationHelper';
 import { AccountService } from './account.service';
+import { Rank } from '../_models/rank';
 
 @Injectable({
   providedIn: 'root',
@@ -84,5 +85,15 @@ export class ScoutService {
     this.scoutParams = scoutParams;
   }
 
+  addScoutRank(id: number, rank: Rank) {
+    let params = new HttpParams();
+   
+    params = params.append('rankName', rank.rankName.toString());
+    params = params.append('activeRank', rank.activeRank.toString());
+    params = params.append('created', rank.created.toString());
+    params = params.append('rankId', rank.rankId.toString());
+    
+    return this.http.post(this.baseUrl + 'scout/add-rank/' + id + '?rank=' + params , {});
+  }
 
 }
