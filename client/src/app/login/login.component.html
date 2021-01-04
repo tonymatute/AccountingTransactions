@@ -8,11 +8,11 @@
                 <form #loginForm='ngForm' class="" (ngSubmit)="login()" autocomplete="off">
                     <div class="from-group">
                         <input name="username" [(ngModel)]="model.username" placeholder="Username" type="text"
-                            class="form-control mr-sm-2 mt-2">
+                            class="form-control mr-sm-2 mt-2" required>
                     </div>
                     <div class="from-group mt-2">
                         <input name="password" [(ngModel)]="model.password" placeholder="Password" type="password"
-                            class="form-control mr-sm-2" autocomplete="off">
+                            class="form-control mr-sm-2" autocomplete="off" required>
                     </div>
                     <div class="text-center mt-3">
                         <button [disabled]='!loginForm.valid' class="btn btn-primary rounded justify-content-right" type="submit">Login</button>
