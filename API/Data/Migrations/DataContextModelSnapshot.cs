@@ -60,6 +60,21 @@ namespace API.data.migrations
                     b.ToTable("Adult");
                 });
 
+            modelBuilder.Entity("API.Entities.AdultLeadership", b =>
+                {
+                    b.Property<int>("AdultId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LeadershipId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("AdultId", "LeadershipId");
+
+                    b.HasIndex("LeadershipId");
+
+                    b.ToTable("AdultLeadership");
+                });
+
             modelBuilder.Entity("API.Entities.AppRole", b =>
                 {
                     b.Property<int>("Id")
@@ -216,32 +231,33 @@ namespace API.data.migrations
                     b.ToTable("BuckTransactions");
                 });
 
-            modelBuilder.Entity("API.Entities.Rank", b =>
+            modelBuilder.Entity("API.Entities.Leadership", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("LeadershipId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<bool>("ActiveRank")
-                        .HasColumnType("boolean");
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
+                    b.HasKey("LeadershipId");
 
+                    b.ToTable("Leadership");
+                });
+
+            modelBuilder.Entity("API.Entities.Rank", b =>
+                {
                     b.Property<int>("RankId")
-                        .HasColumnType("integer");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("RankName")
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int?>("ScoutMemberId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ScoutMemberId");
+                    b.HasKey("RankId");
 
                     b.ToTable("Ranks");
                 });
@@ -288,6 +304,31 @@ namespace API.data.migrations
                     b.ToTable("Scout");
                 });
 
+            modelBuilder.Entity("API.Entities.ScoutRank", b =>
+                {
+                    b.Property<int>("ScoutId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RankId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("ActiveRank")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("CompletedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("RankName")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("ScoutId", "RankId");
+
+                    b.HasIndex("RankId");
+
+                    b.ToTable("ScoutRanks");
+                });
+
             modelBuilder.Entity("API.Entities.SelectList", b =>
                 {
                     b.Property<int>("Id")
@@ -318,6 +359,9 @@ namespace API.data.migrations
                     b.Property<int>("ActivityId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("AdultId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("CheckNumber")
                         .HasColumnType("integer");
 
@@ -343,6 +387,8 @@ namespace API.data.migrations
                         .HasColumnType("integer");
 
                     b.HasKey("TransactionId");
+
+                    b.HasIndex("AdultId");
 
                     b.HasIndex("ScoutMemberId");
 
@@ -444,6 +490,25 @@ namespace API.data.migrations
                     b.Navigation("Scout");
                 });
 
+            modelBuilder.Entity("API.Entities.AdultLeadership", b =>
+                {
+                    b.HasOne("API.Entities.Adult", "Adults")
+                        .WithMany("AdultLeaderships")
+                        .HasForeignKey("AdultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Leadership", "Leaderships")
+                        .WithMany("AdultLeaderships")
+                        .HasForeignKey("LeadershipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Adults");
+
+                    b.Navigation("Leaderships");
+                });
+
             modelBuilder.Entity("API.Entities.AppUserRole", b =>
                 {
                     b.HasOne("API.Entities.AppRole", "Role")
@@ -472,20 +537,36 @@ namespace API.data.migrations
                     b.Navigation("Scout");
                 });
 
-            modelBuilder.Entity("API.Entities.Rank", b =>
+            modelBuilder.Entity("API.Entities.ScoutRank", b =>
                 {
-                    b.HasOne("API.Entities.Scout", "Scout")
-                        .WithMany("Ranks")
-                        .HasForeignKey("ScoutMemberId");
+                    b.HasOne("API.Entities.Rank", "Ranks")
+                        .WithMany("ScoutRanks")
+                        .HasForeignKey("RankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Scout");
+                    b.HasOne("API.Entities.Scout", "Scouts")
+                        .WithMany("ScoutRanks")
+                        .HasForeignKey("ScoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ranks");
+
+                    b.Navigation("Scouts");
                 });
 
             modelBuilder.Entity("API.Entities.Transaction", b =>
                 {
+                    b.HasOne("API.Entities.Adult", "Adult")
+                        .WithMany("Transactions")
+                        .HasForeignKey("AdultId");
+
                     b.HasOne("API.Entities.Scout", "Scout")
                         .WithMany("Transactions")
                         .HasForeignKey("ScoutMemberId");
+
+                    b.Navigation("Adult");
 
                     b.Navigation("Scout");
                 });
@@ -526,6 +607,13 @@ namespace API.data.migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("API.Entities.Adult", b =>
+                {
+                    b.Navigation("AdultLeaderships");
+
+                    b.Navigation("Transactions");
+                });
+
             modelBuilder.Entity("API.Entities.AppRole", b =>
                 {
                     b.Navigation("UserRoles");
@@ -536,13 +624,23 @@ namespace API.data.migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("API.Entities.Leadership", b =>
+                {
+                    b.Navigation("AdultLeaderships");
+                });
+
+            modelBuilder.Entity("API.Entities.Rank", b =>
+                {
+                    b.Navigation("ScoutRanks");
+                });
+
             modelBuilder.Entity("API.Entities.Scout", b =>
                 {
                     b.Navigation("BuckTransactions");
 
                     b.Navigation("Parents");
 
-                    b.Navigation("Ranks");
+                    b.Navigation("ScoutRanks");
 
                     b.Navigation("Transactions");
                 });

@@ -1,3 +1,4 @@
+import { Rank } from 'src/app/_models/rank';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -23,16 +24,18 @@ export class LookupService {
     return this.http.get<LookUpTable[]>(this.baseUrl + 'lookup/Expense Type');
   }
 
-  getPositions() {
-    return this.http.get<LookUpTable[]>(this.baseUrl + 'lookup/Position');
+  getLeaderships() {
+    return this.http.get<LookUpTable[]>(this.baseUrl + 'lookup/GetLeadership');
   }
 
   getRanks() {
-    return this.http.get<LookUpTable[]>(this.baseUrl + 'lookup/Rank');
+    return this.http.get<Rank[]>(this.baseUrl + "lookup/GetRanks");
   }
 
   getTransactionTypes() {
     return this.http.get<LookUpTable[]>(this.baseUrl + 'lookup/Transaction Type');
   }
+
+  
 
 }

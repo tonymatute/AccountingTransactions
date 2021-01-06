@@ -1,5 +1,5 @@
+import { ScoutRank } from './../_models/scoutRank';
 import { Injectable } from '@angular/core';
-import { Rank } from '../_models/rank';
 import { formatDate } from '@angular/common';
 
 @Injectable({
@@ -21,9 +21,9 @@ export class GridtService {
     }
   }
 
-  sortRanksByDateDesc(ranks: Rank[]) {
-    return ranks.sort((a, b) => {
-      return <any>new Date(b.created) - <any>new Date(a.created);
+  sortRanksByDateDesc(scoutRanks: ScoutRank[]) {
+    return scoutRanks.sort((a, b) => {
+      return <any>new Date(b.completedOn) - <any>new Date(a.completedOn);
     });
   }
 

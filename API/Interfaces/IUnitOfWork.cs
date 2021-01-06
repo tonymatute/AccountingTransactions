@@ -6,6 +6,7 @@ namespace API.Interfaces
     {
         IScoutRepository ScoutRepository { get; }
         IUserRepository UserRepository { get; }
+        IAdultRepository AdultRepository { get; }
         bool HasChanges();
         Task<bool> Complete();
 

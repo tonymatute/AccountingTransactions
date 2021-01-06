@@ -1,14 +1,15 @@
-﻿using System;
+﻿using API.DTOs;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Entities
 {
     [Table("Adult")]
     public class Adult
     {
+        [Key]        
         public int AdultId { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }       
@@ -20,5 +21,7 @@ namespace API.Entities
         public DateTime Created { get; set; } = DateTime.Now;
 
         public Scout Scout { get; set; }
+        public ICollection<AdultLeadership> AdultLeaderships { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
     }
 }

@@ -25,6 +25,8 @@ import { AdminGuard } from './_guards/admin.guard';
 import { ExportPdfComponent } from './export-pdf/export-pdf.component';
 import { ConfirmedEmailComponent } from './confirmed-email/confirmed-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AdultAddComponent } from './adults/adult-add/adult-add.component';
+import { ScoutAddComponent } from './scouts/scout-add/scout-add.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,7 +37,9 @@ const routes: Routes = [
     children: [
       { path: 'adults', component: AdultListComponent },
       { path: 'adults/:id', component: AdultTransactionsComponent },
+      { path: 'adult-add', component: AdultAddComponent },
       { path: 'scouts', component: ScoutListComponent},
+      { path: 'scout-add', component: ScoutAddComponent},
       { path: 'scouts/:id', component: ScoutTransactionsComponent , resolve: { scout: ScoutDetailedResolver}},
       {
         path: 'scout/edit/:id', component: ScoutEditComponent,

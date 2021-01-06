@@ -176,34 +176,6 @@
     "Display": "Adult Dues"
   },
   {
-    "ListType": "Rank",
-    "Display": "Scout"
-  },
-  {
-    "ListType": "Rank",
-    "Display": "Tenderfoot"
-  },
-  {
-    "ListType": "Rank",
-    "Display": "Second Class"
-  },
-  {
-    "ListType": "Rank",
-    "Display": "First Class"
-  },
-  {
-    "ListType": "Rank",
-    "Display": "Star"
-  },
-  {
-    "ListType": "Rank",
-    "Display": "Life"
-  },
-  {
-    "ListType": "Rank",
-    "Display": "Eagle"
-  },
-  {
     "ListType": "Patrol",
     "Display": "Frontiersman"
   },
@@ -218,54 +190,6 @@
   {
     "ListType": "Patrol",
     "Display": "Baked Potato"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Unit Scouter Reserve"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Committee Member Chair"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Assistant Scoutmater"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Outdoor Activity Chair"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Scoutmaster"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Chartered Organization Rep Chair"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Treasury Chair"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Eagle Coach"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Fund Raising Chair"
-  },
-  {
-    "ListType": "Position",
-    "Display": "Advancement Chair"
-  },
-  {
-    "ListType": "Position",
-    "Display": "QuarterMaster"
-  },
-  {
-    "ListType": "Position",
-    "Display": "High Adventure Chair"
   },
   {
     "ListType": "Activity",

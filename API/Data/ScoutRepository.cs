@@ -5,14 +5,13 @@ using API.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Data
 {
-  
+
     public class ScoutRepository : IScoutRepository
     {
         private readonly DataContext _context;
@@ -44,14 +43,14 @@ namespace API.Data
                 .Include(t => t.Transactions)
                 .Include(b => b.BuckTransactions)
                 .Include(p => p.Parents)
-                .Include(r => r.Ranks)              
+                .Include(r => r.ScoutRanks)              
                .FirstOrDefaultAsync(s => s.MemberId == id);
         }
 
-        public async Task<Rank> FindActiveRankByIdAsync(int id)
+        public async Task<ScoutRank> FindActiveRankByIdAsync(int id)
         {
-            return await _context.Ranks
-               .FirstOrDefaultAsync(r => r.Scout.MemberId == id && r.ActiveRank == true);
+            return await _context.ScoutRanks
+               .FirstOrDefaultAsync(r => r.ScoutId == id && r.ActiveRank == true);
         }
 
         public async Task<Scout> FindScoutByPublicIdAsync(string PublicId)
@@ -60,7 +59,7 @@ namespace API.Data
                 .Include(t => t.Transactions)
                 .Include(b => b.BuckTransactions)
                 .Include(p => p.Parents)
-                .Include(r => r.Ranks)               
+                .Include(r => r.ScoutRanks)               
                .FirstOrDefaultAsync(s => s.PublicId == PublicId);
         }
 
@@ -99,10 +98,35 @@ namespace API.Data
             return scouts;
         }
 
+        public async Task<Scout> AddScout(ScoutDto scoutDto)
+        {
+            var scout = _mapper.Map<Scout>(scoutDto);
+            
+            await _context.Scouts.AddAsync(scout);
+
+            return scout;
+        }
+
         public async Task<List<SelectList>> GetListTypesAsync(string listType)
         {
             return  await _context.SelectList
                 .Where(s => s.ListType == listType)
+               .AsNoTracking()
+               .ToListAsync();
+        }
+
+        public async Task<List<RankDto>> GetRanksAsync()
+        {
+            return await _context.Ranks
+               .ProjectTo<RankDto>(_mapper.ConfigurationProvider)
+               .AsNoTracking()
+               .ToListAsync();
+        }
+
+        public async Task<List<LeadershipDto>> GetLeadershipAsync()
+        {
+            return await _context.Leaderships
+               .ProjectTo<LeadershipDto>(_mapper.ConfigurationProvider)
                .AsNoTracking()
                .ToListAsync();
         }
@@ -175,25 +199,12 @@ namespace API.Data
             _context.Entry(scout).State = EntityState.Modified;
         }
 
-        public void UpdateRank(Rank rank)
+        public void UpdateRank(ScoutRank scoutRank)
         {
-            _context.Entry(rank).State = EntityState.Modified;
+            _context.Entry(scoutRank).State = EntityState.Modified;
         }
 
-
-        public string SelectRankNameByID(int id)        {
-            return _context.SelectList
-               .AsNoTracking()
-               .FirstOrDefault(s => s.Id == id).Display;               
-        }
-
-        public void UpdateActiveRank(int scoutId)
-        {
-
-
-        }
-
-
+      
 
     }
 }

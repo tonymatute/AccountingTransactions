@@ -1,7 +1,4 @@
-export interface Rank {
-    id: number;
+export interface Rank {   
     rankId: number;
-    rankName: string;
-    activeRank: boolean;
-    created: Date;
+    rankName: string;   
   }

@@ -12,10 +12,10 @@
             </tr>
         </thead>
         <tbody>           
-            <tr *ngFor="let rank of ranks" class="item">
+            <tr *ngFor="let rank of scoutRanks" class="item">
                 <td><input type="checkbox" [checked]="rank.activeRank" class="form-check-input ml-2"> </td>
                 <td>{{rank.rankName}}</td>
-                <td>{{rank.created | date}}</td>
+                <td>{{rank.completedOn | date}}</td>
             </tr>
         </tbody>
     </table>

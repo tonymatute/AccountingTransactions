@@ -7,6 +7,6 @@ namespace API.Helpers
         public int RankId { get; set; }
         public bool ActiveRank { get; set; }
         public string RankName { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime CompletedOn { get; set; }
     }
 }

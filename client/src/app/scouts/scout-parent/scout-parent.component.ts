@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Parent } from 'src/app/_models/parent';
+import { Adult } from 'src/app/_models/adult';
 
 @Component({
   selector: 'app-scout-parent',
@@ -7,7 +7,7 @@ import { Parent } from 'src/app/_models/parent';
   styleUrls: ['./scout-parent.component.css']
 })
 export class ScoutParentComponent implements OnInit {
-  @Input() parents: Parent[];
+  @Input() parents: Adult[];
   constructor() { }
 
   ngOnInit(): void {

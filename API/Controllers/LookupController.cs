@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +28,16 @@ namespace API.Controllers
             return loopUpTable;
         }
 
+        [HttpGet("GetRanks")]
+        public async Task<List<RankDto>> GetRanks()
+        {
+            return await _unitOfWork.ScoutRepository.GetRanksAsync(); 
+        }
 
+        [HttpGet("GetLeadership")]
+        public async Task<List<LeadershipDto>> GetLeadership()
+        {
+            return await _unitOfWork.ScoutRepository.GetLeadershipAsync();
+        }
     }
 }

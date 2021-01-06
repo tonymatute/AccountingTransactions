@@ -16,9 +16,11 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        public IScoutRepository ScoutRepository => new ScoutRepository(_context, _mapper);
+        public IScoutRepository ScoutRepository => new ScoutRepository(_context, _mapper); 
+        public IAdultRepository AdultRepository => new AdultRepository(_context, _mapper);
 
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
+       
 
         public async Task<bool> Complete()
         {

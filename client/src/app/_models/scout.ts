@@ -1,7 +1,9 @@
+import { ScoutRank } from './scoutRank';
 import { Rank } from './rank';
 import { BuckTransaction } from "./buckTransactions";
-import { Parent } from "./parent";
+
 import { Transaction } from "./transaction";
+import { Adult } from './adult';
 
 export interface Scout {
 
@@ -20,7 +22,7 @@ export interface Scout {
     created: Date;
     transactions: Transaction[];
     buckTransactions: BuckTransaction[];
-    parents: Parent[];
-    ranks: Rank[];
+    parents: Adult[];
+    scoutRanks: ScoutRank[];
 
 }

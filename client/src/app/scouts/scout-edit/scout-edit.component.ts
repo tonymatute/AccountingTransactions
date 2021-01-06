@@ -65,6 +65,10 @@ export class ScoutEditComponent implements OnInit {
     });
   }
 
+  refresh() {
+    window.location.reload();
+  }
+
   updateScout() {
     this.confirmService
       .confirm('Confirm Update', 'Are you sure you want to update this profile?',"Yes","No")

@@ -9,6 +9,7 @@ import { map, take } from 'rxjs/operators';
 import { getPaginationHeaders, getPaginationResult } from './paginationHelper';
 import { AccountService } from './account.service';
 import { Rank } from '../_models/rank';
+import { ScoutRank } from '../_models/scoutRank';
 
 @Injectable({
   providedIn: 'root',
@@ -85,13 +86,14 @@ export class ScoutService {
     this.scoutParams = scoutParams;
   }
 
-  addScoutRank(id: number, rank: Rank) {
+  addScoutRank(id: number, scoutRank: ScoutRank) {
     let params = new HttpParams();
    
-    params = params.append('rankName', rank.rankName.toString());
-    params = params.append('activeRank', rank.activeRank.toString());
-    params = params.append('created', rank.created.toString());
-    params = params.append('rankId', rank.rankId.toString());
+    params = params.append('rankName', scoutRank.rankName.toString());
+    params = params.append('activeRank', scoutRank.activeRank.toString());
+    params = params.append('completedOn', scoutRank.completedOn.toString());
+    params = params.append('rankId', scoutRank.rankId.toString());
+    params = params.append('rankName', scoutRank.rankName.toString());
     
     return this.http.post(this.baseUrl + 'scout/add-rank/' + id + '?rank=' + params , {});
   }

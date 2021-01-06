@@ -8,16 +8,17 @@
     <form #rankForm='ngForm' id="rankForm" class="form-inline">
         <div class="from-group text-left">
             <label class=" font-weight-bold justify-content-start pl-1" >Rank:</label>
-            <select class="form-control mr-4 input-pointer" [(ngModel)]="rank.rankId" ngModel name="rankId" required>
-                <option value='0'>Select new rank </option>
-                <option *ngFor="let rankLookup of rankLookupTable" [ngValue]="rankLookup.id">
-                    {{rankLookup.display}}
+            <select #rankName class="form-control mr-4 input-pointer" [(ngModel)]="scoutRank.rankId" 
+                ngModel name="rank" required  (change)='onSelected($event)'>
+                <option value='0' disabled >Select new rank </option>
+                <option *ngFor="let rank of ranks" [ngValue]="rank.rankId">
+                    {{rank.rankName}}
                 </option>
             </select>
         </div>
         <div class="from-group ">
             <label class="text-left font-weight-bold justify-content-start pl-1">Complete On:</label>
-            <input [ngModel]="rank.created" required ngModel (ngModelChange)="rank.created = $event" type="date" placeholder="Completed On" name="created"
+            <input [ngModel]="scoutRank.completedOn" required ngModel (ngModelChange)="scoutRank.completedOn = $event" type="date" placeholder="Completed On" name="created"
                 class="form-control input-pointer">
         </div>
     </form>

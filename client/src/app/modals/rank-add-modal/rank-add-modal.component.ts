@@ -1,3 +1,4 @@
+import { ScoutRank } from './../../_models/scoutRank';
 import { Rank } from './../../_models/rank';
 import { LookUpTable } from './../../_models/lookUpTable';
 
@@ -15,8 +16,8 @@ export class RankAddModalComponent implements OnInit {
 
   @Input() addScoutRank = new EventEmitter();
   scout: Scout;
-  rank: Partial<Rank> = {rankId:0,activeRank:true,rankName: ''}
-  rankLookupTable: LookUpTable[];
+  scoutRank: Partial<ScoutRank> = {rankId:0, activeRank:true ,rankName: ''}
+  ranks: Rank[];
 
   constructor(public bsModalRef: BsModalRef) { }
 
@@ -26,10 +27,13 @@ export class RankAddModalComponent implements OnInit {
 
   addRank() {
 
-    this.addScoutRank.emit(this.rank);
+    this.addScoutRank.emit(this.scoutRank);
     this.bsModalRef.hide();
   }
 
+  onSelected(e) { 
+    this.scoutRank.rankName = this.ranks.filter(x => x.rankId === this.scoutRank.rankId)[0].rankName;   
+  }
 
 
 }

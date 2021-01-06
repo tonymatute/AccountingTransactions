@@ -22,6 +22,7 @@ namespace API.Entities
         public bool Reconciliated { get; set; }
         
         public Scout Scout { get; set; }
-               
+        public Adult Adult { get; set; }
+
     }
 }

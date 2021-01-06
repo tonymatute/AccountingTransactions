@@ -6,7 +6,6 @@ using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -39,10 +38,10 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ScoutDto>>> GetScouts([FromQuery] ScoutParams scoutParams)
         {
-            var users = await _unitOfWork.ScoutRepository.GetScoutsAsync(scoutParams);
-            Response.AddPaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
+            var scouts = await _unitOfWork.ScoutRepository.GetScoutsAsync(scoutParams);
+            Response.AddPaginationHeader(scouts.CurrentPage, scouts.PageSize, scouts.TotalCount, scouts.TotalPages);
 
-            return Ok(users);
+            return Ok(scouts);
         }
 
         [HttpGet("{id}", Name = "GetScout")]
@@ -110,15 +109,22 @@ namespace API.Controllers
 
         }
 
-        [HttpPost("add-rank/{memberId}")]
-        public async Task<ActionResult<RankDto>> AddRank(int memberId, [FromQuery()] RankParams rankParams)
+        [HttpPost("add-scout")]
+        public async Task<ActionResult<ScoutDto>> AddScout(ScoutDto scoutDto)
         {
-            var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(memberId);
+            var scout = await _unitOfWork.ScoutRepository.AddScout(scoutDto);
+
+            return Ok(scout);
+        }
+
+
+        [HttpPost("add-rank/{scoutId}")]
+        public async Task<ActionResult<RankDto>> AddRank(int scoutId, [FromQuery()] RankParams rankParams)
+        {
+            var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(scoutId);
             if (scout == null) return NotFound("Scout Not Found!");
 
-            var rankName =  _unitOfWork.ScoutRepository.SelectRankNameByID(rankParams.RankId);
-
-            var currentRank = await _unitOfWork.ScoutRepository.FindActiveRankByIdAsync(memberId);
+            var currentRank = await _unitOfWork.ScoutRepository.FindActiveRankByIdAsync(scoutId);
             if (currentRank != null)
             {
                 currentRank.ActiveRank = false;
@@ -126,24 +132,20 @@ namespace API.Controllers
                 if (!await _unitOfWork.Complete()) return BadRequest("Failed to Update Current rank.");
             }
 
-            var newRank = new Rank
+            var newRank = new ScoutRank
             {
                 ActiveRank = rankParams.ActiveRank,
-                Created = rankParams.Created,
+                CompletedOn = rankParams.CompletedOn,
                 RankId = rankParams.RankId,
-                RankName = rankName,
-                Scout = scout
+                RankName = rankParams.RankName,
+                ScoutId = scoutId               
             };
 
-            _context.Ranks.Add(newRank);         
+            _context.ScoutRanks.Add(newRank);
 
             if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to add rank to scout.");
-
         }
-
-
-
     }
 }

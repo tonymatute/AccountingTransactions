@@ -1,8 +1,6 @@
 ﻿using API.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.DTOs
 {
@@ -17,7 +15,8 @@ namespace API.DTOs
         public string PhotoUrl { get; set; }
         public string PublicId { get; set; }
         public DateTime Created { get; set; }
-        public int PositionId { get; set; }
+        public ICollection<AdultLeadershipDto> AdultLeaderships { get; set; }
+        public ICollection<Transaction> Transactions { get; set; }
 
     }
 }

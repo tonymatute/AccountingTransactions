@@ -1,5 +1,5 @@
+
 import { ScoutService } from 'src/app/_services/scout.service';
-import { LookUpTable } from './../../_models/lookUpTable';
 import { LookupService } from './../../_services/lookup.service';
 import { Scout } from './../../_models/scout';
 import { RankAddModalComponent } from './../../modals/rank-add-modal/rank-add-modal.component';
@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Rank } from 'src/app/_models/rank';
 import { GridtService } from 'src/app/_services/grid.service';
+import { ScoutRank } from 'src/app/_models/scoutRank';
 
 @Component({
   selector: 'app-scout-rank',
@@ -15,9 +16,9 @@ import { GridtService } from 'src/app/_services/grid.service';
   styleUrls: ['./scout-rank.component.css'],
 })
 export class ScoutRankComponent implements OnInit {
-  @Input() ranks: Rank[];
+  scoutRanks: ScoutRank[];
   @Input() scout: Scout;
-  rankList: LookUpTable[];
+  rankList: Rank[];
 
   bsModalRef: BsModalRef;
 
@@ -33,8 +34,8 @@ export class ScoutRankComponent implements OnInit {
 
   ngOnInit(): void {
     this.gridService.loadSortableScripts();
-    this.ranks = this.gridService.sortRanksByDateDesc(this.ranks);
-    this.lastRank = this.isContains(this.ranks, 'Eagle');
+    this.scoutRanks = this.gridService.sortRanksByDateDesc(this.scout.scoutRanks);
+    this.lastRank = this.isContains(this.scoutRanks, 'Eagle');
     this.getRankList();
   }
 
@@ -58,7 +59,7 @@ export class ScoutRankComponent implements OnInit {
       class: 'modal-dialog-centered',
       initialState: {
         scout,
-        rankLookupTable: this.getRankArray(),
+        ranks: this.getRankArray(),
       },
     };
     this.bsModalRef = this.modalService.show(RankAddModalComponent, config);
@@ -67,22 +68,18 @@ export class ScoutRankComponent implements OnInit {
         rank: values,
       };
       if (newRank) {        
-        this.scoutService.addScoutRank(scout.memberId, newRank.rank).subscribe(() => {
-          this.rankList.forEach(rank => {
-            if (rank.id === newRank.rank.rankId) {
-              newRank.rank.rankName = rank.display;
-            }
-          });
-          
-          scout.ranks.forEach(rank => {
+        this.scoutService.addScoutRank(scout.memberId, newRank.rank).subscribe(() => {   
+          scout.scoutRanks.forEach(rank => {
             if (rank.activeRank) {
               rank.activeRank = false;
             }
           });
 
-          scout.ranks.push(newRank.rank);
-          scout.ranks = this.gridService.sortRanksByDateDesc(scout.ranks);
-          this.lastRank = this.isContains(scout.ranks, 'Eagle');
+          scout.scoutRanks.push(newRank.rank);
+          scout.scoutRanks = this.gridService.sortRanksByDateDesc(scout.scoutRanks);
+          this.lastRank = this.isContains(scout.scoutRanks, 'Eagle');
+          window.location.reload();
+          
         });      
       }
     });

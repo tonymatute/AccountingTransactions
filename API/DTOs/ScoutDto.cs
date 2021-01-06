@@ -22,7 +22,7 @@ namespace API.DTOs
         public ICollection<TransactionDto> Transactions { get; set; }
         public ICollection<BuckTransactionDto> BuckTransactions { get; set; }
         public ICollection<AdultDto> Parents { get; set; }
-        public ICollection<RankDto> Ranks { get; set; }
+        public ICollection<ScoutRankDto> ScoutRanks { get; set; }
 
     }
 }

@@ -24,6 +24,6 @@ namespace API.Entities
         public ICollection<Transaction> Transactions { get; set; }
         public ICollection<BuckTransaction> BuckTransactions { get; set; }
         public ICollection<Adult> Parents { get; set; }
-        public ICollection<Rank> Ranks { get; set; }
+        public ICollection<ScoutRank> ScoutRanks { get; set; }
     }
 }
