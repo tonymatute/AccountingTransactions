@@ -13,6 +13,7 @@ namespace API.Interfaces
         Task<List<SelectList>> GetListTypesAsync(string listType);
         void Update(Scout scout);
         Task<Scout> FindScoutByIdAsync(int id);
+        Task<Scout> FindScoutByNameAsync(string lastName, string firstName);
         Task<Scout> FindScoutByPublicIdAsync(string PublicId);
         Task<ScoutRank> FindActiveRankByIdAsync(int id);
         void UpdateRank(ScoutRank ScoutRank);

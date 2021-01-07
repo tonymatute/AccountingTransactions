@@ -98,4 +98,8 @@ export class ScoutService {
     return this.http.post(this.baseUrl + 'scout/add-rank/' + id + '?rank=' + params , {});
   }
 
+  addNewScout(scout: Scout) {
+    return this.http.post(this.baseUrl + 'scout/add-scout/', scout);
+  }
+
 }

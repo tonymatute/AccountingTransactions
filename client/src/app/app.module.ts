@@ -51,6 +51,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { RankAddModalComponent } from './modals/rank-add-modal/rank-add-modal.component';
 import { AdultAddComponent } from './adults/adult-add/adult-add.component';
 import { ScoutAddComponent } from './scouts/scout-add/scout-add.component';
+import { CheckboxInputComponent } from './_forms/checkbox-input/checkbox-input.component';
+
+
 
 
 @NgModule({
@@ -94,7 +97,8 @@ import { ScoutAddComponent } from './scouts/scout-add/scout-add.component';
     ForgotPasswordComponent,
     RankAddModalComponent,
     AdultAddComponent,
-    ScoutAddComponent
+    ScoutAddComponent,
+    CheckboxInputComponent   
   ],
   imports: [
     SharedModule,
@@ -105,7 +109,7 @@ import { ScoutAddComponent } from './scouts/scout-add/scout-add.component';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
-    AgGridModule.withComponents([BtnCellRenderer, CheckboxRenderer,CustomTooltip])
+    AgGridModule.withComponents([BtnCellRenderer, CheckboxRenderer, CustomTooltip])
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [

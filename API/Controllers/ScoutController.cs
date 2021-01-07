@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 
@@ -112,9 +113,18 @@ namespace API.Controllers
         [HttpPost("add-scout")]
         public async Task<ActionResult<ScoutDto>> AddScout(ScoutDto scoutDto)
         {
-            var scout = await _unitOfWork.ScoutRepository.AddScout(scoutDto);
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            scoutDto.LastName = textInfo.ToTitleCase(scoutDto.LastName);
+            scoutDto.FirstName = textInfo.ToTitleCase(scoutDto.FirstName);
 
-            return Ok(scout);
+            var scout = await _unitOfWork.ScoutRepository.FindScoutByNameAsync(scoutDto.LastName, scoutDto.FirstName);
+            if (scout != null) return BadRequest("Scout alredy exists!");
+
+            var newScout = await _unitOfWork.ScoutRepository.AddScout(scoutDto);
+
+            if (!await _unitOfWork.Complete()) return BadRequest("Failed to add new scout.");
+
+            return Ok(newScout);
         }
 
 

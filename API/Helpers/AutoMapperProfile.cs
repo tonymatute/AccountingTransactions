@@ -17,7 +17,7 @@ namespace API.Helpers
             CreateMap<Transaction, TransactionDto>();
             CreateMap<BuckTransaction, BuckTransactionDto>();
             CreateMap<Adult, AdultDto>();
-            CreateMap<Rank, RankDto>();
+            CreateMap<Rank, RankDto>();         
             CreateMap<ScoutRank, ScoutRankDto>()
                 .ForMember(s => s.RankName, opt => opt.MapFrom(ranks => ranks.Ranks.RankName));
             CreateMap<ScoutUpdateDto, Scout>();
@@ -26,6 +26,7 @@ namespace API.Helpers
             CreateMap<Leadership, LeadershipDto>();
             CreateMap<AdultLeadership, AdultLeadershipDto>()
                   .ForMember(s => s.Name, opt => opt.MapFrom(leadership => leadership.Leaderships.Name));
+            CreateMap<ScoutDto, Scout>();
 
         }
     }

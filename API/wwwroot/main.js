@@ -2363,28 +2363,171 @@ class ScoutParams {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScoutAddComponent", function() { return ScoutAddComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _scout_list_scout_list_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../scout-list/scout-list.component */ "J/hL");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var src_app_services_scout_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/_services/scout.service */ "ig2i");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "5eHb");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _services_lookup_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../_services/lookup.service */ "a/Xj");
+/* harmony import */ var _forms_text_input_text_input_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../_forms/text-input/text-input.component */ "hOav");
+/* harmony import */ var _forms_date_input_date_input_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../_forms/date-input/date-input.component */ "0r7+");
+/* harmony import */ var _forms_checkbox_input_checkbox_input_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../_forms/checkbox-input/checkbox-input.component */ "xF/n");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "ofXK");
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+function ScoutAddComponent_option_26_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "option", 16);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const patrol_r1 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("value", patrol_r1.id);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", patrol_r1.display, " ");
+} }
 class ScoutAddComponent {
-    constructor() { }
+    constructor(scoutService, toastr, fb, router, lookUpService, scoutListComponent) {
+        this.scoutService = scoutService;
+        this.toastr = toastr;
+        this.fb = fb;
+        this.router = router;
+        this.lookUpService = lookUpService;
+        this.scoutListComponent = scoutListComponent;
+        this.cancelRegister = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+    }
     ngOnInit() {
+        this.initializeForm();
+        this.getPatrols();
+    }
+    initializeForm() {
+        this.scoutAddForm = this.fb.group({
+            lastName: ["", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            firstName: ["", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            dateOfBirth: ["",],
+            rechartedDate: ["", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            active: ["",],
+            activeSinceDatetime: ["", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            patrolId: ["", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+        });
+    }
+    addScout() {
+        this.scoutService.addNewScout(this.scoutAddForm.value).subscribe(response => {
+            this.router.navigateByUrl("/scouts");
+            this.scoutListComponent.deleteScoutFromCache();
+            this.scoutListComponent.loadScouts();
+        });
+    }
+    cancel() {
+        this.router.navigateByUrl('/');
+    }
+    getPatrols() {
+        this.lookUpService.getPatrols().subscribe((patrols) => {
+            this.patrols = patrols;
+        });
     }
 }
-ScoutAddComponent.ɵfac = function ScoutAddComponent_Factory(t) { return new (t || ScoutAddComponent)(); };
-ScoutAddComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: ScoutAddComponent, selectors: [["app-scout-add"]], decls: 2, vars: 0, template: function ScoutAddComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1, "scout-add works!");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Njb3V0cy9zY291dC1hZGQvc2NvdXQtYWRkLmNvbXBvbmVudC5jc3MifQ== */"] });
-/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](ScoutAddComponent, [{
-        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+ScoutAddComponent.ɵfac = function ScoutAddComponent_Factory(t) { return new (t || ScoutAddComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](src_app_services_scout_service__WEBPACK_IMPORTED_MODULE_3__["ScoutService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_lookup_service__WEBPACK_IMPORTED_MODULE_6__["LookupService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_scout_list_scout_list_component__WEBPACK_IMPORTED_MODULE_0__["ScoutListComponent"])); };
+ScoutAddComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: ScoutAddComponent, selectors: [["app-scout-add"]], outputs: { cancelRegister: "cancelRegister" }, features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([_scout_list_scout_list_component__WEBPACK_IMPORTED_MODULE_0__["ScoutListComponent"]])], decls: 32, vars: 16, consts: [[1, "container"], [1, "d-flex", "justify-content-center", "h-100"], [1, "card", "border-primary", "div-border"], [1, "card-header"], [1, "text-center", "text-primary", "mt-2"], ["id", "registerCard", 1, "card-body"], ["autocomplete", "off", 3, "formGroup", "ngSubmit"], [1, "form-group"], [3, "formControl", "label"], [1, "text-muted"], ["name", "patrolId", 1, "form-control", "ml-1", 3, "formControl"], ["value", "0", "selected", ""], [3, "value", 4, "ngFor", "ngForOf"], [1, "text-center"], ["type", "submit", 1, "btn", "btn-primary", "mr-2", "rounded-pill", 3, "disabled"], ["type", "button", 1, "btn", "btn-outline-warning", "mr-2", "rounded-pill", 3, "click"], [3, "value"]], template: function ScoutAddComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "h3", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](5, "Add New Scout");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](6, "div", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](7, "form", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("ngSubmit", function ScoutAddComponent_Template_form_ngSubmit_7_listener() { return ctx.scoutAddForm.valid && ctx.addScout(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](8, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](9, "app-text-input", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](10, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](11, "app-text-input", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](12, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](13, "app-date-input", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](14, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](15, "app-date-input", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](16, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](17, "app-checkbox-input", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](18, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](19, "app-date-input", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](20, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](21, "label", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](22, "Patrol");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](23, "select", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](24, "option", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](25, "No Assigned Patrol");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](26, ScoutAddComponent_option_26_Template, 2, 2, "option", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](27, "div", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](28, "button", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](29, "Add ");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](30, "button", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function ScoutAddComponent_Template_button_click_30_listener() { return ctx.cancel(); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](31, "Cancel");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formGroup", ctx.scoutAddForm);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formControl", ctx.scoutAddForm.controls["lastName"])("label", "Lastname");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formControl", ctx.scoutAddForm.controls["firstName"])("label", "Firstname");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formControl", ctx.scoutAddForm.controls["dateOfBirth"])("label", "Date of Birth");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formControl", ctx.scoutAddForm.controls["rechartedDate"])("label", "Recharted Date");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formControl", ctx.scoutAddForm.controls["active"])("label", "Active");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formControl", ctx.scoutAddForm.controls["activeSinceDatetime"])("label", "Active Since");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("formControl", ctx.scoutAddForm.controls["patrolId"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngForOf", ctx.patrols);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", !ctx.scoutAddForm.valid);
+    } }, directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵangular_packages_forms_forms_y"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControlStatusGroup"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroupDirective"], _forms_text_input_text_input_component__WEBPACK_IMPORTED_MODULE_7__["TextInputComponent"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControlDirective"], _forms_date_input_date_input_component__WEBPACK_IMPORTED_MODULE_8__["DateInputComponent"], _forms_checkbox_input_checkbox_input_component__WEBPACK_IMPORTED_MODULE_9__["CheckboxInputComponent"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["SelectControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgSelectOption"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["ɵangular_packages_forms_forms_x"], _angular_common__WEBPACK_IMPORTED_MODULE_10__["NgForOf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Njb3V0cy9zY291dC1hZGQvc2NvdXQtYWRkLmNvbXBvbmVudC5jc3MifQ== */"] });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵsetClassMetadata"](ScoutAddComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"],
         args: [{
+                providers: [_scout_list_scout_list_component__WEBPACK_IMPORTED_MODULE_0__["ScoutListComponent"]],
                 selector: 'app-scout-add',
                 templateUrl: './scout-add.component.html',
                 styleUrls: ['./scout-add.component.css']
             }]
-    }], function () { return []; }, null); })();
+    }], function () { return [{ type: src_app_services_scout_service__WEBPACK_IMPORTED_MODULE_3__["ScoutService"] }, { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] }, { type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] }, { type: _services_lookup_service__WEBPACK_IMPORTED_MODULE_6__["LookupService"] }, { type: _scout_list_scout_list_component__WEBPACK_IMPORTED_MODULE_0__["ScoutListComponent"] }]; }, { cancelRegister: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"]
+        }] }); })();
 
 
 /***/ }),
@@ -2958,6 +3101,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modals_rank_add_modal_rank_add_modal_component__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(/*! ./modals/rank-add-modal/rank-add-modal.component */ "vD68");
 /* harmony import */ var _adults_adult_add_adult_add_component__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(/*! ./adults/adult-add/adult-add.component */ "Y/XL");
 /* harmony import */ var _scouts_scout_add_scout_add_component__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(/*! ./scouts/scout-add/scout-add.component */ "Th6w");
+/* harmony import */ var _forms_checkbox_input_checkbox_input_component__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(/*! ./_forms/checkbox-input/checkbox-input.component */ "xF/n");
+
 
 
 
@@ -3069,7 +3214,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInjector
         _forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_48__["ForgotPasswordComponent"],
         _modals_rank_add_modal_rank_add_modal_component__WEBPACK_IMPORTED_MODULE_49__["RankAddModalComponent"],
         _adults_adult_add_adult_add_component__WEBPACK_IMPORTED_MODULE_50__["AdultAddComponent"],
-        _scouts_scout_add_scout_add_component__WEBPACK_IMPORTED_MODULE_51__["ScoutAddComponent"]], imports: [_modules_shared_module__WEBPACK_IMPORTED_MODULE_2__["SharedModule"],
+        _scouts_scout_add_scout_add_component__WEBPACK_IMPORTED_MODULE_51__["ScoutAddComponent"],
+        _forms_checkbox_input_checkbox_input_component__WEBPACK_IMPORTED_MODULE_52__["CheckboxInputComponent"]], imports: [_modules_shared_module__WEBPACK_IMPORTED_MODULE_2__["SharedModule"],
         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_8__["AppRoutingModule"],
         _angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClientModule"],
@@ -3120,7 +3266,8 @@ AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInjector
                     _forgot_password_forgot_password_component__WEBPACK_IMPORTED_MODULE_48__["ForgotPasswordComponent"],
                     _modals_rank_add_modal_rank_add_modal_component__WEBPACK_IMPORTED_MODULE_49__["RankAddModalComponent"],
                     _adults_adult_add_adult_add_component__WEBPACK_IMPORTED_MODULE_50__["AdultAddComponent"],
-                    _scouts_scout_add_scout_add_component__WEBPACK_IMPORTED_MODULE_51__["ScoutAddComponent"]
+                    _scouts_scout_add_scout_add_component__WEBPACK_IMPORTED_MODULE_51__["ScoutAddComponent"],
+                    _forms_checkbox_input_checkbox_input_component__WEBPACK_IMPORTED_MODULE_52__["CheckboxInputComponent"]
                 ],
                 imports: [
                     _modules_shared_module__WEBPACK_IMPORTED_MODULE_2__["SharedModule"],
@@ -3611,6 +3758,9 @@ class ScoutService {
         params = params.append('rankId', scoutRank.rankId.toString());
         params = params.append('rankName', scoutRank.rankName.toString());
         return this.http.post(this.baseUrl + 'scout/add-rank/' + id + '?rank=' + params, {});
+    }
+    addNewScout(scout) {
+        return this.http.post(this.baseUrl + 'scout/add-scout/', scout);
     }
 }
 ScoutService.ɵfac = function ScoutService_Factory(t) { return new (t || ScoutService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_account_service__WEBPACK_IMPORTED_MODULE_7__["AccountService"])); };
@@ -5461,6 +5611,78 @@ LoginComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCom
             }]
     }], function () { return [{ type: _services_account_service__WEBPACK_IMPORTED_MODULE_2__["AccountService"] }, { type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormBuilder"] }, { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }]; }, { cancelLogin: [{
             type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"]
+        }] }); })();
+
+
+/***/ }),
+
+/***/ "xF/n":
+/*!*******************************************************************!*\
+  !*** ./src/app/_forms/checkbox-input/checkbox-input.component.ts ***!
+  \*******************************************************************/
+/*! exports provided: CheckboxInputComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CheckboxInputComponent", function() { return CheckboxInputComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "3Pt+");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "ofXK");
+
+
+
+
+function CheckboxInputComponent_div_4_Template(rf, ctx) { if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate1"]("Please enter ", ctx_r0.label, "");
+} }
+class CheckboxInputComponent {
+    constructor(ngControl) {
+        this.ngControl = ngControl;
+        this.type = 'text';
+        this.ngControl.valueAccessor = this;
+    }
+    writeValue(obj) { }
+    registerOnChange(fn) { }
+    registerOnTouched(fn) { }
+}
+CheckboxInputComponent.ɵfac = function CheckboxInputComponent_Factory(t) { return new (t || CheckboxInputComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControl"], 2)); };
+CheckboxInputComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: CheckboxInputComponent, selectors: [["app-checkbox-input"]], inputs: { label: "label", type: "type" }, decls: 5, vars: 5, consts: [[1, "form-group"], ["type", "checkbox", 1, "", 3, "formControl"], [1, "ml-2", "text-muted"], ["class", "invalid-feedback", 4, "ngIf"], [1, "invalid-feedback"]], template: function CheckboxInputComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "input", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "label", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](4, CheckboxInputComponent_div_4_Template, 2, 1, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵclassProp"]("is-invalid", ctx.ngControl.touched && ctx.ngControl.invalid);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("formControl", ctx.ngControl.control);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtextInterpolate"](ctx.label);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("ngIf", ctx.ngControl.control.errors == null ? null : ctx.ngControl.control.errors.required);
+    } }, directives: [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["CheckboxControlValueAccessor"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControlStatus"], _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControlDirective"], _angular_common__WEBPACK_IMPORTED_MODULE_2__["NgIf"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL19mb3Jtcy9jaGVja2JveC1pbnB1dC9jaGVja2JveC1pbnB1dC5jb21wb25lbnQuY3NzIn0= */"] });
+/*@__PURE__*/ (function () { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵsetClassMetadata"](CheckboxInputComponent, [{
+        type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"],
+        args: [{
+                selector: 'app-checkbox-input',
+                templateUrl: './checkbox-input.component.html',
+                styleUrls: ['./checkbox-input.component.css']
+            }]
+    }], function () { return [{ type: _angular_forms__WEBPACK_IMPORTED_MODULE_1__["NgControl"], decorators: [{
+                type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Self"]
+            }] }]; }, { label: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
+        }], type: [{
+            type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"]
         }] }); })();
 
 

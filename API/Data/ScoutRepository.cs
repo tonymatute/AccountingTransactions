@@ -101,6 +101,7 @@ namespace API.Data
         public async Task<Scout> AddScout(ScoutDto scoutDto)
         {
             var scout = _mapper.Map<Scout>(scoutDto);
+            //scout.Created = DateTime.Now;
             
             await _context.Scouts.AddAsync(scout);
 
@@ -204,7 +205,10 @@ namespace API.Data
             _context.Entry(scoutRank).State = EntityState.Modified;
         }
 
-      
-
+        public async Task<Scout> FindScoutByNameAsync(string lastName, string firstName)
+        {
+            return await _context.Scouts
+              .FirstOrDefaultAsync(s => s.LastName == lastName && s.FirstName == firstName);
+        }
     }
 }
