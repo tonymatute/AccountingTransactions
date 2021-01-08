@@ -9,10 +9,13 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
 export class CheckboxInputComponent implements ControlValueAccessor {
   @Input() label: String;
   @Input() type = 'text';
+  @Input() isChecked = false;
+  @Input() disabled = false;
 
   constructor(@Self() public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;
   }
+  
   writeValue(obj: any): void { }
   registerOnChange(fn: any): void { }
   registerOnTouched(fn: any): void { }

@@ -11,7 +11,7 @@ import { LookUpTable } from 'src/app/_models/lookUpTable';
   providers: [ScoutListComponent],
   selector: 'app-scout-add',
   templateUrl: './scout-add.component.html',
-  styleUrls: ['./scout-add.component.css']
+  styleUrls: ['./scout-add.component.css'],
 })
 export class ScoutAddComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
@@ -24,31 +24,35 @@ export class ScoutAddComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private lookUpService: LookupService,
-    private scoutListComponent: ScoutListComponent) { }
+    private scoutListComponent: ScoutListComponent
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
     this.getPatrols();
   }
 
-  initializeForm() { 
+  initializeForm() {
     this.scoutAddForm = this.fb.group({
-      lastName: ["", Validators.required],
-      firstName: ["", Validators.required],
-      dateOfBirth: ["", ],
-      rechartedDate: ["",Validators.required ],
-      active: ["", ],
-      activeSinceDatetime: ["", Validators.required],      
-      patrolId:["", Validators.required],          
+      lastName: ['', Validators.required],
+      firstName: ['', Validators.required],
+      dateOfBirth: [''],
+      rechartedDate: ['', Validators.required],
+      active: [''],
+      activeSinceDatetime: ['', Validators.required],
+      patrolId: ['', Validators.required],
     });
   }
 
-  addScout() {    
-    this.scoutService.addNewScout(this.scoutAddForm.value).subscribe(response => {
-      this.router.navigateByUrl("/scouts");
-      this.scoutListComponent.deleteScoutFromCache();
-      this.scoutListComponent.loadScouts();
-    })
+  addScout() {
+    this.scoutService
+      .addNewScout(this.scoutAddForm.value)
+      .subscribe((response) => {
+        this.toastr.success('New Scout added sucessfull.');
+        this.router.navigateByUrl('/scouts');
+        this.scoutListComponent.deleteScoutFromCache();
+        this.scoutListComponent.loadScouts();
+      });
   }
 
   cancel() {
@@ -60,5 +64,4 @@ export class ScoutAddComponent implements OnInit {
       this.patrols = patrols;
     });
   }
-
 }

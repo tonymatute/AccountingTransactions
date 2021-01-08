@@ -29,6 +29,7 @@ namespace API.Extentions
                 .Get<EmailConfiguration>();
             services.AddSingleton(emailConfig);
             services.AddScoped<IEmailSender, EmailSender>();
+            services.AddControllers().AddNewtonsoftJson();
 
             return services;
         }

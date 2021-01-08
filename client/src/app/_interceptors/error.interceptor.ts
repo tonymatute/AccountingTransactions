@@ -38,7 +38,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                   });
                   break;
                 } else {
-                  this.toastr.error(error.error);
+                  if (error.error.title) {
+                    this.toastr.error(error.error.title);
+                  } else {
+                    this.toastr.error(error.error);
+                  };
                   break;
                 }
 

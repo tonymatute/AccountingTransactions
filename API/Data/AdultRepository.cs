@@ -67,5 +67,22 @@ namespace API.Data
             _context.Entry(adult).State = EntityState.Modified;
         }
 
+        public async Task<Adult> AddAdultAsync(AdultDto adultDto)
+        {
+            var adult = _mapper.Map<Adult>(adultDto);
+            adult.Created = DateTime.Now;
+
+            await _context.Adults.AddAsync(adult);
+
+            return adult;
+        }
+
+        public async Task<Adult> FindAdultByNameAsync(string lastName, string firstName)
+        {
+            return await _context.Adults
+              .FirstOrDefaultAsync(s => s.LastName == lastName && s.FirstName == firstName);
+        }
+
+        
     }
 }

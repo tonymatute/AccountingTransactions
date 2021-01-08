@@ -1,11 +1,12 @@
-<div class="form-group">
+<div class="form-group form-check">
     <input 
         [class.is-invalid]='ngControl.touched && ngControl.invalid'
         type='checkbox'
-        class="" 
+        [class.is-invalid] ='ngControl.touched && ngControl.invalid'
+        class='form-check-input' 
         [formControl]="ngControl.control"
         >
-        <label class="ml-2 text-muted">{{label}}</label>
+        <label class="form-check-label text-muted"  >{{label}}</label>
     <div *ngIf="ngControl.control.errors?.required" class="invalid-feedback">Please enter {{label}}</div>
     
 </div>

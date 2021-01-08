@@ -5,9 +5,9 @@ export interface Adult {
   adultId: number;
   lastName: string;
   firstName: string;
-  rechartedDate: Date;
+  rechartedDate?: Date ;
   active: boolean;
-  activeSinceDatetime: Date;
+  activeSinceDatetime?: Date;
   photoUrl?: any;
   publicId?: any;
   created: Date;
