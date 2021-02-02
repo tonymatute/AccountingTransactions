@@ -25,7 +25,7 @@ namespace API
                 var context = services.GetRequiredService<DataContext>();
                 await context.Database.MigrateAsync();
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
-                var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                var roleManager = services.GetRequiredService<RoleManager<AppRole>>();             
                 await Seed.SeedTables(userManager, roleManager, context);
             }
             catch (System.Exception ex)

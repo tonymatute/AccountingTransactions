@@ -1,0 +1,22 @@
+<div class="card mb-4">
+    <div class="card-img-wrapper">
+        <img class="card-img-top" src="{{member.photo || './assets/user.png'}}" alt="{{member.firstName}}">
+         <ul class="list-inline member-icons animate text-center">
+            <li class="list-inline-item">
+                <button class="btn btn-primary" routerLink="/member/{{member.memberId}}" 
+                placement="top" tooltip="Transactions">
+                    <i class="fa fa-table"></i>
+                </button>
+            </li>                  
+        </ul> 
+    </div>
+    <div class="card-body p-1">
+        <h6 class="card-title text-center mb-1"> 
+            <i class="fa fa-user mr-2"></i>                      
+           {{member.firstName + ' ' + member.lastName}}, {{member.age}}
+        </h6>
+        <h6 class="card-text text-center text-muted">{{member.currentRank}}</h6>
+        <h6 class=" text-center text-muted">{{member.patrol}}</h6>
+    </div>
+</div>
+

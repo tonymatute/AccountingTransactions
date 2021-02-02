@@ -38,7 +38,7 @@ export class ScoutAddComponent implements OnInit {
       firstName: ['', Validators.required],
       dateOfBirth: [''],
       rechartedDate: ['', Validators.required],
-      active: [''],
+      active: ['true'],
       activeSinceDatetime: ['', Validators.required],
       patrolId: ['', Validators.required],
     });

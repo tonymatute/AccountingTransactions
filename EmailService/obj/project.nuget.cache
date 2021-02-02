@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2XwmvVO1I849hVxFDwYBDXd+xI4b9WoxwiNtObg6PWvzkV9acYah2Owpomy2i/7rekafYZJhAyQdJHDtIrMCbQ==",
+  "dgSpecHash": "So4k6RyWjckuKRajnw/GrSfKb2fG2WKWuyDhELsINJLiK1dmvubtxGuuTfmBN7/QpOBQFKUY/p5FClRf1Qx2eA==",
   "success": true,
   "projectFilePath": "C:\\Source\\Accounting\\EmailService\\EmailService.csproj",
   "expectedPackageFiles": [
@@ -117,8 +117,7 @@
     "C:\\Users\\matut\\.nuget\\packages\\system.threading.threadpool\\4.3.0\\system.threading.threadpool.4.3.0.nupkg.sha512",
     "C:\\Users\\matut\\.nuget\\packages\\system.threading.timer\\4.3.0\\system.threading.timer.4.3.0.nupkg.sha512",
     "C:\\Users\\matut\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "C:\\Users\\matut\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
-    "C:\\Users\\matut\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512"
+    "C:\\Users\\matut\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }

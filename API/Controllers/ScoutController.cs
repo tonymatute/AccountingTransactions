@@ -36,126 +36,126 @@ namespace API.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ScoutDto>>> GetScouts([FromQuery] ScoutParams scoutParams)
-        {
-            var scouts = await _unitOfWork.ScoutRepository.GetScoutsAsync(scoutParams);
-            Response.AddPaginationHeader(scouts.CurrentPage, scouts.PageSize, scouts.TotalCount, scouts.TotalPages);
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<ScoutDto>>> GetScouts([FromQuery] ScoutParams scoutParams)
+        //{
+        //    var scouts = await _unitOfWork.ScoutRepository.GetScoutsAsync(scoutParams);
+        //    Response.AddPaginationHeader(scouts.CurrentPage, scouts.PageSize, scouts.TotalCount, scouts.TotalPages);
 
-            return Ok(scouts);
-        }
+        //    return Ok(scouts);
+        //}
 
-        [HttpGet("{id}", Name = "GetScout")]
-        public async Task<ActionResult<ScoutDto>> GetScout(int id)
-        {
-            return await _unitOfWork.ScoutRepository.GetScoutAsync(id);
-        }
+        //[HttpGet("{id}", Name = "GetScout")]
+        //public async Task<ActionResult<ScoutDto>> GetScout(int id)
+        //{
+        //    return await _unitOfWork.ScoutRepository.GetScoutAsync(id);
+        //}
 
-        [HttpPut]
-        public async Task<ActionResult> UpdateScout(ScoutUpdateDto scoutUpdateDto)
-        {
-            var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(scoutUpdateDto.MemberId);
-            _mapper.Map(scoutUpdateDto, scout);
-            _unitOfWork.ScoutRepository.Update(scout);
-            if (await _unitOfWork.Complete()) return NoContent();
+        //[HttpPut]
+        //public async Task<ActionResult> UpdateScout(ScoutUpdateDto scoutUpdateDto)
+        //{
+        //    var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(scoutUpdateDto.MemberId);
+        //    _mapper.Map(scoutUpdateDto, scout);
+        //    _unitOfWork.ScoutRepository.Update(scout);
+        //    if (await _unitOfWork.Complete()) return NoContent();
 
-            return BadRequest("Failed to update Scout!");
-        }
+        //    return BadRequest("Failed to update Scout!");
+        //}
 
-        [HttpPost("add-photo")]
-        public async Task<ActionResult<ScoutDto>> AddPhoto(IFormFile file, int memberId)
-        {
-            var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(memberId);
-            if (scout == null) return NotFound("Scout Not Found!");
+        //[HttpPost("add-photo")]
+        //public async Task<ActionResult<ScoutDto>> AddPhoto(IFormFile file, int memberId)
+        //{
+        //    var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(memberId);
+        //    if (scout == null) return NotFound("Scout Not Found!");
 
-            var result = await _photoService.AddPhotoAsync(file);
-            if (result.Error != null) return BadRequest(result.Error.Message);
+        //    var result = await _photoService.AddPhotoAsync(file);
+        //    if (result.Error != null) return BadRequest(result.Error.Message);
 
-            if (scout.PublicId != null)
-            {                
-                var deleteResult = await _photoService.DeletePhotoAsync(scout.PublicId);
-                if (deleteResult.Error != null) return BadRequest(deleteResult.Error.Message);
-            }
+        //    if (scout.PublicId != null)
+        //    {                
+        //        var deleteResult = await _photoService.DeletePhotoAsync(scout.PublicId);
+        //        if (deleteResult.Error != null) return BadRequest(deleteResult.Error.Message);
+        //    }
 
-            scout.PhotoUrl = result.SecureUrl.AbsoluteUri;
-            scout.PublicId = result.PublicId;
+        //    scout.PhotoUrl = result.SecureUrl.AbsoluteUri;
+        //    scout.PublicId = result.PublicId;
 
-            _unitOfWork.ScoutRepository.Update(scout);
-            if (await _unitOfWork.Complete())
-            {
-                return CreatedAtRoute("GetScout", new { id = memberId }, _mapper.Map<ScoutDto>(scout));
-            }
+        //    _unitOfWork.ScoutRepository.Update(scout);
+        //    if (await _unitOfWork.Complete())
+        //    {
+        //        return CreatedAtRoute("GetScout", new { id = memberId }, _mapper.Map<ScoutDto>(scout));
+        //    }
 
-            return BadRequest("Problem adding photo!");
-        }
+        //    return BadRequest("Problem adding photo!");
+        //}
 
-        [HttpDelete("delete-photo/{PublicId}")]
-        public async Task<ActionResult> DeletePhoto(string PublicId)
-        {
-            var scout = await _unitOfWork.ScoutRepository.FindScoutByPublicIdAsync(PublicId);
-            if (scout == null) return NotFound("Scout Not Found!");
+        //[HttpDelete("delete-photo/{PublicId}")]
+        //public async Task<ActionResult> DeletePhoto(string PublicId)
+        //{
+        //    var scout = await _unitOfWork.ScoutRepository.FindScoutByPublicIdAsync(PublicId);
+        //    if (scout == null) return NotFound("Scout Not Found!");
 
-            if (scout.PublicId != null)
-            {
-                scout.PhotoUrl = null;
-                scout.PublicId = null;
-                var result = await _photoService.DeletePhotoAsync(PublicId);
-                if (result.Error != null) return BadRequest(result.Error.Message);
-            }
+        //    if (scout.PublicId != null)
+        //    {
+        //        scout.PhotoUrl = null;
+        //        scout.PublicId = null;
+        //        var result = await _photoService.DeletePhotoAsync(PublicId);
+        //        if (result.Error != null) return BadRequest(result.Error.Message);
+        //    }
 
-            _unitOfWork.ScoutRepository.Update(scout);
-            if (await _unitOfWork.Complete()) return Ok();
+        //    _unitOfWork.ScoutRepository.Update(scout);
+        //    if (await _unitOfWork.Complete()) return Ok();
 
-            return BadRequest("Problem deleting photo!");
+        //    return BadRequest("Problem deleting photo!");
 
-        }
+        //}
 
-        [HttpPost("add-scout")]
-        public async Task<ActionResult<ScoutDto>> AddScout(ScoutDto scoutDto)
-        {
-            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-            scoutDto.LastName = textInfo.ToTitleCase(scoutDto.LastName);
-            scoutDto.FirstName = textInfo.ToTitleCase(scoutDto.FirstName);
+        //[HttpPost("add-scout")]
+        //public async Task<ActionResult<ScoutDto>> AddScout(ScoutDto scoutDto)
+        //{
+        //    TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+        //    scoutDto.LastName = textInfo.ToTitleCase(scoutDto.LastName);
+        //    scoutDto.FirstName = textInfo.ToTitleCase(scoutDto.FirstName);
 
-            var scout = await _unitOfWork.ScoutRepository.FindScoutByNameAsync(scoutDto.LastName, scoutDto.FirstName);
-            if (scout != null) return BadRequest("Scout alredy exists!");
+        //    var scout = await _unitOfWork.ScoutRepository.FindScoutByNameAsync(scoutDto.LastName, scoutDto.FirstName);
+        //    if (scout != null) return BadRequest("Scout alredy exists!");
 
-            var newScout = await _unitOfWork.ScoutRepository.AddScout(scoutDto);
+        //    var newScout = await _unitOfWork.ScoutRepository.AddScout(scoutDto);
 
-            if (!await _unitOfWork.Complete()) return BadRequest("Failed to add new scout.");
+        //    if (!await _unitOfWork.Complete()) return BadRequest("Failed to add new scout.");
 
-            return Ok(newScout);
-        }
+        //    return Ok(newScout);
+        //}
 
 
-        [HttpPost("add-rank/{scoutId}")]
-        public async Task<ActionResult<RankDto>> AddRank(int scoutId, [FromQuery()] RankParams rankParams)
-        {
-            var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(scoutId);
-            if (scout == null) return NotFound("Scout Not Found!");
+        //[HttpPost("add-rank/{scoutId}")]
+        //public async Task<ActionResult<RankDto>> AddRank(int scoutId, [FromQuery()] RankParams rankParams)
+        //{
+        //    var scout = await _unitOfWork.ScoutRepository.FindScoutByIdAsync(scoutId);
+        //    if (scout == null) return NotFound("Scout Not Found!");
 
-            var currentRank = await _unitOfWork.ScoutRepository.FindActiveRankByIdAsync(scoutId);
-            if (currentRank != null)
-            {
-                currentRank.ActiveRank = false;
-                _unitOfWork.ScoutRepository.UpdateRank(currentRank);
-                if (!await _unitOfWork.Complete()) return BadRequest("Failed to Update Current rank.");
-            }
+        //    var currentRank = await _unitOfWork.ScoutRepository.FindActiveRankByIdAsync(scoutId);
+        //    if (currentRank != null)
+        //    {
+        //        currentRank.ActiveRank = false;
+        //        _unitOfWork.ScoutRepository.UpdateRank(currentRank);
+        //        if (!await _unitOfWork.Complete()) return BadRequest("Failed to Update Current rank.");
+        //    }
 
-            var newRank = new ScoutRank
-            {
-                ActiveRank = rankParams.ActiveRank,
-                CompletedOn = rankParams.CompletedOn,
-                RankId = rankParams.RankId,
-                RankName = rankParams.RankName,
-                ScoutId = scoutId               
-            };
+        //    var newRank = new ScoutRank
+        //    {
+        //        ActiveRank = rankParams.ActiveRank,
+        //        CompletedOn = rankParams.CompletedOn,
+        //        RankId = rankParams.RankId,
+        //        RankName = rankParams.RankName,
+        //        ScoutId = scoutId               
+        //    };
 
-            _context.ScoutRanks.Add(newRank);
+        //    _context.ScoutRanks.Add(newRank);
 
-            if (await _unitOfWork.Complete()) return NoContent();
+        //    if (await _unitOfWork.Complete()) return NoContent();
 
-            return BadRequest("Failed to add rank to scout.");
-        }
+        //    return BadRequest("Failed to add rank to scout.");
+        //}
     }
 }

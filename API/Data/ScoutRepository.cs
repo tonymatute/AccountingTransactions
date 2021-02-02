@@ -24,89 +24,89 @@ namespace API.Data
             _mapper = mapper;
         }
 
-        public async Task<ScoutDto> GetScoutAsync(int id)
-        {
-            var scout = await _context.Scouts
-               .ProjectTo<ScoutDto>(_mapper.ConfigurationProvider)
-               .AsNoTracking()
-               .FirstOrDefaultAsync(s => s.MemberId == id);
+        //public async Task<ScoutDto> GetScoutAsync(int id)
+        //{
+        //    var scout = await _context.Scouts
+        //       .ProjectTo<ScoutDto>(_mapper.ConfigurationProvider)
+        //       .AsNoTracking()
+        //       .FirstOrDefaultAsync(s => s.MemberId == id);
 
-            SetTransactionType(scout);
-            SetPatrolName(scout);
-            SetActivity(scout);
+        //    SetTransactionType(scout);
+        //    SetPatrolName(scout);
+        //    SetActivity(scout);
 
-            return scout;
-        }
+        //    return scout;
+        //}
 
-        public async Task<Scout> FindScoutByIdAsync(int id)
-        {
-            return await _context.Scouts
-                .Include(t => t.Transactions)
-                .Include(b => b.BuckTransactions)
-                .Include(p => p.Parents)
-                .Include(r => r.ScoutRanks)              
-               .FirstOrDefaultAsync(s => s.MemberId == id);
-        }
+        //public async Task<Scout> FindScoutByIdAsync(int id)
+        //{
+        //    return await _context.Scouts
+        //        .Include(t => t.Transactions)
+        //        .Include(b => b.BuckTransactions)
+        //        .Include(p => p.Parents)
+        //        .Include(r => r.ScoutRanks)              
+        //       .FirstOrDefaultAsync(s => s.MemberId == id);
+        //}
 
-        public async Task<ScoutRank> FindActiveRankByIdAsync(int id)
-        {
-            return await _context.ScoutRanks
-               .FirstOrDefaultAsync(r => r.ScoutId == id && r.ActiveRank == true);
-        }
+        //public async Task<ScoutRank> FindActiveRankByIdAsync(int id)
+        //{
+        //    return await _context.ScoutRanks
+        //       .FirstOrDefaultAsync(r => r.ScoutId == id && r.ActiveRank == true);
+        //}
 
-        public async Task<Scout> FindScoutByPublicIdAsync(string PublicId)
-        {
-            return await _context.Scouts
-                .Include(t => t.Transactions)
-                .Include(b => b.BuckTransactions)
-                .Include(p => p.Parents)
-                .Include(r => r.ScoutRanks)               
-               .FirstOrDefaultAsync(s => s.PublicId == PublicId);
-        }
+        //public async Task<Scout> FindScoutByPublicIdAsync(string PublicId)
+        //{
+        //    return await _context.Scouts
+        //        .Include(t => t.Transactions)
+        //        .Include(b => b.BuckTransactions)
+        //        .Include(p => p.Parents)
+        //        .Include(r => r.ScoutRanks)               
+        //       .FirstOrDefaultAsync(s => s.PublicId == PublicId);
+        //}
 
-        public async Task<PageList<ScoutDto>> GetScoutsAsync(ScoutParams scoutParams)
-        {
-            var query = _context.Scouts.AsQueryable();
-            if (scoutParams.LastName?.Length > 0)
-                query = query.Where(s => s.LastName.Contains(scoutParams.LastName));
+        //public async Task<PageList<ScoutDto>> GetScoutsAsync(ScoutParams scoutParams)
+        //{
+        //    var query = _context.Scouts.AsQueryable();
+        //    if (scoutParams.LastName?.Length > 0)
+        //        query = query.Where(s => s.LastName.ToLower().Contains( scoutParams.LastName.ToLower()));
 
-            if (scoutParams.FirstName?.Length > 0)
-                query = query.Where(s => s.FirstName.Contains(scoutParams.FirstName));
+        //    if (scoutParams.FirstName?.Length > 0)
+        //        query = query.Where(s => s.FirstName.ToLower().Contains(scoutParams.FirstName.ToLower()));
 
-            if (scoutParams.PatrolId > 0)
-                query = query.Where(s => s.PatrolId == scoutParams.PatrolId);
+        //    if (scoutParams.PatrolId > 0)
+        //        query = query.Where(s => s.PatrolId == scoutParams.PatrolId);
 
-            query = query.Where(s => s.Active == scoutParams.Active);
+        //    query = query.Where(s => s.Active == scoutParams.Active);
 
-            query = scoutParams.OrderBy switch
-            {
-                "name" => query.OrderBy(o => o.LastName).ThenBy(o => o.FirstName),
-                _ => query.OrderBy(o => o.PatrolId).ThenBy(o => o.LastName)
-            };
+        //    query = scoutParams.OrderBy switch
+        //    {
+        //        "name" => query.OrderBy(o => o.LastName).ThenBy(o => o.FirstName),
+        //        _ => query.OrderBy(o => o.PatrolId).ThenBy(o => o.LastName)
+        //    };
 
-            var scouts = await PageList<ScoutDto>.CreateAsync(
-                           query.ProjectTo<ScoutDto>(_mapper.ConfigurationProvider)
-                           .AsNoTracking(),
-                           scoutParams.PageNumber,
-                           scoutParams.PageSize);
+        //    var scouts = await PageList<ScoutDto>.CreateAsync(
+        //                   query.ProjectTo<ScoutDto>(_mapper.ConfigurationProvider)
+        //                   .AsNoTracking(),
+        //                   scoutParams.PageNumber,
+        //                   scoutParams.PageSize);
 
-            foreach (var scout in scouts)
-            {
-                SetTransactionType(scout);
-                SetPatrolName(scout);
-                SetActivity(scout);
-            }
-            return scouts;
-        }
+        //    foreach (var scout in scouts)
+        //    {
+        //        SetTransactionType(scout);
+        //        SetPatrolName(scout);
+        //        SetActivity(scout);
+        //    }
+        //    return scouts;
+        //}
 
-        public async Task<Scout> AddScout(ScoutDto scoutDto)
-        {
-            var scout = _mapper.Map<Scout>(scoutDto);
-            scout.Created = DateTime.Now;
-            await _context.Scouts.AddAsync(scout);
+        //public async Task<Scout> AddScout(ScoutDto scoutDto)
+        //{
+        //    var scout = _mapper.Map<Scout>(scoutDto);
+        //    scout.Created = DateTime.Now;
+        //    await _context.Scouts.AddAsync(scout);
 
-            return scout;
-        }
+        //    return scout;
+        //}
 
         public async Task<List<SelectList>> GetListTypesAsync(string listType)
         {
@@ -116,21 +116,7 @@ namespace API.Data
                .ToListAsync();
         }
 
-        public async Task<List<RankDto>> GetRanksAsync()
-        {
-            return await _context.Ranks
-               .ProjectTo<RankDto>(_mapper.ConfigurationProvider)
-               .AsNoTracking()
-               .ToListAsync();
-        }
-
-        public async Task<List<LeadershipDto>> GetLeadershipAsync()
-        {
-            return await _context.Leaderships
-               .ProjectTo<LeadershipDto>(_mapper.ConfigurationProvider)
-               .AsNoTracking()
-               .ToListAsync();
-        }
+        
 
         public List<SelectList> GetListTypes(string listType)
         {
@@ -140,59 +126,49 @@ namespace API.Data
                .ToList();
         }      
 
-        private void SetTransactionType(ScoutDto scout)
-        {
-            foreach (var row in GetListTypes("Transaction Type"))
-            {
-                foreach (var transaction in scout.Transactions)
-                {
-                    if (transaction.TransactionTypeId == row.Id)
-                    {
-                        transaction.TransactionType = row.Display;
-                    }
-                }
+        //private void SetTransactionType(MemberDto scout)
+        //{
+        //    foreach (var row in GetListTypes("Transaction Type"))
+        //    {
+        //        foreach (var transaction in scout.Transactions)
+        //        {
+        //            if (transaction.TransactionTypeId == row.Id)
+        //            {
+        //                transaction.TransactionType = row.Display;
+        //            }
+        //        }
 
-                foreach (var transaction in scout.BuckTransactions)
-                {
-                    if (transaction.TransactionTypeId == row.Id)
-                    {
-                        transaction.TransactionType = row.Display;
-                    }
-                }
-            }
-        }
+        //        foreach (var transaction in scout.BuckTransactions)
+        //        {
+        //            if (transaction.TransactionTypeId == row.Id)
+        //            {
+        //                transaction.TransactionType = row.Display;
+        //            }
+        //        }
+        //    }
+        //}
 
-        private void SetPatrolName(ScoutDto scout)
-        {
-            foreach (var row in GetListTypes("Patrol"))
-            {
-                if (scout.PatrolId == row.Id)
-                {
-                    scout.PatrolName = row.Display;
-
-                }
-            }
-        }
-        private void SetActivity(ScoutDto scout)
-        {
-            foreach (var row in GetListTypes("Activity"))
-            {
-                foreach (var transaction in scout.Transactions)
-                {
-                    if (transaction.ActivityId == row.Id)
-                    {
-                        transaction.Activity = row.Display;
-                    }
-                }
-                foreach (var transaction in scout.BuckTransactions)
-                {
-                    if (transaction.ActivityId == row.Id)
-                    {
-                        transaction.Activity = row.Display;
-                    }
-                }
-            }
-        }
+       
+        //private void SetActivity(MemberDto scout)
+        //{
+        //    foreach (var row in GetListTypes("Activity"))
+        //    {
+        //        foreach (var transaction in scout.Transactions)
+        //        {
+        //            if (transaction.ActivityId == row.Id)
+        //            {
+        //                transaction.Activity = row.Display;
+        //            }
+        //        }
+        //        foreach (var transaction in scout.BuckTransactions)
+        //        {
+        //            if (transaction.ActivityId == row.Id)
+        //            {
+        //                transaction.Activity = row.Display;
+        //            }
+        //        }
+        //    }
+        //}
 
         public void Update(Scout scout)
         {
@@ -204,10 +180,10 @@ namespace API.Data
             _context.Entry(scoutRank).State = EntityState.Modified;
         }
 
-        public async Task<Scout> FindScoutByNameAsync(string lastName, string firstName)
-        {
-            return await _context.Scouts
-              .FirstOrDefaultAsync(s => s.LastName == lastName && s.FirstName == firstName);
-        }
+        //public async Task<Scout> FindScoutByNameAsync(string lastName, string firstName)
+        //{
+        //    return await _context.Scouts
+        //      .FirstOrDefaultAsync(s => s.LastName == lastName && s.FirstName == firstName);
+        //}
     }
 }

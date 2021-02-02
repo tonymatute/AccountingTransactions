@@ -4,9 +4,10 @@ namespace API.Interfaces
 {
     public interface IUnitOfWork
     {
-        IScoutRepository ScoutRepository { get; }
+        //IScoutRepository ScoutRepository { get; }
+        IMemberRepository MemberRepository { get; }
         IUserRepository UserRepository { get; }
-        IAdultRepository AdultRepository { get; }
+        //IAdultRepository AdultRepository { get; }
         bool HasChanges();
         Task<bool> Complete();
 

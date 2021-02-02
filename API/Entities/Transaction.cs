@@ -8,8 +8,7 @@ namespace API.Entities
     public class Transaction
     {
         [Key]
-        public int TransactionId { get; set; }
-        
+        public int TransactionId { get; set; }        
         public int TransactionTypeId { get; set; }
         public int ActivityId { get; set; } = 0;
         [Column(TypeName = "decimal(18,2)")]
@@ -21,8 +20,8 @@ namespace API.Entities
         public DateTime Created { get; set; } = DateTime.Now;
         public bool Reconciliated { get; set; }
         
-        public Scout Scout { get; set; }
-        public Adult Adult { get; set; }
+        public Member Member { get; set; }
+       
 
     }
 }

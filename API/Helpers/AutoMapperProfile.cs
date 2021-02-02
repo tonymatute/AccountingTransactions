@@ -10,24 +10,14 @@ namespace API.Helpers
     {
         public AutoMapperProfile() 
         {
-            CreateMap<Scout, ScoutDto>()
-              .ForMember(s => s.Age, opt => opt.MapFrom(scout => scout.DateOfBirth.CalculateAge()))
-              .ForMember(r => r.RankName, opt => opt.MapFrom(rank =>
-                     rank.ScoutRanks.FirstOrDefault(x => x.ActiveRank).RankName));
+
+            CreateMap<Member, MemberDto>()
+             .ForMember(m => m.Age, opt => opt.MapFrom(member => member.DateOfBirth.CalculateAge()));
+            CreateMap<MemberDto, Member>();          
             CreateMap<Transaction, TransactionDto>();
-            CreateMap<BuckTransaction, BuckTransactionDto>();
-            CreateMap<Adult, AdultDto>();
-            CreateMap<AdultDto, Adult>();
-            CreateMap<Rank, RankDto>();         
-            CreateMap<ScoutRank, ScoutRankDto>()
-                .ForMember(s => s.RankName, opt => opt.MapFrom(ranks => ranks.Ranks.RankName));
-            CreateMap<ScoutUpdateDto, Scout>();
-            CreateMap<PhotoDto, Scout>();
+            CreateMap<TransactionDto, Transaction>();
             CreateMap<RegisterDto, AppUser>();
-            CreateMap<Leadership, LeadershipDto>();
-            CreateMap<AdultLeadership, AdultLeadershipDto>()
-                  .ForMember(s => s.Name, opt => opt.MapFrom(leadership => leadership.Leaderships.Name));
-            CreateMap<ScoutDto, Scout>();
+           
 
         }
     }

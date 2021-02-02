@@ -28,7 +28,6 @@ import { ScoutCardComponent } from './scouts/scout-card/scout-card.component';
 import { ScoutEditComponent } from './scouts/scout-edit/scout-edit.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { TransactionsComponent } from './transactions/transactions.component';
-import { BuckTransactionsComponent } from './buck-transactions/buck-transactions.component';
 import { ScoutParentComponent } from './scouts/scout-parent/scout-parent.component';
 import { BtnCellRenderer } from './_buttons/btn-cell-renderer/btn-cell-renderer.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
@@ -52,9 +51,10 @@ import { RankAddModalComponent } from './modals/rank-add-modal/rank-add-modal.co
 import { AdultAddComponent } from './adults/adult-add/adult-add.component';
 import { ScoutAddComponent } from './scouts/scout-add/scout-add.component';
 import { CheckboxInputComponent } from './_forms/checkbox-input/checkbox-input.component';
-
-
-
+import { AdultCardComponent } from './adults/adult-card/adult-card.component';
+import { MemberListComponent } from './member/member-list/member-list.component';
+import { MemberTransactionsComponent } from './member/member-transactions/member-transactions.component';
+import { MemberCardComponent } from './member/member-card/member-card.component';
 
 @NgModule({
   declarations: [    
@@ -75,7 +75,6 @@ import { CheckboxInputComponent } from './_forms/checkbox-input/checkbox-input.c
     ScoutCardComponent,
     ScoutEditComponent,
     TransactionsComponent,
-    BuckTransactionsComponent,
     ScoutParentComponent,
     BtnCellRenderer,
     UserEditComponent,
@@ -98,7 +97,11 @@ import { CheckboxInputComponent } from './_forms/checkbox-input/checkbox-input.c
     RankAddModalComponent,
     AdultAddComponent,
     ScoutAddComponent,
-    CheckboxInputComponent   
+    CheckboxInputComponent,
+    AdultCardComponent,
+    MemberListComponent,
+    MemberTransactionsComponent,
+    MemberCardComponent   
   ],
   imports: [
     SharedModule,

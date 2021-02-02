@@ -4,11 +4,9 @@
         <ul class="navbar-nav mr-auto">
             <ng-container *ngIf="accountService.currentUser$ | async">
                 <li class="nav-item ">
-                    <a class="nav-link" routerLink='/scouts' routerLinkActive='active'>Scouts</a>
+                    <a class="nav-link" routerLink='/member' routerLinkActive='active'>Members</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink='/adults' routerLinkActive='active'>Adults</a>
-                </li>                
+                            
                 <li class="nav-item" *appHasRole='["Admin"]'>
                     <div class="dropdown" dropdown>
                         <a class="dropdown-toggle nav-link" dropdownToggle routerLinkActive='active'>Admin</a>

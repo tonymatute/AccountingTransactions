@@ -21,23 +21,23 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{listType}")]
-        public async Task<List<SelectList>> GetListTypesAsync(string listType)
-        {           
-            var loopUpTable =  await _unitOfWork.ScoutRepository.GetListTypesAsync(listType);
-            return loopUpTable;
-        }
+        //[HttpGet("{listType}")]
+        //public async Task<List<SelectList>> GetListTypesAsync(string listType)
+        //{           
+        //    var loopUpTable =  await _unitOfWork.ScoutRepository.GetListTypesAsync(listType);
+        //    return loopUpTable;
+        //}
 
-        [HttpGet("GetRanks")]
-        public async Task<List<RankDto>> GetRanks()
-        {
-            return await _unitOfWork.ScoutRepository.GetRanksAsync(); 
-        }
+        //[HttpGet("GetRanks")]
+        //public async Task<List<RankDto>> GetRanks()
+        //{
+        //    return await _unitOfWork.ScoutRepository.GetRanksAsync(); 
+        //}
 
-        [HttpGet("GetLeadership")]
-        public async Task<List<LeadershipDto>> GetLeadership()
-        {
-            return await _unitOfWork.ScoutRepository.GetLeadershipAsync();
-        }
+        //[HttpGet("GetLeadership")]
+        //public async Task<List<LeadershipDto>> GetLeadership()
+        //{
+        //    return await _unitOfWork.ScoutRepository.GetLeadershipAsync();
+        //}
     }
 }

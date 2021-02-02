@@ -19,62 +19,6 @@ namespace API.data.migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("API.Entities.Adult", b =>
-                {
-                    b.Property<int>("AdultId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime?>("ActiveSinceDatetime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PublicId")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("RechartedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("ScoutMemberId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("AdultId");
-
-                    b.HasIndex("ScoutMemberId");
-
-                    b.ToTable("Adult");
-                });
-
-            modelBuilder.Entity("API.Entities.AdultLeadership", b =>
-                {
-                    b.Property<int>("AdultId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("LeadershipId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("AdultId", "LeadershipId");
-
-                    b.HasIndex("LeadershipId");
-
-                    b.ToTable("AdultLeadership");
-                });
-
             modelBuilder.Entity("API.Entities.AppRole", b =>
                 {
                     b.Property<int>("Id")
@@ -196,137 +140,58 @@ namespace API.data.migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("API.Entities.BuckTransaction", b =>
-                {
-                    b.Property<int>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<int>("ActivityId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int?>("ScoutMemberId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("TransactionCredit")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("TransactionDateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<decimal>("TransactionDebit")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("TransactionTypeId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("TransactionId");
-
-                    b.HasIndex("ScoutMemberId");
-
-                    b.ToTable("BuckTransactions");
-                });
-
-            modelBuilder.Entity("API.Entities.Leadership", b =>
-                {
-                    b.Property<int>("LeadershipId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.HasKey("LeadershipId");
-
-                    b.ToTable("Leadership");
-                });
-
-            modelBuilder.Entity("API.Entities.Rank", b =>
-                {
-                    b.Property<int>("RankId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("RankName")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("RankId");
-
-                    b.ToTable("Ranks");
-                });
-
-            modelBuilder.Entity("API.Entities.Scout", b =>
+            modelBuilder.Entity("API.Entities.Member", b =>
                 {
                     b.Property<int>("MemberId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
+                    b.Property<string>("CellPhone")
+                        .HasColumnType("text");
 
-                    b.Property<DateTime>("ActiveSinceDatetime")
+                    b.Property<string>("CurrentPosition")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CurrentRank")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Gender")
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<string>("Patrol")
+                        .HasColumnType("text");
+
                     b.Property<int>("PatrolId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("PhotoUrl")
+                    b.Property<string>("Photo")
                         .HasColumnType("text");
 
-                    b.Property<string>("PublicId")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("RechartedDate")
+                    b.Property<DateTime?>("RechartedDate")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("Scout")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TroopNumber")
+                        .HasColumnType("integer");
 
                     b.HasKey("MemberId");
 
-                    b.ToTable("Scout");
-                });
-
-            modelBuilder.Entity("API.Entities.ScoutRank", b =>
-                {
-                    b.Property<int>("ScoutId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RankId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("ActiveRank")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("CompletedOn")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("RankName")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("ScoutId", "RankId");
-
-                    b.HasIndex("RankId");
-
-                    b.ToTable("ScoutRanks");
+                    b.ToTable("Member");
                 });
 
             modelBuilder.Entity("API.Entities.SelectList", b =>
@@ -359,20 +224,17 @@ namespace API.data.migrations
                     b.Property<int>("ActivityId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("AdultId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("CheckNumber")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int?>("MemberId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Reconciliated")
                         .HasColumnType("boolean");
-
-                    b.Property<int?>("ScoutMemberId")
-                        .HasColumnType("integer");
 
                     b.Property<decimal>("TransactionCredit")
                         .HasColumnType("decimal(18,2)");
@@ -388,9 +250,7 @@ namespace API.data.migrations
 
                     b.HasKey("TransactionId");
 
-                    b.HasIndex("AdultId");
-
-                    b.HasIndex("ScoutMemberId");
+                    b.HasIndex("MemberId");
 
                     b.ToTable("Transactions");
                 });
@@ -481,34 +341,6 @@ namespace API.data.migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("API.Entities.Adult", b =>
-                {
-                    b.HasOne("API.Entities.Scout", "Scout")
-                        .WithMany("Parents")
-                        .HasForeignKey("ScoutMemberId");
-
-                    b.Navigation("Scout");
-                });
-
-            modelBuilder.Entity("API.Entities.AdultLeadership", b =>
-                {
-                    b.HasOne("API.Entities.Adult", "Adults")
-                        .WithMany("AdultLeaderships")
-                        .HasForeignKey("AdultId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.Leadership", "Leaderships")
-                        .WithMany("AdultLeaderships")
-                        .HasForeignKey("LeadershipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Adults");
-
-                    b.Navigation("Leaderships");
-                });
-
             modelBuilder.Entity("API.Entities.AppUserRole", b =>
                 {
                     b.HasOne("API.Entities.AppRole", "Role")
@@ -528,47 +360,13 @@ namespace API.data.migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("API.Entities.BuckTransaction", b =>
-                {
-                    b.HasOne("API.Entities.Scout", "Scout")
-                        .WithMany("BuckTransactions")
-                        .HasForeignKey("ScoutMemberId");
-
-                    b.Navigation("Scout");
-                });
-
-            modelBuilder.Entity("API.Entities.ScoutRank", b =>
-                {
-                    b.HasOne("API.Entities.Rank", "Ranks")
-                        .WithMany("ScoutRanks")
-                        .HasForeignKey("RankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.Scout", "Scouts")
-                        .WithMany("ScoutRanks")
-                        .HasForeignKey("ScoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ranks");
-
-                    b.Navigation("Scouts");
-                });
-
             modelBuilder.Entity("API.Entities.Transaction", b =>
                 {
-                    b.HasOne("API.Entities.Adult", "Adult")
+                    b.HasOne("API.Entities.Member", "Member")
                         .WithMany("Transactions")
-                        .HasForeignKey("AdultId");
+                        .HasForeignKey("MemberId");
 
-                    b.HasOne("API.Entities.Scout", "Scout")
-                        .WithMany("Transactions")
-                        .HasForeignKey("ScoutMemberId");
-
-                    b.Navigation("Adult");
-
-                    b.Navigation("Scout");
+                    b.Navigation("Member");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -607,13 +405,6 @@ namespace API.data.migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("API.Entities.Adult", b =>
-                {
-                    b.Navigation("AdultLeaderships");
-
-                    b.Navigation("Transactions");
-                });
-
             modelBuilder.Entity("API.Entities.AppRole", b =>
                 {
                     b.Navigation("UserRoles");
@@ -624,24 +415,8 @@ namespace API.data.migrations
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("API.Entities.Leadership", b =>
+            modelBuilder.Entity("API.Entities.Member", b =>
                 {
-                    b.Navigation("AdultLeaderships");
-                });
-
-            modelBuilder.Entity("API.Entities.Rank", b =>
-                {
-                    b.Navigation("ScoutRanks");
-                });
-
-            modelBuilder.Entity("API.Entities.Scout", b =>
-                {
-                    b.Navigation("BuckTransactions");
-
-                    b.Navigation("Parents");
-
-                    b.Navigation("ScoutRanks");
-
                     b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618

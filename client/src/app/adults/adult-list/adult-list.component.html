@@ -1,1 +1,50 @@
-<p>adult-list works!</p>
+<div class="text-center" *ngIf="adultParams.active">
+    <h2 class="font-weight-bold">{{pagination?.totalItems}} Active Scouts </h2>
+</div>
+<div class="text-center" *ngIf="!adultParams.active">
+    <h2 class="font-weight-bold">{{pagination?.totalItems}} Unactive Scouts </h2>
+</div>
+<div class="container mt-3">
+    <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadAdults()" autocomplete="off">
+        <div class="form-group">
+            <label>Active: </label>
+            <input [checked]="adultParams.active" (change)="onActiveChange($event)"
+                class="form-check-input ml-1" type="checkbox" id="active" style="cursor: pointer;"/>
+        </div>        
+        <div class="form-group px-2">           
+            <input #lastName type="text" class="form-control ml-1" style="width: 100px;" name="lastName"
+                [(ngModel)]="adultParams.lastName" placeholder="Lastname" (keyup)="onKeyUp(lastName)" autocomplete="off">
+        </div>
+        <div class="form-group px-1">           
+            <input #firstName type="text" class="form-control ml-1" style="width: 100px;" name="firstName" autocomplete="off"
+                [(ngModel)]="adultParams.firstName" placeholder="Firstname" (keyup)="onKeyUp(firstName)">
+        </div>
+        
+        <button class="btn btn-sm btn-secondary ml-1 rounded" (click)="resetFilter()" type="submit">Reset
+            Filter
+        </button>
+        <div class="ml-3">
+            <div class="btn-group float-right">
+                <button type="button" name="orderBy" (click)="loadAdults()" btnRadio="lastname"
+                [(ngModel)]="adultParams.orderBy" class="btn btn-sm btn-primary">By LastName</button>
+
+            <button type="button" name="orderBy" (click)="loadAdults()" btnRadio="firstname"
+                [(ngModel)]="adultParams.orderBy" class="btn btn-sm btn-primary">By FirstName</button>
+            </div>
+        </div> 
+    </form>
+</div>
+
+<div class="row">
+    <div *ngFor="let adult of adults" class="col-2">
+        <app-adult-card [adult]='adult'></app-adult-card>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination && !loading && pagination?.totalItems> adultParams.pageSize">
+    <pagination style="cursor: pointer;" [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage" [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+        lastText="&raquo;">
+    </pagination>
+</div>

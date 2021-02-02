@@ -1,6 +1,6 @@
 import { ScoutRank } from './scoutRank';
 import { Rank } from './rank';
-import { BuckTransaction } from "./buckTransactions";
+
 
 import { Transaction } from "./transaction";
 import { Adult } from './adult';
@@ -21,8 +21,4 @@ export interface Scout {
     patrolName: string;
     created: Date;
     transactions: Transaction[];
-    buckTransactions: BuckTransaction[];
-    parents: Adult[];
-    scoutRanks: ScoutRank[];
-
 }

@@ -176,22 +176,6 @@
     "Display": "Adult Dues"
   },
   {
-    "ListType": "Patrol",
-    "Display": "Frontiersman"
-  },
-  {
-    "ListType": "Patrol",
-    "Display": "Flaming Hawks"
-  },
-  {
-    "ListType": "Patrol",
-    "Display": "Cosmo"
-  },
-  {
-    "ListType": "Patrol",
-    "Display": "Baked Potato"
-  },
-  {
     "ListType": "Activity",
     "Display": "Trappers"
   },
