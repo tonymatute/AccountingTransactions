@@ -36,6 +36,11 @@ export class MemberListComponent implements OnInit {
       this.loading = false;
     });
   }
+  loadMembersFromRadioButton() { 
+    this.memberParams.pageNumber = 1;
+    this.memberService.setMemberParams(this.memberParams);
+    this.loadMembers();
+  }
 
   pageChanged(event: any) {
     this.memberParams.pageNumber = event.page;

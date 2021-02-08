@@ -25,7 +25,6 @@ namespace API.Data
             _mapper = mapper;
         }
 
-
         public async Task GetMembersFromTroopTrarckAsync()
         {
             using (var client = new TroopTrackAPI())
@@ -66,10 +65,6 @@ namespace API.Data
                .AsNoTracking()
                .FirstOrDefaultAsync(member => member.MemberId == id);
 
-            SetTransactionType(member);
-            SetActivity(member);
-
-
             return member;
         }
 
@@ -98,7 +93,7 @@ namespace API.Data
                 default:
                     query = query.Where(member => member.Scout == true);
                     break;
-            }            
+            }
 
             query = memberParams.OrderBy switch
             {
@@ -112,11 +107,6 @@ namespace API.Data
                            memberParams.PageNumber,
                            memberParams.PageSize);
 
-            foreach (var member in members)
-            {
-                SetTransactionType(member);
-                SetActivity(member);
-            }
             return members;
         }
 
@@ -138,51 +128,60 @@ namespace API.Data
               .FirstOrDefaultAsync(member => member.LastName == lastName && member.FirstName == firstName);
         }
 
-
         public List<PatrolDto> GetPatrolList()
         {
-            var patrols = _context.Member.Select(
-                    p => new PatrolDto { Patrol = p.Patrol, PatrolId = p.PatrolId })
+            var patrols = _context.Member
+                .Select(p => new PatrolDto { Patrol = p.Patrol, PatrolId = p.PatrolId })
                 .Distinct()
                 .OrderBy(o => o.Patrol);
             return patrols.ToList();
         }
 
-        public List<SelectList> GetListTypes(string listType)
+        public List<TransactionTypeDto> GetTransactionTypeList()
         {
-            return _context.SelectList
-                .Where(s => s.ListType == listType)
-               .AsNoTracking()
-               .ToList();
+            var transactionTypes = _context.TransactionTypes
+                .ProjectTo<TransactionTypeDto>(_mapper.ConfigurationProvider)
+                .AsNoTracking()
+                .OrderBy(t => t.TransactionTypeName)
+                .ToList();
+
+            return transactionTypes;
         }
 
-        private void SetTransactionType(MemberDto member)
+        public List<ActivityTypeDto> GetActivityTypeList()
         {
-            foreach (var row in GetListTypes("Transaction Type"))
-            {
-                foreach (var transaction in member.Transactions)
-                {
-                    if (transaction.TransactionTypeId == row.Id)
-                    {
-                        transaction.TransactionType = row.Display;
-                    }
-                }
-            }
+            var activityTypes = _context.ActivityTypes
+                 .ProjectTo<ActivityTypeDto>(_mapper.ConfigurationProvider)
+                 .AsNoTracking()
+                 .OrderBy(a => a.ActivityTypeName)
+                 .ToList();
+
+            return activityTypes;
         }
 
-        private void SetActivity(MemberDto member)
+        public void AddTransaction(Transaction transaction)
         {
-            foreach (var row in GetListTypes("Activity"))
-            {
-                foreach (var transaction in member.Transactions)
-                {
-                    if (transaction.ActivityId == row.Id)
-                    {
-                        transaction.Activity = row.Display;
-                    }
-                }
-
-            }
+            _context.Transactions.Add(transaction);
         }
+
+        public TransactionTypeDto FindTransactionTypeById(int transactionTypeId)
+        {
+            var transactionType = _context.TransactionTypes
+                 .ProjectTo<TransactionTypeDto>(_mapper.ConfigurationProvider)
+                 .AsNoTracking()
+                 .FirstOrDefault(x => x.TransactionTypeId == transactionTypeId);
+            return transactionType;
+        }
+
+        public ActivityTypeDto FindActivityTypeById(int activityTypeId)
+        {
+            var activityType = _context.ActivityTypes
+                 .ProjectTo<ActivityTypeDto>(_mapper.ConfigurationProvider)
+                 .AsNoTracking()
+                 .FirstOrDefault(x => x.ActivityTypeId == activityTypeId);
+
+            return activityType;
+        }
+
     }
 }

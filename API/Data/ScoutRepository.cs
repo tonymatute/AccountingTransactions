@@ -108,23 +108,17 @@ namespace API.Data
         //    return scout;
         //}
 
-        public async Task<List<SelectList>> GetListTypesAsync(string listType)
-        {
-            return  await _context.SelectList
-                .Where(s => s.ListType == listType)
-               .AsNoTracking()
-               .ToListAsync();
-        }
+        
 
         
 
-        public List<SelectList> GetListTypes(string listType)
-        {
-            return  _context.SelectList
-                .Where(s => s.ListType == listType)
-               .AsNoTracking()
-               .ToList();
-        }      
+        //public List<SelectList> GetListTypes(string listType)
+        //{
+        //    return  _context.SelectList
+        //        .Where(s => s.ListType == listType)
+        //       .AsNoTracking()
+        //       .ToList();
+        //}      
 
         //private void SetTransactionType(MemberDto scout)
         //{
@@ -175,10 +169,7 @@ namespace API.Data
             _context.Entry(scout).State = EntityState.Modified;
         }
 
-        public void UpdateRank(ScoutRank scoutRank)
-        {
-            _context.Entry(scoutRank).State = EntityState.Modified;
-        }
+       
 
         //public async Task<Scout> FindScoutByNameAsync(string lastName, string firstName)
         //{

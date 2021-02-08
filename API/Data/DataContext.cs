@@ -25,51 +25,39 @@ namespace API.Data
 
         public DbSet<Member> Member { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
-        //public DbSet<Scout> Scouts { get; set; }
-        public DbSet<SelectList> SelectList { get; set; }
-       
+        public DbSet<TransactionType> TransactionTypes { get; set; }
+        public DbSet<ActivityType> ActivityTypes { get; set; }
+        public DbSet<ExpenseType> ExpenseTypes { get; set; }
+          
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating(modelBuilder);
 
             // Role to AppRole FK
-            builder.Entity<AppUser>()
+            modelBuilder.Entity<AppUser>()
                   .HasMany(ur => ur.UserRoles)
                   .WithOne(u => u.User)
                   .HasForeignKey(ur => ur.UserId)
                   .IsRequired();
-            builder.Entity<AppRole>()
+            modelBuilder.Entity<AppRole>()
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
 
-            //// Adult to Leadership FK
-            //builder.Entity<AdultLeadership>().HasKey(al => new { al.AdultId, al.LeadershipId });
-            //builder.Entity<Adult>()
-            //     .HasMany(al => al.AdultLeaderships)
-            //     .WithOne(a => a.Adults)
-            //     .HasForeignKey(a => a.AdultId)
-            //     .IsRequired();
-            //builder.Entity<Leadership>()
-            //   .HasMany(al => al.AdultLeaderships)
-            //   .WithOne(l => l.Leaderships)
-            //   .HasForeignKey(l => l.LeadershipId)
-            //   .IsRequired();
+            modelBuilder.Entity<Transaction>()
+                .HasQueryFilter(t => !t.Reconciliated);
+            
+            //modelBuilder.Entity<Transaction>()
+            //    .HasOne(t => t.TransactionTypes)
+            //    .WithOne(t => t.Transactions)
+            //    .HasForeignKey<Transaction>(t =>  new { t.TransactionTypeFKId, t.TransactionTypeId });
 
-            //// Scout to Rank FK
-            //builder.Entity<ScoutRank>().HasKey(sr => new { sr.ScoutId, sr.RankId });
-            //builder.Entity<Rank>()
-            //    .HasMany(sr => sr.ScoutRanks)
-            //    .WithOne(r => r.Ranks)
-            //    .HasForeignKey(fk => fk.RankId)
-            //    .IsRequired();
-            //builder.Entity<Scout>()
-            //    .HasMany(sr => sr.ScoutRanks)
-            //    .WithOne(r => r.Scouts)
-            //    .HasForeignKey(fk => fk.ScoutId)
-            //    .IsRequired();
+            //modelBuilder.Entity<Transaction>()
+            //   .HasOne(t => t.ActivityTypes)
+            //   .WithOne(t => t.Transactions)
+            //   .HasForeignKey<Transaction>(t => new {  t.TransactionId , t.ActivityTypeId});           
 
         }
 

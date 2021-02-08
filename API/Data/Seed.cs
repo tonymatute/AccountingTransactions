@@ -17,13 +17,13 @@ namespace API.Data
 
         public static async Task SeedTables(
             UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, DataContext context)
-        {
+        {   
             await Seed.SeedUsers(userManager, roleManager);
-            await Seed.SeedLookUpTable(context);
-            await SeedMembers(context);
-            //await Seed.SeedScouts(context);
-            //await Seed.SeedLeadership(context);
-            //await Seed.SeedRanks(context);
+            await Seed.SeedExpenseType(context);
+            await Seed.SeedActivityType(context);
+            await Seed.SeedTransactionType(context);
+            await Seed.SeedMembers(context);
+            
         }
         public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {            
@@ -91,61 +91,44 @@ namespace API.Data
             }
         }
 
-            //public static async Task SeedScouts(DataContext context)
-            //{
-            //    if (await context.Scouts.AnyAsync()) return;
-            //    var scoutData = await File.ReadAllTextAsync("Data/ScoutSeedData.json");
-            //    var scouts = JsonSerializer.Deserialize<List<Scout>>(scoutData);
-            //    foreach (var scout in scouts)
-            //    {
-            //        context.Scouts.Add(scout);
-            //    }
-
-            //    await context.SaveChangesAsync();
-            //}
-
-            public static async Task SeedLookUpTable(DataContext context)
+        public static async Task SeedExpenseType(DataContext context)
         {
-
-            if (await context.SelectList.AnyAsync()) return;
-            var data = await File.ReadAllTextAsync("Data/LookupTable.json");
-            var looupList = JsonSerializer.Deserialize<List<SelectList>>(data);
-            foreach (var row in looupList)
+            if (await context.ExpenseTypes.AnyAsync()) return;
+            var data = await File.ReadAllTextAsync("Data/SeedData/expenseType.json");
+            var expenseTypes = JsonSerializer.Deserialize<List<ExpenseType>>(data);
+            foreach (var expenseType in expenseTypes)
             {
-                context.SelectList.Add(row);
+                context.ExpenseTypes.Add(expenseType);
             }
 
             await context.SaveChangesAsync();
         }
 
-        //public static async Task SeedLeadership(DataContext context)
-        //{
+        public static async Task SeedActivityType(DataContext context)
+        {
+            if (await context.ActivityTypes.AnyAsync()) return;
+            var data = await File.ReadAllTextAsync("Data/SeedData/activityType.json");
+            var activityTypes = JsonSerializer.Deserialize<List<ActivityType>>(data);
+            foreach (var activityType in activityTypes)
+            {
+                context.ActivityTypes.Add(activityType);
+            }
 
-        //    if (await context.Leaderships.AnyAsync()) return;
-        //    var data = await File.ReadAllTextAsync("Data/leadership.json");
-        //    var leaderships = JsonSerializer.Deserialize<List<Leadership>>(data);
-        //    foreach (var leadership in leaderships)
-        //    {
-        //        context.Leaderships.Add(leadership);
-        //    }
+            await context.SaveChangesAsync();
+        }
 
-        //    await context.SaveChangesAsync();
-        //}
+        public static async Task SeedTransactionType(DataContext context)
+        {
+            if (await context.TransactionTypes.AnyAsync()) return;
+            var data = await File.ReadAllTextAsync("Data/SeedData/transactionType.json");
+            var transactionTypes = JsonSerializer.Deserialize<List<TransactionType>>(data);
+            foreach (var transactionType in transactionTypes)
+            {
+                context.TransactionTypes.Add(transactionType);
+            }
 
-        //public static async Task SeedRanks(DataContext context)
-        //{
-
-        //   // Thread.Sleep(6000);
-        //    if (await context.Ranks.AnyAsync()) return;
-        //    var data = await File.ReadAllTextAsync("Data/ranks.json");
-        //    var ranks = JsonSerializer.Deserialize<List<Rank>>(data);
-        //    foreach (var rank in ranks)
-        //    {
-        //        context.Ranks.Add(rank);
-        //    }
-
-        //    await context.SaveChangesAsync();
-        //}
+            await context.SaveChangesAsync();
+        }
 
     }
 

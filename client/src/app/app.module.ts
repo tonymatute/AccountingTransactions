@@ -28,10 +28,8 @@ import { ScoutCardComponent } from './scouts/scout-card/scout-card.component';
 import { ScoutEditComponent } from './scouts/scout-edit/scout-edit.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { TransactionsComponent } from './transactions/transactions.component';
-import { ScoutParentComponent } from './scouts/scout-parent/scout-parent.component';
 import { BtnCellRenderer } from './_buttons/btn-cell-renderer/btn-cell-renderer.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
-import { ScoutRankComponent } from './scouts/scout-rank/scout-rank.component';
 import { CheckboxRenderer } from './_component_extentions/checkbox-renderer/checkbox-renderer.component';
 import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
@@ -55,6 +53,7 @@ import { AdultCardComponent } from './adults/adult-card/adult-card.component';
 import { MemberListComponent } from './member/member-list/member-list.component';
 import { MemberTransactionsComponent } from './member/member-transactions/member-transactions.component';
 import { MemberCardComponent } from './member/member-card/member-card.component';
+import { MemberAddModalComponent } from './modals/member-add-modal/member-add-modal.component';
 
 @NgModule({
   declarations: [    
@@ -74,11 +73,9 @@ import { MemberCardComponent } from './member/member-card/member-card.component'
     ServerErrorComponent,
     ScoutCardComponent,
     ScoutEditComponent,
-    TransactionsComponent,
-    ScoutParentComponent,
+    TransactionsComponent,  
     BtnCellRenderer,
-    UserEditComponent,
-    ScoutRankComponent,
+    UserEditComponent,   
     CheckboxRenderer,
     PhotoEditorComponent,
     HasRoleDirective,
@@ -101,7 +98,8 @@ import { MemberCardComponent } from './member/member-card/member-card.component'
     AdultCardComponent,
     MemberListComponent,
     MemberTransactionsComponent,
-    MemberCardComponent   
+    MemberCardComponent,
+    MemberAddModalComponent   
   ],
   imports: [
     SharedModule,

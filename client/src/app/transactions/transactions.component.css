@@ -11,7 +11,7 @@
 
 #transactions tbody tr:nth-child(even){background-color: #f2f2f2;}  
 #transactions tbody tr:hover {background-color: #ddd;}
-#transactions th:hover {background-color: rgb(3, 23, 90);}
+#transactions th:hover {background-color: rgb(214, 215, 219);}
 
 #transactions th {
   padding-top: 10px;
@@ -20,6 +20,11 @@
   background-color: #e8e8e8;
   color: black;
   cursor: pointer;  
+}
+
+
+#transactions td {
+  font-size: 12px; 
 }
 
 #transactions tfoot {

@@ -22,8 +22,6 @@ namespace API.Entities
         public DateTime Created { get; set; } = DateTime.Now;
 
         public ICollection<Transaction> Transactions { get; set; }
-        public ICollection<BuckTransaction> BuckTransactions { get; set; }
-        public ICollection<Adult> Parents { get; set; }
-        public ICollection<ScoutRank> ScoutRanks { get; set; }
+      
     }
 }

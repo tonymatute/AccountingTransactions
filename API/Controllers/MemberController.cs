@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.DTOs;
+using API.Entities;
 using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
@@ -17,17 +18,14 @@ namespace API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService;
         private readonly DataContext _context;
 
         public MemberController(IUnitOfWork unitOfWork,
             IMapper mapper,
-            IPhotoService photoService,
             DataContext context)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _photoService = photoService;
             _context = context;
         }
 
@@ -47,10 +45,66 @@ namespace API.Controllers
         }
 
         [HttpGet("GetPatrolList")]
-        public  List<PatrolDto> GetPatrolList()
+        public List<PatrolDto> GetPatrolList()
         {
             return _unitOfWork.MemberRepository.GetPatrolList();
         }
 
+        [HttpGet("GetTransactionTypes")]
+        public List<TransactionTypeDto> GetTransactionTypes()
+        {
+            return _unitOfWork.MemberRepository.GetTransactionTypeList();
+        }
+
+        [HttpGet("GetActivityTypes")]
+        public List<ActivityTypeDto> GetActivityTypes()
+        {
+            return _unitOfWork.MemberRepository.GetActivityTypeList();
+        }
+
+        [HttpPost("add-transaction/{memberId}")]
+        public async Task<ActionResult<TransactionDto>> AddTransaction(int memberId, [FromQuery()] TransactionParams transactionParams)
+        {
+            var member = await _unitOfWork.MemberRepository.FindMemberByIdAsync(memberId);
+            if (member == null) return NotFound("Member Not Found!");
+
+            var transactionType = _unitOfWork.MemberRepository.FindTransactionTypeById(transactionParams.TransactionTypeId);
+            var activityType = _unitOfWork.MemberRepository.FindActivityTypeById(transactionParams.ActivityTypeId);
+            
+            if ( transactionParams.TransactionTypeId == 7)
+            {
+                member.RechartedDate = transactionParams.TransactionDate;
+                _unitOfWork.MemberRepository.Update(member);
+                if (!await _unitOfWork.Complete()) return BadRequest("Failed to update member.");
+            }
+
+
+
+            var newTransaction = new Transaction
+            {
+                Member = member,
+                TransactionTypeName = transactionType!=null ? transactionType.TransactionTypeName : "",  
+                TransactionCredit = transactionParams.TransactionCredit,
+                TransactionDebit = transactionParams.TransactionDebit,
+                TransactionDate = transactionParams.TransactionDate,
+                ActivityTypeName = activityType != null ? activityType.ActivityTypeName : "",
+                ActivityTypeCost = activityType != null ? activityType.Cost : 0,
+                ActivityTypeLocation = activityType != null ? activityType.Location : "",
+                Created = DateTime.Now,
+                Reconciliated = false,
+                CheckNumber = transactionParams.CheckNumber,
+                Comments = transactionParams.Comments
+            };
+
+
+        _unitOfWork.MemberRepository.AddTransaction(newTransaction);
+
+            if (await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Failed to add transaction to member.");
+
     }
+
+
+}
 }

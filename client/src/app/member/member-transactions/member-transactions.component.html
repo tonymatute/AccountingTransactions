@@ -1,1 +1,47 @@
-<p>member-transactions works!</p>
+<div class="row" *ngIf="member" id="printScreenDiv">
+    <div class="col-3">
+        <div class="card">
+            <img src="{{member.photo || './assets/user.png'}}" alt="{{member.firstName}}"
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div class="text-center font-weight-bold">
+                    {{charteredOrganization}}
+                </div>
+                <div class="text-center font-weight-bold mt-1">
+                    {{troop}}
+                </div>
+                <div class="text-center font-weight-bold mt-2">
+                    {{troopLocation}}
+                </div>
+                <hr />
+                <div class=" mt-1"><strong> Member :</strong>
+                    {{member.firstName}} {{member.lastName}}
+                </div>
+                <div *ngIf="member.age > 0 "   class=" mt-1"><strong>Age : </strong>
+                    {{member.age}}
+                </div>
+                <div class=" mt-1" ><strong>Recharted Date : </strong>
+                    <div style="display: inline;" [ngStyle]="{'color':RechartedDateDueColor()}">
+                         {{member.rechartedDate | date}}
+                         <p *ngIf="isRechartedDateDue()" class="text-center font-weight-bold" style="color: red;">Past Due </p>
+                    </div>                   
+                </div>
+                <div class=" mt-1 mb-2">
+                    <strong>Position : </strong>
+                    {{ member.currentPosition}}
+                </div>
+                <div class=" mt-1">
+                    <strong>Rank : </strong>
+                    {{member.currentRank}}
+                </div>
+                <div class=" mt-1 mb-2">
+                    <strong>Patrol : </strong>
+                    {{member.patrol}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <app-transactions [member]="member" ></app-transactions>
+    </div>
+</div>

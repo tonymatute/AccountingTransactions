@@ -19,6 +19,27 @@ namespace API.data.migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
+            modelBuilder.Entity("API.Entities.ActivityType", b =>
+                {
+                    b.Property<int>("ActivityTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("ActivityTypeName")
+                        .HasColumnType("text");
+
+                    b.Property<double>("Cost")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("text");
+
+                    b.HasKey("ActivityTypeId");
+
+                    b.ToTable("ActivityTypes");
+                });
+
             modelBuilder.Entity("API.Entities.AppRole", b =>
                 {
                     b.Property<int>("Id")
@@ -140,6 +161,21 @@ namespace API.data.migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
+            modelBuilder.Entity("API.Entities.ExpenseType", b =>
+                {
+                    b.Property<int>("ExpenseTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("ExpenseTypeName")
+                        .HasColumnType("text");
+
+                    b.HasKey("ExpenseTypeId");
+
+                    b.ToTable("ExpenseTypes");
+                });
+
             modelBuilder.Entity("API.Entities.Member", b =>
                 {
                     b.Property<int>("MemberId")
@@ -194,26 +230,6 @@ namespace API.data.migrations
                     b.ToTable("Member");
                 });
 
-            modelBuilder.Entity("API.Entities.SelectList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
-
-                    b.Property<string>("Display")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<string>("ListType")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SelectList");
-                });
-
             modelBuilder.Entity("API.Entities.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
@@ -221,11 +237,20 @@ namespace API.data.migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int>("ActivityId")
-                        .HasColumnType("integer");
+                    b.Property<double?>("ActivityTypeCost")
+                        .HasColumnType("double precision");
 
-                    b.Property<int?>("CheckNumber")
-                        .HasColumnType("integer");
+                    b.Property<string>("ActivityTypeLocation")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ActivityTypeName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CheckNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
@@ -239,20 +264,35 @@ namespace API.data.migrations
                     b.Property<decimal>("TransactionCredit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("TransactionDateTime")
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<decimal>("TransactionDebit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("TransactionTypeId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TransactionTypeName")
+                        .HasColumnType("text");
 
                     b.HasKey("TransactionId");
 
                     b.HasIndex("MemberId");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("API.Entities.TransactionType", b =>
+                {
+                    b.Property<int>("TransactionTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .UseIdentityByDefaultColumn();
+
+                    b.Property<string>("TransactionTypeName")
+                        .HasColumnType("text");
+
+                    b.HasKey("TransactionTypeId");
+
+                    b.ToTable("TransactionTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

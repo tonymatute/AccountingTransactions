@@ -19,20 +19,17 @@ namespace API.Controllers
     {
 
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        private readonly IPhotoService _photoService;
+        private readonly IMapper _mapper;      
         private readonly DataContext _context;
 
         public ScoutController(
             IUnitOfWork unitOfWork, 
             IMapper mapper, 
-            IPhotoService photoService,
+          
             DataContext context)
         {
-
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
-            _photoService = photoService;
+            _mapper = mapper;          
             _context = context;
         }
 

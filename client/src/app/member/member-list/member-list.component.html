@@ -1,18 +1,16 @@
 <div class="text-center">
-    <h2 class="font-weight-bold">{{pagination?.totalItems}} Active Scouts </h2>
+    <h2 class="font-weight-bold">{{pagination?.totalItems}} Members Found </h2>
 </div>
-<div class="text-center">
-    <h2 class="font-weight-bold">{{pagination?.totalItems}} Unactive Scouts </h2>
-</div>
+
 <div class="container mt-3">
     <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadMembers()" autocomplete="off">
         <div class="ml-3">
             <div class="btn-group float-right">
-                <button type="button" name="memberType" (click)="loadMembers()" btnRadio="0"
+                <button type="button" name="memberType" (click)="loadMembersFromRadioButton()" btnRadio="0"
                     [(ngModel)]="memberParams.memberType" class="btn btn-sm btn-primary">Scouts</button>
-                <button type="button" name="memberType" (click)="loadMembers()" btnRadio="1"
+                <button type="button" name="memberType" (click)="loadMembersFromRadioButton()" btnRadio="1"
                     [(ngModel)]="memberParams.memberType" class="btn btn-sm btn-primary">Adults</button>
-                <button type="button" name="memberType" (click)="loadMembers()" btnRadio="2"
+                <button type="button" name="memberType" (click)="loadMembersFromRadioButton()" btnRadio="2"
                     [(ngModel)]="memberParams.memberType" class="btn btn-sm btn-primary">Age Scouts</button>
             </div>
         </div>

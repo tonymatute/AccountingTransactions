@@ -5,16 +5,17 @@ namespace API.DTOs
     public class TransactionDto
     {
         public int TransactionId { get; set; }
-        public int TransactionTypeId { get; set; }
-        public string TransactionType { get; set; }
-        public int ActivityId { get; set; }
-        public string Activity { get; set; }
-        public decimal TransactionCredit { get; set; }       
+        public DateTime TransactionDate { get; set; }
+        public string CheckNumber { get; set; }
+        public decimal TransactionCredit { get; set; }
         public decimal TransactionDebit { get; set; }
-        public int? CheckNumber { get; set; }
-        public DateTime TransactionDateTime { get; set; }
-        public DateTime Created { get; set; } 
+        public string Comments { get; set; }
         public bool Reconciliated { get; set; }
-       
+        public DateTime Created { get; set; }       
+        public string TransactionTypeName { get; set; }       
+        public string ActivityTypeName { get; set; }
+        public double? ActivityTypeCost { get; set; }
+        public string ActivityTypeLocation { get; set; }
+
     }
 }

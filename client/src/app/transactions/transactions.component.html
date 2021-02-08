@@ -1,65 +1,59 @@
 <div class="">
-    <button class="btn btn-primary   mb-2 " (click)="addNewHandler()">Add Transaction</button>
-    <input class="btn btn-primary   mb-2 " type="button" value="Print Preview" (click)='onPrintPreview()' />
+    <button class="btn btn-primary   mb-2 " (click)="openMemberAddModal(member)">Add Transaction</button>
+    <!-- <input class="btn btn-primary   mb-2 " type="button" value="Print Preview" (click)='onPrintPreview()' /> -->
     <!-- <button  class="btn btn-primary   mb-2 " type="button"  (click)="exportToPDF()">Export</button> -->
 </div>
 <div id="printareaDiv">
     <table class="table sortable" id="transactions" style="width: 900px;">
         <thead>
             <tr>
+                <th style="width: 12%;">Date</th> 
                 <th style="width: 20%;">Type</th>
-                <th style="width: 3%;">Ckeck</th>
+                <th style="width: 3%;">Check</th>
+                <th style="width: 20%;">Comments</th>
                 <th style="width: 20%;">Activity</th>
                 <th style="width: 11%;">Credit</th>
-                <th style="width: 11%;">Debit</th>
-                <th style="width: 12%;">Date</th>
+                <th style="width: 11%;">Debit</th>  
+                <th style="width: 10%;">Total</th>             
             </tr>
         </thead>
         <tbody>
             <tr *ngIf="transactions.length == 0">
-                <td colspan="6" class="text-center font-weight-bold" >
+                <td colspan="8" class="text-center font-weight-bold" >
                     No transactions Found
                 </td>
             </tr>           
             <tr *ngFor="let transaction of transactions | paginate: { itemsPerPage: 10, currentPage: page }"
                 class="item" class="item">
-                <td>{{transaction.transactionType}} </td>
+                <td>{{transaction.transactionDate| date: 'MM/dd/yyyy'}}</td>
+                <td>{{transaction.transactionTypeName}} </td>
                 <td>{{transaction.checkNumber}} </td>
-                <td>{{transaction.activity}}</td>
+                <td>{{transaction.comments}} </td>
+                <td>{{transaction.activityTypeName}}</td>
                 <td>{{transaction.transactionCredit | currency}}</td>
-                <td>{{transaction.transactionDebit | currency}}</td>
-                <td>{{transaction.transactionDateTime| date: 'MM/dd/yyyy'}}</td>
+                <td>{{transaction.transactionDebit | currency}}</td>   
+                <td></td>              
             </tr>
         </tbody>
         <tfoot *ngIf="transactions.length > 0">
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
+                <td colspan="5"></td>                
+                <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(totalCredit)}">
                     {{totalCredit | currency }}
                 </td>
-                <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
+                <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(TotalDebit)}">
                     {{TotalDebit | currency}}
                 </td>
                 <td></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="font-weight-bold">
-
-                </td>
-                <td class="font-weight-bold text-right">
-                    Total:
-                </td>
+                <td colspan="7"></td>
                 <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
                     {{total | currency}}
                 </td>
             </tr>
             <tr>
-                <td colspan="6" class="text-center border-top "  >
+                <td colspan="8" class="text-center border-top "  >
                     <pagination-controls (pageChange)="page = $event"></pagination-controls>
                 </td>
             </tr>

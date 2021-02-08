@@ -1,0 +1,20 @@
+[
+  { "TransactionTypeName": "Check Deposit" },
+  { "TransactionTypeName": "Cash Deposit" },
+  { "TransactionTypeName": "Payment" },
+  { "TransactionTypeName": "Merit Badge Expense" },
+  { "TransactionTypeName": "Deposit" },
+  { "TransactionTypeName": "SPL Manuals" },
+  { "TransactionTypeName": "Balance Forward" },
+  { "TransactionTypeName": "Troop Dues" },
+  { "TransactionTypeName": "New Initial Balance" },
+  { "TransactionTypeName": "Missing Reimbursment" },
+  { "TransactionTypeName": "Scout Bucks" },
+  { "TransactionTypeName": "Ticket Sales" },
+  { "TransactionTypeName": "Auction" },
+  { "TransactionTypeName": "Pancake Tickets" },
+  { "TransactionTypeName": "Refund to Scout" },
+  { "TransactionTypeName": "Fund Raising Working Hours" },
+  { "TransactionTypeName": "Popcorn Sale" },
+  { "TransactionTypeName": "Orienteering Event" }
+]
