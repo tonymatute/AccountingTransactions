@@ -49,16 +49,6 @@ namespace API.Data
             modelBuilder.Entity<Transaction>()
                 .HasQueryFilter(t => !t.Reconciliated);
             
-            //modelBuilder.Entity<Transaction>()
-            //    .HasOne(t => t.TransactionTypes)
-            //    .WithOne(t => t.Transactions)
-            //    .HasForeignKey<Transaction>(t =>  new { t.TransactionTypeFKId, t.TransactionTypeId });
-
-            //modelBuilder.Entity<Transaction>()
-            //   .HasOne(t => t.ActivityTypes)
-            //   .WithOne(t => t.Transactions)
-            //   .HasForeignKey<Transaction>(t => new {  t.TransactionId , t.ActivityTypeId});           
-
         }
 
     }
