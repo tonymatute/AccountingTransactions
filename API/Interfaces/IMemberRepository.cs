@@ -22,5 +22,6 @@ namespace API.Interfaces
         TransactionTypeDto FindTransactionTypeById(int transactionTypeId);
         ActivityTypeDto FindActivityTypeById(int activityTypeId);
         Task UpdateTroopTrackMembers();
+
     }
 }

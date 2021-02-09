@@ -123,4 +123,8 @@ export class MemberService {
     return this.http.post(this.baseUrl + 'member/update-trooptrack-members', {});
   }
 
+  deleteTransaction(memberId: number, transactionId: number) {
+    return this.http.delete(this.baseUrl + 'member/delete-transaction?memberId=' + memberId + '&transactionId=' + transactionId, {});
+  }
+
 }

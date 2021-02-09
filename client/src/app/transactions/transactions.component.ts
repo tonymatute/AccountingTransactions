@@ -1,3 +1,5 @@
+import { ConfirmService } from './../_services/confirm.service';
+import { ToastrService } from 'ngx-toastr';
 import { MemberAddModalComponent } from './../modals/member-add-modal/member-add-modal.component';
 import { ActivityType } from './../_models/activityType';
 import { TransactionType } from './../_models/transactionType';
@@ -30,7 +32,9 @@ export class TransactionsComponent implements OnInit {
     private router: Router,
     private modalService: BsModalService,
     private memberService: MemberService,
-    private gridService: GridtService
+    private gridService: GridtService,
+    private toastr: ToastrService,
+    private confirmService: ConfirmService
   ) {}
 
   ngOnInit(): void {
@@ -106,7 +110,6 @@ export class TransactionsComponent implements OnInit {
       );
     });
   }
-
   private transactionTypeToArray() {
     const transactionTypeArray = [];
 
@@ -115,7 +118,6 @@ export class TransactionsComponent implements OnInit {
     });
     return transactionTypeArray;
   }
-
   private activityTypeToArray() {
     const activityTypeArray = [];
 
@@ -124,4 +126,21 @@ export class TransactionsComponent implements OnInit {
     });
     return activityTypeArray;
   }
+
+  editTransaction(transactionId: number) { 
+    alert("transaction id to edit is " + transactionId.toString());
+  }
+
+  deleteTransaction(transactionId: number) {     
+    this.confirmService.confirm('Confirm Delete', 'Do you want to Delete this transaction!?').subscribe(result => {
+      if (result) {
+        this.memberService.deleteTransaction(this.member.memberId, transactionId).subscribe(() => {
+          this.transactions = this.member.transactions.filter(x => x.transactionId !== transactionId);
+          this.toastr.success("Transaction deleted succesfully");
+        })
+      }
+    });   
+    
+  }
+  
 }

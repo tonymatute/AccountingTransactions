@@ -5,40 +5,58 @@
     <!-- <button  class="btn btn-primary   mb-2 " type="button"  (click)="exportToPDF()">Export</button> -->
 </div>
 <div id="printareaDiv">
-    <table class="table sortable" id="transactions" style="width: 900px;">
+    <table class="table sortable" id="transactions" style="width: 950px;">
         <thead>
             <tr>
-                <th style="width: 12%;">Date</th> 
+                <th style="width: 12%;"></th>
+                <th style="width: 12%;">Date</th>
                 <th style="width: 20%;">Type</th>
                 <th style="width: 3%;">Check</th>
                 <th style="width: 20%;">Comments</th>
                 <th style="width: 20%;">Activity</th>
                 <th style="width: 11%;">Credit</th>
-                <th style="width: 11%;">Debit</th>  
-                <th style="width: 10%;">Total</th>             
+                <th style="width: 11%;">Debit</th>
+                <th style="width: 10%;">Total</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngIf="transactions.length == 0">
-                <td colspan="8" class="text-center font-weight-bold" >
+                <td colspan="8" class="text-center font-weight-bold">
                     No transactions Found
                 </td>
-            </tr>           
+            </tr>
             <tr *ngFor="let transaction of transactions | paginate: { itemsPerPage: 10, currentPage: page }"
                 class="item" class="item">
+                <td>
+                    <div class="btn-group" dropdown *appHasRole='["Admin"]'>
+                        <button type="button" class="btn btn-primary btn-sm">Action</button>
+                        <button id="button-split" type="button" dropdownToggle
+                            class="btn btn-primary btn-sm dropdown-toggle dropdown-toggle-split"
+                            aria-controls="dropdown-split">
+                            <span class="caret"></span>
+                            <span class="sr-only">Split button!</span>
+                        </button>
+                        <ul id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu"
+                            aria-labelledby="button-split">
+                            <li role="menuitem"><a class="dropdown-item" (click)="editTransaction(transaction.transactionId)">Edit</a></li>
+                            <li role="menuitem"><a class="dropdown-item" (click)="deleteTransaction(transaction.transactionId)">Delete</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
                 <td>{{transaction.transactionDate| date: 'MM/dd/yyyy'}}</td>
                 <td>{{transaction.transactionTypeName}} </td>
                 <td>{{transaction.checkNumber}} </td>
                 <td>{{transaction.comments}} </td>
                 <td>{{transaction.activityTypeName}}</td>
                 <td>{{transaction.transactionCredit | currency}}</td>
-                <td>{{transaction.transactionDebit | currency}}</td>   
-                <td></td>              
+                <td>{{transaction.transactionDebit | currency}}</td>
+                <td></td>
             </tr>
         </tbody>
         <tfoot *ngIf="transactions.length > 0">
             <tr>
-                <td colspan="5"></td>                
+                <td colspan="6"></td>
                 <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(totalCredit)}">
                     {{totalCredit | currency }}
                 </td>
@@ -48,21 +66,16 @@
                 <td></td>
             </tr>
             <tr>
-                <td colspan="7"></td>
+                <td colspan="8"></td>
                 <td class="font-weight-bold border-top border-dark" [ngStyle]="{'color': getColor(total)}">
                     {{total | currency}}
                 </td>
             </tr>
             <tr>
-                <td colspan="8" class="text-center border-top "  >
+                <td colspan="9" class="text-center border-top ">
                     <pagination-controls (pageChange)="page = $event"></pagination-controls>
                 </td>
             </tr>
         </tfoot>
     </table>
 </div>
-
-
-
-
-

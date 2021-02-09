@@ -45,6 +45,7 @@ import { MemberCardComponent } from './member/member-card/member-card.component'
 import { MemberAddModalComponent } from './modals/member-add-modal/member-add-modal.component';
 import { UpdateTrooptrackMembersComponent } from './update-trooptrack-members/update-trooptrack-members.component';
 import { ReconcileMembersComponent } from './reconcile-members/reconcile-members.component';
+import { TransactionEditModalComponent } from './modals/transaction-edit-modal/transaction-edit-modal.component';
 
 @NgModule({
   declarations: [    
@@ -81,7 +82,8 @@ import { ReconcileMembersComponent } from './reconcile-members/reconcile-members
     MemberCardComponent,
     MemberAddModalComponent,
     UpdateTrooptrackMembersComponent,
-    ReconcileMembersComponent   
+    ReconcileMembersComponent,
+    TransactionEditModalComponent   
   ],
   imports: [
     SharedModule,

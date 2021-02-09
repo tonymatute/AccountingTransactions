@@ -113,5 +113,20 @@ namespace API.Controllers
             return BadRequest("Failed to Update TroopTrack Members.");
         }
 
+        [HttpDelete("delete-transaction")]
+        public async Task<ActionResult> DeleteTransaction([FromQuery] int memberId, int transactionId)
+        {
+            var member = await _unitOfWork.MemberRepository.FindMemberByIdAsync(memberId);
+            if (member == null) return NotFound("Member Not Found!");
+
+            var transaction = member.Transactions.FirstOrDefault(x => x.TransactionId == transactionId);
+            if (transaction == null) return NotFound("Transaction not found!");
+            
+            member.Transactions.Remove(transaction);
+
+            if (await _unitOfWork.Complete()) return Ok();
+
+            return BadRequest(" Failed to delete transaction.");
+        }
     }
 }
