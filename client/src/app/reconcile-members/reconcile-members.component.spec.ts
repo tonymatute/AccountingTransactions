@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdultTransactionsComponent } from './adult-transactions.component';
+import { ReconcileMembersComponent } from './reconcile-members.component';
 
-describe('AdultTransactionsComponent', () => {
-  let component: AdultTransactionsComponent;
-  let fixture: ComponentFixture<AdultTransactionsComponent>;
+describe('ReconcileMembersComponent', () => {
+  let component: ReconcileMembersComponent;
+  let fixture: ComponentFixture<ReconcileMembersComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdultTransactionsComponent ]
+      declarations: [ ReconcileMembersComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdultTransactionsComponent);
+    fixture = TestBed.createComponent(ReconcileMembersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

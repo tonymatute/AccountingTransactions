@@ -11,7 +11,6 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import {
   getMemberPaginationHeaders,
-  getPaginationHeaders,
   getPaginationResult,
 } from './paginationHelper';
 import { Transaction } from '../_models/transaction';
@@ -104,7 +103,7 @@ export class MemberService {
     return this.http.get<Patrol[]>(this.baseUrl + 'member/GetPatrolList');
   }
 
-  addTransactionk(memberId: number, transaction: NewTransaction) {
+  addTransaction(memberId: number, transaction: NewTransaction) {
     let params = new HttpParams();
 
     params = params.append('TransactionTypeId', transaction.transactionTypeId);
@@ -117,13 +116,11 @@ export class MemberService {
     params = params.append('TransactionTypeId', transaction.transactionTypeId);
     params = params.append('Comments', transaction.comments);
 
-    return this.http.post(
-      this.baseUrl +
-        'member/add-transaction/' +
-        memberId +
-        '?transaction=' +
-        params,
-      {}
-    );
+    return this.http.post( this.baseUrl + 'member/add-transaction/' + memberId +'?transaction=' + params, {} );
   }
+
+  updateTroopTrackMembers() {
+    return this.http.post(this.baseUrl + 'member/update-trooptrack-members', {});
+  }
+
 }

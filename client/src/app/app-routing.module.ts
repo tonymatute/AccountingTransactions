@@ -1,3 +1,5 @@
+import { ReconcileMembersComponent } from './reconcile-members/reconcile-members.component';
+import { UpdateTrooptrackMembersComponent } from './update-trooptrack-members/update-trooptrack-members.component';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberTransactionsComponent } from './member/member-transactions/member-transactions.component';
 import { MemberListComponent } from './member/member-list/member-list.component';
@@ -11,7 +13,6 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { ErrorTestComponent } from './errors/error-test/error-test.component';
 import { AuthorizedPathGuard } from './_guards/authorized-path.guard';
-import { ScoutListComponent } from './scouts/scout-list/scout-list.component';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -23,7 +24,6 @@ import { ExportPdfComponent } from './export-pdf/export-pdf.component';
 import { ConfirmedEmailComponent } from './confirmed-email/confirmed-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
-
 const routes: Routes = [
   { path: '', component: HomeComponent },
   {
@@ -34,11 +34,12 @@ const routes: Routes = [
       { path: 'member', component: MemberListComponent},
       { path: 'member/:id', component: MemberTransactionsComponent , resolve: { member: MemberDetailResolver}},
       { path: 'user/edit', component: UserEditComponent },
-      { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard] }
+      { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard] },
+      { path: 'update-trooptrack-members', component: UpdateTrooptrackMembersComponent },
+      { path: 'reconcile-members', component: ReconcileMembersComponent}
     ]
   },
   { path: 'export-pdf', component: ExportPdfComponent},
-  { path: 'lookup', component: ScoutListComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
   { path: 'errors', component: ErrorTestComponent },

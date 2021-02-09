@@ -183,5 +183,52 @@ namespace API.Data
             return activityType;
         }
 
+
+        public async Task UpdateTroopTrackMembers()
+        {
+            using var client = new TroopTrackAPI();
+            var response = await client.ApiClient.GetAsync("api/v1/users");
+            if (response.IsSuccessStatusCode)
+            {
+                RootObject rootObject = await response.Content.ReadAsAsync<RootObject>();
+                foreach (var user in rootObject.Members)
+                {
+                    var member = await FindMemberByIdAsync(user.user_id);
+                    if (member == null)
+                    {
+                        var newMember = new Member
+                        {
+                            MemberId = user.user_id,
+                            LastName = user.last_name,
+                            FirstName = user.first_name,
+                            Email = user.email,
+                            CellPhone = user.cell_phone,
+                            Gender = user.gender,
+                            Scout = user.scout,
+                            CurrentPosition = user.current_position,
+                            CurrentRank = user.current_rank,
+                            Photo = user.avatar,
+                            Patrol = user.patrol,
+                            PatrolId = user.patrol_id,
+                            TroopNumber = user.troop_number,
+                            DateOfBirth = user.born_on
+                        };
+                        _context.Member.Add(newMember);
+                    }
+                    else
+                    {
+                        member.CurrentPosition = user.current_position;
+                        member.CurrentRank = user.current_rank;
+                        member.Photo = user.avatar;
+                        member.Patrol = user.patrol;
+                        member.PatrolId = user.patrol_id;
+                        member.DateOfBirth = user.born_on;
+                        member.Email = user.email;
+                        member.CellPhone = user.cell_phone;
+                        Update(member);
+                    }
+                }
+            }
+        }
     }
 }

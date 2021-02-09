@@ -30,7 +30,7 @@
                     <strong>Position : </strong>
                     {{ member.currentPosition}}
                 </div>
-                <div class=" mt-1">
+                <div class=" mt-1" *ngIf="member.currentRank == null "  >
                     <strong>Rank : </strong>
                     {{member.currentRank}}
                 </div>

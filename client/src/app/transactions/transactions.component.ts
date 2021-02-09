@@ -75,7 +75,7 @@ export class TransactionsComponent implements OnInit {
       };
       if (newTransaction) {
         this.memberService
-          .addTransactionk(member.memberId, newTransaction.transaction)
+          .addTransaction(member.memberId, newTransaction.transaction)
           .subscribe(() => {
             member.transactions.push(newTransaction.transaction);
             member.transactions = this.gridService.sorTransactionsByDateDesc(

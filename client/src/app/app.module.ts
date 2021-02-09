@@ -15,23 +15,16 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DateInputComponent } from './_forms/date-input/date-input.component';
-import { ScoutListComponent } from './scouts/scout-list/scout-list.component';
-import { ScoutTransactionsComponent } from './scouts/scout-transactions/scout-transactions.component';
-import { AdultTransactionsComponent } from './adults/adult-transactions/adult-transactions.component';
-import { AdultListComponent } from './adults/adult-list/adult-list.component';
 import { ErrorTestComponent } from './errors/error-test/error-test.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { ScoutCardComponent } from './scouts/scout-card/scout-card.component';
-import { ScoutEditComponent } from './scouts/scout-edit/scout-edit.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { TransactionsComponent } from './transactions/transactions.component';
 import { BtnCellRenderer } from './_buttons/btn-cell-renderer/btn-cell-renderer.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { CheckboxRenderer } from './_component_extentions/checkbox-renderer/checkbox-renderer.component';
-import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
 import { HasRoleDirective } from './_directives/has-role.directive';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { RoleManagementComponent } from './admin/role-management/role-management.component';
@@ -45,15 +38,13 @@ import { ResetPasswordSentComponent } from './reset-password-sent/reset-password
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ResetPasswordCompleteComponent } from './reset-password-complete/reset-password-complete.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { RankAddModalComponent } from './modals/rank-add-modal/rank-add-modal.component';
-import { AdultAddComponent } from './adults/adult-add/adult-add.component';
-import { ScoutAddComponent } from './scouts/scout-add/scout-add.component';
 import { CheckboxInputComponent } from './_forms/checkbox-input/checkbox-input.component';
-import { AdultCardComponent } from './adults/adult-card/adult-card.component';
 import { MemberListComponent } from './member/member-list/member-list.component';
 import { MemberTransactionsComponent } from './member/member-transactions/member-transactions.component';
 import { MemberCardComponent } from './member/member-card/member-card.component';
 import { MemberAddModalComponent } from './modals/member-add-modal/member-add-modal.component';
+import { UpdateTrooptrackMembersComponent } from './update-trooptrack-members/update-trooptrack-members.component';
+import { ReconcileMembersComponent } from './reconcile-members/reconcile-members.component';
 
 @NgModule({
   declarations: [    
@@ -64,20 +55,13 @@ import { MemberAddModalComponent } from './modals/member-add-modal/member-add-mo
     RegisterComponent,
     TextInputComponent,
     DateInputComponent,
-    ScoutListComponent,
-    ScoutTransactionsComponent,
-    AdultTransactionsComponent,
-    AdultListComponent,
     ErrorTestComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    ScoutCardComponent,
-    ScoutEditComponent,
     TransactionsComponent,  
     BtnCellRenderer,
     UserEditComponent,   
     CheckboxRenderer,
-    PhotoEditorComponent,
     HasRoleDirective,
     AdminPanelComponent,
     RoleManagementComponent,
@@ -91,15 +75,13 @@ import { MemberAddModalComponent } from './modals/member-add-modal/member-add-mo
     ResetPasswordComponent,
     ResetPasswordCompleteComponent,
     ForgotPasswordComponent,
-    RankAddModalComponent,
-    AdultAddComponent,
-    ScoutAddComponent,
     CheckboxInputComponent,
-    AdultCardComponent,
     MemberListComponent,
     MemberTransactionsComponent,
     MemberCardComponent,
-    MemberAddModalComponent   
+    MemberAddModalComponent,
+    UpdateTrooptrackMembersComponent,
+    ReconcileMembersComponent   
   ],
   imports: [
     SharedModule,

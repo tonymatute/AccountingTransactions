@@ -1,5 +1,6 @@
 <div class="">
-    <button class="btn btn-primary   mb-2 " (click)="openMemberAddModal(member)">Add Transaction</button>
+    <button class="btn btn-primary   mb-2 " (click)="openMemberAddModal(member)" *appHasRole='["Admin"]'>
+        Add Transaction</button>
     <!-- <input class="btn btn-primary   mb-2 " type="button" value="Print Preview" (click)='onPrintPreview()' /> -->
     <!-- <button  class="btn btn-primary   mb-2 " type="button"  (click)="exportToPDF()">Export</button> -->
 </div>

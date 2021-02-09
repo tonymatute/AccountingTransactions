@@ -1,4 +1,5 @@
-﻿using API.DTOs;
+﻿using API.Data;
+using API.DTOs;
 using API.Entities;
 using API.Helpers;
 using System.Collections.Generic;
@@ -20,5 +21,6 @@ namespace API.Interfaces
         void AddTransaction(Transaction transaction);
         TransactionTypeDto FindTransactionTypeById(int transactionTypeId);
         ActivityTypeDto FindActivityTypeById(int activityTypeId);
+        Task UpdateTroopTrackMembers();
     }
 }

@@ -1,5 +1,4 @@
 import { Transaction } from './../_models/transaction';
-import { ScoutRank } from './../_models/scoutRank';
 import { Injectable } from '@angular/core';
 import { formatDate } from '@angular/common';
 
@@ -22,12 +21,7 @@ export class GridtService {
     }
   }
 
-  sortRanksByDateDesc(scoutRanks: ScoutRank[]) {
-    return scoutRanks.sort((a, b) => {
-      return <any>new Date(b.completedOn) - <any>new Date(a.completedOn);
-    });
-  }
-
+ 
   sorTransactionsByDateDesc(transactions: Transaction[]) {
     return transactions.sort((a, b) => {
       return <any>new Date(b.transactionDate) - <any>new Date(a.transactionDate);

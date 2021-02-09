@@ -70,20 +70,18 @@ namespace API.Controllers
 
             var transactionType = _unitOfWork.MemberRepository.FindTransactionTypeById(transactionParams.TransactionTypeId);
             var activityType = _unitOfWork.MemberRepository.FindActivityTypeById(transactionParams.ActivityTypeId);
-            
-            if ( transactionParams.TransactionTypeId == 7)
+
+            if (transactionParams.TransactionTypeId == 7)
             {
                 member.RechartedDate = transactionParams.TransactionDate;
                 _unitOfWork.MemberRepository.Update(member);
                 if (!await _unitOfWork.Complete()) return BadRequest("Failed to update member.");
             }
 
-
-
             var newTransaction = new Transaction
             {
                 Member = member,
-                TransactionTypeName = transactionType!=null ? transactionType.TransactionTypeName : "",  
+                TransactionTypeName = transactionType != null ? transactionType.TransactionTypeName : "",
                 TransactionCredit = transactionParams.TransactionCredit,
                 TransactionDebit = transactionParams.TransactionDebit,
                 TransactionDate = transactionParams.TransactionDate,
@@ -97,14 +95,23 @@ namespace API.Controllers
             };
 
 
-        _unitOfWork.MemberRepository.AddTransaction(newTransaction);
+            _unitOfWork.MemberRepository.AddTransaction(newTransaction);
 
             if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to add transaction to member.");
 
+        }
+
+        [HttpPost("update-trooptrack-members")]
+        public async Task<ActionResult> UpdateTroopTrackMembers()
+        {
+            await _unitOfWork.MemberRepository.UpdateTroopTrackMembers();
+
+            if (await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Failed to Update TroopTrack Members.");
+        }
+
     }
-
-
-}
 }
