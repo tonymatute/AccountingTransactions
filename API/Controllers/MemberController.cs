@@ -94,13 +94,11 @@ namespace API.Controllers
                 Comments = transactionParams.Comments
             };
 
-
             _unitOfWork.MemberRepository.AddTransaction(newTransaction);
 
             if (await _unitOfWork.Complete()) return NoContent();
 
-            return BadRequest("Failed to add transaction to member.");
-
+            return BadRequest("Failed to add transaction.");
         }
 
         [HttpPost("update-trooptrack-members")]
@@ -127,6 +125,42 @@ namespace API.Controllers
             if (await _unitOfWork.Complete()) return Ok();
 
             return BadRequest(" Failed to delete transaction.");
+        }
+
+        [HttpPost("update-transaction/{memberId}")]
+        public async Task<ActionResult> UpdateTransaction(int memberId, [FromQuery()] TransactionParams transactionParams)
+        {
+            var member = await _unitOfWork.MemberRepository.FindMemberByIdAsync(memberId);
+            if (member == null) return NotFound("Member Not Found!");
+
+            var transactionType = _unitOfWork.MemberRepository.FindTransactionTypeById(transactionParams.TransactionTypeId);
+            var activityType = _unitOfWork.MemberRepository.FindActivityTypeById(transactionParams.ActivityTypeId);
+
+            if (transactionParams.TransactionTypeId == 7)
+            {
+                member.RechartedDate = transactionParams.TransactionDate;
+                _unitOfWork.MemberRepository.Update(member);
+                if (!await _unitOfWork.Complete()) return BadRequest("Failed to update member.");
+            }
+
+            var transaction = member.Transactions.FirstOrDefault(x => x.TransactionId == transactionParams.TransactionId);
+            if (transaction == null) return NotFound("Transaction not found!");
+
+            transaction.TransactionTypeName = transactionType != null ? transactionType.TransactionTypeName : "";
+            transaction.TransactionCredit = transactionParams.TransactionCredit;
+            transaction.TransactionDebit = transactionParams.TransactionDebit;
+            transaction.TransactionDate = transactionParams.TransactionDate;
+            transaction.ActivityTypeName = activityType != null ? activityType.ActivityTypeName : "";
+            transaction.ActivityTypeCost = activityType != null ? activityType.Cost : 0;
+            transaction.ActivityTypeLocation = activityType != null ? activityType.Location : "";
+            transaction.CheckNumber = transactionParams.CheckNumber;
+            transaction.Comments = transactionParams.Comments;
+
+            _unitOfWork.MemberRepository.Update(member);
+
+            if (await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Failed to update transaction.");
         }
     }
 }

@@ -1,3 +1,4 @@
+
 import { ConfirmService } from './../_services/confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import { MemberAddModalComponent } from './../modals/member-add-modal/member-add-modal.component';
@@ -127,9 +128,6 @@ export class TransactionsComponent implements OnInit {
     return activityTypeArray;
   }
 
-  editTransaction(transactionId: number) { 
-    alert("transaction id to edit is " + transactionId.toString());
-  }
 
   deleteTransaction(transactionId: number) {     
     this.confirmService.confirm('Confirm Delete', 'Do you want to Delete this transaction!?').subscribe(result => {

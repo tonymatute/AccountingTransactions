@@ -10,7 +10,7 @@ export interface Member {
   scout: boolean;
   currentPosition: string;
   currentRank: string;
-  photo: string;
+  photoUrl: string;
   patrol: string;
   patrolId: number;
   troopNumber: number;

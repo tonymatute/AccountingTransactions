@@ -4,10 +4,25 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.data.migrations
 {
-    public partial class InitialTables : Migration
+    public partial class InitialDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ActivityTypes",
+                columns: table => new
+                {
+                    ActivityTypeId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ActivityTypeName = table.Column<string>(type: "text", nullable: true),
+                    Cost = table.Column<double>(type: "double precision", nullable: false),
+                    Location = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ActivityTypes", x => x.ActivityTypeId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -54,11 +69,23 @@ namespace API.data.migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExpenseTypes",
+                columns: table => new
+                {
+                    ExpenseTypeId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ExpenseTypeName = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExpenseTypes", x => x.ExpenseTypeId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Member",
                 columns: table => new
                 {
-                    MemberId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.None),
+                    MemberId = table.Column<int>(type: "integer", nullable: false),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     LastName = table.Column<string>(type: "text", nullable: true),
                     Email = table.Column<string>(type: "text", nullable: true),
@@ -67,7 +94,7 @@ namespace API.data.migrations
                     Scout = table.Column<bool>(type: "boolean", nullable: false),
                     CurrentPosition = table.Column<string>(type: "text", nullable: true),
                     CurrentRank = table.Column<string>(type: "text", nullable: true),
-                    Photo = table.Column<string>(type: "text", nullable: true),
+                    PhotoUrl = table.Column<string>(type: "text", nullable: true),
                     Patrol = table.Column<string>(type: "text", nullable: true),
                     PatrolId = table.Column<int>(type: "integer", nullable: false),
                     TroopNumber = table.Column<int>(type: "integer", nullable: false),
@@ -80,17 +107,16 @@ namespace API.data.migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SelectList",
+                name: "TransactionTypes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    TransactionTypeId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ListType = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: true),
-                    Display = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
+                    TransactionTypeName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SelectList", x => x.Id);
+                    table.PrimaryKey("PK_TransactionTypes", x => x.TransactionTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,14 +231,17 @@ namespace API.data.migrations
                 {
                     TransactionId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TransactionTypeId = table.Column<int>(type: "integer", nullable: false),
-                    ActivityId = table.Column<int>(type: "integer", nullable: false),
+                    TransactionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    CheckNumber = table.Column<int>(type: "integer", nullable: true),
                     TransactionCredit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TransactionDebit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CheckNumber = table.Column<int>(type: "integer", nullable: true),
-                    TransactionDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Comments = table.Column<string>(type: "text", nullable: true),
                     Reconciliated = table.Column<bool>(type: "boolean", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    TransactionTypeName = table.Column<string>(type: "text", nullable: true),
+                    ActivityTypeName = table.Column<string>(type: "text", nullable: true),
+                    ActivityTypeCost = table.Column<double>(type: "double precision", nullable: true),
+                    ActivityTypeLocation = table.Column<string>(type: "text", nullable: true),
                     MemberId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
@@ -272,6 +301,9 @@ namespace API.data.migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ActivityTypes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -287,10 +319,13 @@ namespace API.data.migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "SelectList");
+                name: "ExpenseTypes");
 
             migrationBuilder.DropTable(
                 name: "Transactions");
+
+            migrationBuilder.DropTable(
+                name: "TransactionTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

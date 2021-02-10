@@ -24,14 +24,6 @@
                 autocomplete="off" [(ngModel)]="memberParams.firstName" placeholder="Firstname"
                 (keyup)="onKeyUp(firstName)">
         </div>
-        <!-- <div class="form-group px-2">            
-            <select  name="patrolId" [(ngModel)]="memberParams.patrolId"  class="form-control ml-1" (change)="selectedChange($event.target.value)">
-                <option value="0"  class="text-muted" disabled selected hidden>Select Patrol</option>
-                <option *ngFor="let patrol of patrols" [value]="patrol.id">
-                    {{patrol.display}}
-                </option>
-            </select>
-        </div>        -->
         <button class="btn btn-sm btn-secondary ml-1 rounded" (click)="resetFilter()" type="submit">Reset
             Filter
         </button>

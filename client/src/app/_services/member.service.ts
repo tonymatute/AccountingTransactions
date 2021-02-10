@@ -127,4 +127,6 @@ export class MemberService {
     return this.http.delete(this.baseUrl + 'member/delete-transaction?memberId=' + memberId + '&transactionId=' + transactionId, {});
   }
 
+  
+
 }

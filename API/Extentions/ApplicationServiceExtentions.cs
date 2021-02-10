@@ -21,6 +21,7 @@ namespace API.Extentions
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+                //options.UseSqlServer(config.GetConnectionString("SQLConnection"));
             });
             var emailConfig = config
                 .GetSection("EmailConfiguration")

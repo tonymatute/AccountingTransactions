@@ -4,7 +4,7 @@ namespace API.Helpers
 {
     public class TransactionParams
     {
-      
+        public int TransactionId { get; set; }
         public int TransactionTypeId { get; set; }
         public int ActivityTypeId { get; set; }
         public decimal TransactionCredit { get; set; }

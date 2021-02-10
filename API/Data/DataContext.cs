@@ -28,7 +28,7 @@ namespace API.Data
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<ActivityType> ActivityTypes { get; set; }
         public DbSet<ExpenseType> ExpenseTypes { get; set; }
-          
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -48,7 +48,12 @@ namespace API.Data
 
             modelBuilder.Entity<Transaction>()
                 .HasQueryFilter(t => !t.Reconciliated);
-            
+
+            //Ignore Troop member account
+            modelBuilder.Entity<Member>()
+               .HasQueryFilter(m => m.MemberId != 1);
+
+
         }
 
     }

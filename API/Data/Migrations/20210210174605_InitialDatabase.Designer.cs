@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.data.migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210206152204_modifyTables")]
-    partial class modifyTables
+    [Migration("20210210174605_InitialDatabase")]
+    partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,9 +181,7 @@ namespace API.data.migrations
             modelBuilder.Entity("API.Entities.Member", b =>
                 {
                     b.Property<int>("MemberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("integer");
 
                     b.Property<string>("CellPhone")
                         .HasColumnType("text");
@@ -215,7 +213,7 @@ namespace API.data.migrations
                     b.Property<int>("PatrolId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Photo")
+                    b.Property<string>("PhotoUrl")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("RechartedDate")
@@ -248,8 +246,8 @@ namespace API.data.migrations
                     b.Property<string>("ActivityTypeName")
                         .HasColumnType("text");
 
-                    b.Property<string>("CheckNumber")
-                        .HasColumnType("text");
+                    b.Property<int?>("CheckNumber")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Comments")
                         .HasColumnType("text");

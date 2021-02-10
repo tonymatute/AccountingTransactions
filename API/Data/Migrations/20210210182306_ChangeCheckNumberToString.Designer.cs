@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.data.migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210203192258_AddFKtoTransactionType")]
-    partial class AddFKtoTransactionType
+    [Migration("20210210182306_ChangeCheckNumberToString")]
+    partial class ChangeCheckNumberToString
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace API.data.migrations
 
             modelBuilder.Entity("API.Entities.ActivityType", b =>
                 {
-                    b.Property<int>("ActivityTypeID")
+                    b.Property<int>("ActivityTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
@@ -37,7 +37,7 @@ namespace API.data.migrations
                     b.Property<string>("Location")
                         .HasColumnType("text");
 
-                    b.HasKey("ActivityTypeID");
+                    b.HasKey("ActivityTypeId");
 
                     b.ToTable("ActivityTypes");
                 });
@@ -181,9 +181,7 @@ namespace API.data.migrations
             modelBuilder.Entity("API.Entities.Member", b =>
                 {
                     b.Property<int>("MemberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("integer");
 
                     b.Property<string>("CellPhone")
                         .HasColumnType("text");
@@ -215,7 +213,7 @@ namespace API.data.migrations
                     b.Property<int>("PatrolId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Photo")
+                    b.Property<string>("PhotoUrl")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("RechartedDate")
@@ -239,11 +237,17 @@ namespace API.data.migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int>("ActivityId")
-                        .HasColumnType("integer");
+                    b.Property<double?>("ActivityTypeCost")
+                        .HasColumnType("double precision");
 
-                    b.Property<int?>("CheckNumber")
-                        .HasColumnType("integer");
+                    b.Property<string>("ActivityTypeLocation")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ActivityTypeName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CheckNumber")
+                        .HasColumnType("text");
 
                     b.Property<string>("Comments")
                         .HasColumnType("text");
@@ -260,21 +264,18 @@ namespace API.data.migrations
                     b.Property<decimal>("TransactionCredit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("TransactionDateTime")
+                    b.Property<DateTime>("TransactionDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<decimal>("TransactionDebit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("TransactionTypeId")
-                        .HasColumnType("integer");
+                    b.Property<string>("TransactionTypeName")
+                        .HasColumnType("text");
 
                     b.HasKey("TransactionId");
 
                     b.HasIndex("MemberId");
-
-                    b.HasIndex("TransactionTypeId")
-                        .IsUnique();
 
                     b.ToTable("Transactions");
                 });
@@ -405,15 +406,7 @@ namespace API.data.migrations
                         .WithMany("Transactions")
                         .HasForeignKey("MemberId");
 
-                    b.HasOne("API.Entities.TransactionType", "TransactionTypes")
-                        .WithOne("Transactions")
-                        .HasForeignKey("API.Entities.Transaction", "TransactionTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Member");
-
-                    b.Navigation("TransactionTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -463,11 +456,6 @@ namespace API.data.migrations
                 });
 
             modelBuilder.Entity("API.Entities.Member", b =>
-                {
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("API.Entities.TransactionType", b =>
                 {
                     b.Navigation("Transactions");
                 });

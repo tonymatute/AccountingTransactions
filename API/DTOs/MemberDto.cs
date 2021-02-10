@@ -15,7 +15,7 @@ namespace API.DTOs
         public bool Scout { get; set; }
         public string CurrentPosition { get; set; }
         public string CurrentRank { get; set; }
-        public string Photo { get; set; }
+        public string PhotoUrl { get; set; }
         public string Patrol { get; set; }
         public int PatrolId { get; set; }
         public int TroopNumber { get; set; }

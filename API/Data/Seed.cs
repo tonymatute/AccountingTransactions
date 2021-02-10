@@ -14,33 +14,32 @@ namespace API.Data
 {
     public class Seed
     {
-
         public static async Task SeedTables(
             UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, DataContext context)
-        {   
+        {
             await Seed.SeedUsers(userManager, roleManager);
             await Seed.SeedExpenseType(context);
             await Seed.SeedActivityType(context);
             await Seed.SeedTransactionType(context);
             await Seed.SeedMembers(context);
-            
+
         }
         public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
-        {            
+        {
             if (!await roleManager.Roles.AnyAsync())
             {
                 var roles = new List<AppRole>
                 {
                     new AppRole{Name = "Admin"},
-                    new AppRole{Name = "Operator"},                    
+                    new AppRole{Name = "Operator"},
                 };
 
                 foreach (var role in roles)
                 {
                     await roleManager.CreateAsync(role);
                 }
-            }            
-            
+            }
+
             if (!await userManager.Users.AnyAsync())
             {
                 var admin = new AppUser
@@ -48,18 +47,33 @@ namespace API.Data
                     UserName = "admin",
                     LastName = "Admin",
                     FirstName = "Admin"
-                    
+
                 };
 
                 admin.EmailConfirmed = true;
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
-                await userManager.AddToRolesAsync(admin , new[] {"Admin", "Operator"});
-            }            
+                await userManager.AddToRolesAsync(admin, new[] { "Admin", "Operator" });
+            }
 
         }
         public static async Task SeedMembers(DataContext context)
         {
             if (await context.Member.AnyAsync()) return;
+
+            var memberTroop = new Member
+            {
+                MemberId = 1,
+                LastName = "Troop",
+                FirstName ="Admin",
+                Scout = false,
+                PatrolId = 0,
+                Patrol = "Admin",
+                TroopNumber = 425
+                
+                
+            };
+            context.Member.Add(memberTroop);
+            await context.SaveChangesAsync();
 
             using var client = new TroopTrackAPI();
             var response = await client.ApiClient.GetAsync("api/v1/users");
@@ -79,7 +93,7 @@ namespace API.Data
                         Scout = user.scout,
                         CurrentPosition = user.current_position,
                         CurrentRank = user.current_rank,
-                        Photo = user.avatar,
+                        PhotoUrl = user.avatar,
                         Patrol = user.patrol,
                         PatrolId = user.patrol_id,
                         TroopNumber = user.troop_number,

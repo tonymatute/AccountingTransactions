@@ -21,7 +21,7 @@
         </thead>
         <tbody>
             <tr *ngIf="transactions.length == 0">
-                <td colspan="8" class="text-center font-weight-bold">
+                <td colspan="9" class="text-center font-weight-bold">
                     No transactions Found
                 </td>
             </tr>
@@ -38,7 +38,6 @@
                         </button>
                         <ul id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu"
                             aria-labelledby="button-split">
-                            <li role="menuitem"><a class="dropdown-item" (click)="editTransaction(transaction.transactionId)">Edit</a></li>
                             <li role="menuitem"><a class="dropdown-item" (click)="deleteTransaction(transaction.transactionId)">Delete</a>
                             </li>
                         </ul>

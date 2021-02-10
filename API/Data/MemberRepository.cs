@@ -46,7 +46,7 @@ namespace API.Data
                             Scout = user.scout,
                             CurrentPosition = user.current_position,
                             CurrentRank = user.current_rank,
-                            Photo = user.avatar,
+                            PhotoUrl = user.avatar,
                             Patrol = user.patrol,
                             TroopNumber = user.troop_number,
                             DateOfBirth = user.born_on
@@ -207,7 +207,7 @@ namespace API.Data
                             Scout = user.scout,
                             CurrentPosition = user.current_position,
                             CurrentRank = user.current_rank,
-                            Photo = user.avatar,
+                            PhotoUrl = user.avatar,
                             Patrol = user.patrol,
                             PatrolId = user.patrol_id,
                             TroopNumber = user.troop_number,
@@ -219,7 +219,7 @@ namespace API.Data
                     {
                         member.CurrentPosition = user.current_position;
                         member.CurrentRank = user.current_rank;
-                        member.Photo = user.avatar;
+                        member.PhotoUrl = user.avatar;
                         member.Patrol = user.patrol;
                         member.PatrolId = user.patrol_id;
                         member.DateOfBirth = user.born_on;

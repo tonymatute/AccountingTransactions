@@ -39,17 +39,17 @@ export class MemberTransactionsComponent implements OnInit {
 
     if (this.member.rechartedDate != null) {
       var lastRechartedDate = new Date(this.member.rechartedDate);
-      var diff = (rechartedDate.getTime() - lastRechartedDate.getTime());
-      var diffDays = Math.ceil(diff / (1000 * 3600 * 24)); 
-
-     if (diffDays < 0)
-      return true;
+      
+      let days = Math.floor((rechartedDate.getTime() - lastRechartedDate.getTime()) / 1000 / 60 / 60 / 24);
+     
+      if (days > 365)
+        return true;
     }
     return false;
   }
 
   RechartedDateDueColor() {
-    var x = this.isRechartedDateDue();   
+     
       return this.isRechartedDateDue() ? 'red' : 'green';
     }
    

@@ -179,9 +179,7 @@ namespace API.data.migrations
             modelBuilder.Entity("API.Entities.Member", b =>
                 {
                     b.Property<int>("MemberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .UseIdentityByDefaultColumn();
+                        .HasColumnType("integer");
 
                     b.Property<string>("CellPhone")
                         .HasColumnType("text");
@@ -213,7 +211,7 @@ namespace API.data.migrations
                     b.Property<int>("PatrolId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Photo")
+                    b.Property<string>("PhotoUrl")
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("RechartedDate")
